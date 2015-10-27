@@ -1,0 +1,46 @@
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr">
+   <head>
+      <meta charset="utf-8" />
+      <title>{title}</title>
+      <meta name="description" content="{description}" />
+      <meta name="author" content="{author}" />
+      <meta name="keywords" content="{subject}" />
+      
+      <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet" />
+      <link href="/synopsx/files/css/main.css" rel="stylesheet" />
+      <link href="/synopsx/files/css/ahn.css" rel="stylesheet" />
+      
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+      <script src="/synopsx/files/js/synopsx.js"></script>
+      <!-- ajouter js pour lt IE 9 -->
+   
+     
+   </head>
+   <body>
+ 
+<header data-url="inc_header"/>
+<div>
+<hr/><hr/><hr/><hr/><hr/>
+
+  <nav id="contextual" class="sidebar-nav">
+      <h3>The SynopsX default contextual nav</h3>
+  </nav>
+ <article class="type-system-serif">
+      <h1>{title}</h1>
+      <p>
+      <small>Error code : <span>{error code}</span><br/>
+      Error stack trace : <span>{error stack trace}</span></small></p>
+      
+ </article>
+{content}
+  </div> 
+<footer data-url="inc_footer"/>
+      <script type="text/javascript">
+         // synopsx's composition
+         $(document).ready(function(){
+              init();
+         }); 
+       </script>
+   </body>
+</html>

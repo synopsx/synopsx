@@ -1,0 +1,9 @@
+1. installer basex
+2. cloner synopsx
+3. lien symolique basex/webapp/synopsx vers le clone de synopsx
+4. cloner dba
+5. lien symolique basex/webapp/dba vers le clone de dba
+6. supprimer /usr/local/basex83/webapp/restxq.xqm
+7. creer une base avec dba (admin/admin) : dba
+
+5. renommer basex/webapp/synopsx/config.sample en basex/webapp/synopsx/config.xml

@@ -1,0 +1,2650 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<teiCorpus xmlns="http://www.tei-c.org/ns/1.0" xml:id="example">
+    <teiHeader>
+        <fileDesc>
+            <titleStmt>
+                <title>Synopsx example project - based on the Roman des Morand project</title>
+                <author key="Morand, Antoine (1760-1838)">Antoine Morand</author>
+                <author key="Morand, Magdeleine (1766-1847)">Magdeleine Morand</author>
+                <author key="Morand, Antoinette (1734-1812)">Antoinette Morand</author>
+                <author key="Tempier, Fondos">Fondos Tempier</author>
+                <author key="Tempier, Jean-André">Jean-André Tempier</author>
+                <author key="de Besson, Olympe">Olympe de Besson</author>
+                <editor key="Verjus, Anne">Anne Verjus</editor>
+                <editor key="Manchio, Corine">Corine Manchio</editor>
+            </titleStmt>
+            <publicationStmt>
+                <publisher>Ecole Normale Supérieure de Lyon</publisher>
+                <distributor>Archives Municipales de Lyon</distributor>
+                <authority>Laboratoire Triangle</authority>
+                <date when="2013">2013</date>
+                <idno>http://morand.ens-lyon.fr/</idno>
+                <availability status="restricted">
+                    <licence target="http://creativecommons.org/licenses/by-nc-sa/2.0/fr/"/>
+                    <p>La correspondance est mise en ligne avec l’autorisation de la famille,
+                        conformément au document de prêt à usage. Les lettres ont été numérisées par
+                        Gilles Bernasconi, photographe des Archives municipales de Lyon.</p>
+                    <p>Les images des lettres mises en ligne issues du Fonds Morand peuvent être
+                        réutilisées sous certaines conditions. Bien qu’il n’y ait pas de propriété
+                        intellectuelle liée aux documents eux-mêmes, les conditions de réutilisation
+                        sont fixées par référence à un modèle de licence créative commons :
+                        attribution-pas d’utilisation commerciale-partage dans les mêmes conditions,
+                        qui respecte les modalités du prêt à usage <lb/>Pas de réutilisation
+                        commerciale <lb/>Respecter l’intégrité des informations et ne jamais en
+                        altérer le sens ni la portée <lb/>Mentionner la légende complète à savoir la
+                        référence précise de l’image : Archives municipales de Lyon, fonds Morand,
+                        suivi des numéros.</p>
+                    <p>Il vous est également possible de nous envoyer un courrier postal à l'adresse
+                        suivante : <lb/>Anne-Catherine Marin <lb/>Directrice des Archives
+                        Municipales de Lyon - 1, place des Archives - 69002 Lyon</p>
+                    <p>Conditions de réutilisation de la mise en valeur scientifique : Toute
+                        citation doit faire l’objet d’une introduction précisant le nom de l’auteur
+                        et l’adresse URL du site Roman des Morand. Les citations mises à part, le
+                        contenu de ce site ne peut être reproduit, diffusé et réutilisé sans accord
+                        préalable du responsable éditorial, Anne Verjus, chargée de recherche au
+                        CNRS, UMR 5206.</p>
+                    <p>Etablir un lien vers ce site : La mise en place de liens vers le site Roman
+                        des Morand, y compris "profonds", n’est conditionnée à aucun accord
+                        préalable. Seule la mention explicite du site dans l’intitulé du lien est
+                        souhaitée.</p>
+                    <p>Il vous est également possible de nous envoyer un courrier postal à l’une des
+                        adresses suivantes : Carole Boulai - ISH de Lyon - 14 avenue Berthelot,
+                        69363 LYON cedex 07 ou Samantha Saïdi - ENS de Lyon, R 264 - 15 parvis René
+                        Descartes - BP 7000, 69342 LYON Cedex 07</p>
+                </availability>
+            </publicationStmt>
+            <notesStmt>
+                <note type="abstract">Edition numérique de la correspondance conjugale et familiale
+                    d'un couple lyonnais ayant vécu sous la Révolution française et sous l'Empire :
+                    Antoine et Magdeleine Morand de Jouffrey. Cette correspondance fait partie du
+                    fonds Morand (ensemble de manuscrits, de correspondances, de dossiers familiaux,
+                    d’estampes, de dessins, de plans d’architecture) conservé par les Archives
+                    Municipales de Lyon. </note>
+            </notesStmt>
+            <sourceDesc>
+                <msDesc>
+                    <msIdentifier>
+                        <country>France</country>
+                        <settlement>Lyon</settlement>
+                        <repository>Archives municipales de Lyon</repository>
+                        <collection>Fonds Morand de Jouffrey</collection>
+                        <idno type="FRAC069123">14 ii</idno>
+                    </msIdentifier>
+                </msDesc>
+                <listPerson>
+                    <person xml:id="pers002">
+                        <persName>
+                            <surname>Morand de Jouffrey</surname>
+                            <forename>Albine</forename>
+                        </persName>
+                        <birth when="1786-04-17">1786</birth>
+                        <death when="1807-07-08">1807</death>
+                        <note>
+                            <p>Antoinette Albine est née le 17 avril 1786 à Lyon. Elle est la fille
+                                d'Antoine Morand de Jouffrey et de Magdeleine Guilloud.</p>
+                            <p>On ne sait rien de la vie d'Albine avant 1794, date de la première
+                                séparation entre son père Antoine et le reste de la famille.</p>
+                            <p>C'est surtout par les lettres de sa grand-mère Antoinette qu'on
+                                découvre la personnalité et quelques traits physiques de la petite,
+                                puis de la jeune fille. C'est une enfant prématurée, ne cesse-t-elle
+                                de répéter. Elle est élevée par sa mère et ne connaîtra jamais la
+                                pension. Elle est instruite en orthographe, géographie et latin.
+                                Elle reçoit une instruction religieuse de sa mère ; elle prend
+                                également des leçons de forte piano et de dessin, pour lesquels elle
+                                montre, d'après sa famille, beaucoup de talent. Il n'est pas
+                                question d'en faire une professionnelle. Néanmoins son père veille à
+                                ce qu'elle puisse atteindre un niveau assez élevé pour « son
+                                plaisir, son occupation surtout et l'agrément des siens » :
+                                <cit><quote>« ...je crois bien entre nous, écrit Antoine Morand de
+                                Jouffrey, que le dessin nuit un peu au piano, je ne peux pas dire
+                                que j’en suis bien fâché, cependant comme elle avait vraiment de la
+                                facilité pour l’un et pour l’autre, mon intention est bien qu’elle
+                                continue le piano de manière à ne jamais l’abandonner et à devenir
+                                après bonne musicienne pour pouvoir convoiter l’accompagnement, cela
+                                seul peut y attacher, quant à la perfection dans l’exécution, il
+                                faut trop de temps et une trop grande continuité d’application, au
+                                reste il y a maintenant des choses si étonnantes en fait de talents,
+                                qu’il faut se borner à les avoir pour son plaisir, son occupation
+                                surtout et l’agrément des siens mais ne pas avoir la prétention
+                                d’être remarquée ni citée. Je vois avec plaisir que vous avez été
+                                contente du petit Saint-Jean et que les tatan l’ont été, je l’avais
+                                vu bien avancé, elle a beaucoup de facilité et une grande propreté
+                                dans ce qu’elle fait, mon intention est qu’elle passe cette année à
+                                dessiner beaucoup d’après la bosse, c’est vraiment ce qui forme,
+                                elle est assez jeune pour pouvoir ensuite adopter un genre et
+                                chercher à y devenir d’une certaine force. J’avoue que je tiens plus
+                                à cela qu’au piano, mais je ne lui dis point.»</quote> <ref
+                                target="#morand552">Antoine Morand de Jouffrey à sa mère Antoinette
+                                Morand, le 29 avril 1801</ref></cit> (Albine a 15 ans).</p>
+                            <p>On a peu d'éléments sur son apparence physique ; il semble qu'elle
+                                souffre d'une légère disgrâce, (rougeurs et boutons) au milieu du
+                                visage, qui incommode sa famille au point de consulter régulièrement
+                                les médecins sur la question. On envisage toutes sortes de
+                                médecines, des sangsues à la vésication en passant par les bains de
+                                lait d'ânesse (voir lettres des 2 et 13 juin 1801). Les inquiétudes
+                                se dissipent lorsqu'elle atteint sa 19 ème année, comme en témoigne
+                                une <cit><ref target="#morand634">lettre d'Antoine à son épouse en
+                                1804 :</ref> <quote>« Albine se porte bien, le voyage [jusqu'à
+                                Grenoble] ne l’a point fatiguée ou très peu, ma mère et ma tante ont
+                                trouvé une grande différence dans son teint, l’abbé de Montauban
+                                avec lequel j’ai eu le plaisir de dîner hier, me dit avec l’intérêt
+                                de la bonne amitié qu’il la trouvait parfaitement bien et qu’il
+                                voyait avec grand plaisir que ce qui me donnait quelque inquiétude
+                                lorsqu’il la vit à Lyon était entièrement dissipé. Je ne doute donc
+                                pas ma bonne amie que ta fille ne jouisse de tous ses avantages dans
+                                le moment où cela est le plus nécessaire pour une demoiselle, et que
+                                tu ne dises être parfaitement rassurée à cet égard.
+                                »</quote></cit></p>
+                            <p>Au printemps 1805, les parents effectuent les premières démarches
+                                pour la marier. Un premier prétendant est contacté à Grenoble.
+                                Durant tout l'été, Antoinette va servir d'intermédiaire entre les
+                                deux familles. Trop d'obstacles se présentent à Albine, qui
+                                tergiverse et finit par tomber malade. Elle se marie finalement avec
+                                un voisin, Honoré Boeuf de Curis, à Chasselay, le 12 novembre 1805 :
+                                <cit><quote>« C’est hier, ma chère maman, qu’Albine a changé d’état,
+                                elle est bien venue ce matin déjeuner avec nous, est-elle ou non
+                                Madame c’est ce que je ne vous dirai pas je suis trop discret pour
+                                faire à cet égard des questions, mais elle a un air d’étonnement et
+                                de satisfaction qui s’explique et qui me fait grand plaisir. Nous
+                                avions très peu de monde et cependant assez pour garnir ma salle à
+                                manger qui ne répond pas au salon ; nous aurons des cousins demain
+                                jeudi ; les Poleimieux Dellecise et dimanche quelques autres
+                                personnes du voisinage et de la ville, lundi nous allons faire notre
+                                entrée à Curis, et ensuite reviendrons à Machy où ma femme compte
+                                rester et garder Mad. Albine jusqu’à la noël. Tout s’est très bien
+                                passé hier on nous a traités en gens qu’on aime, les jeunes gens ont
+                                formé une garde à cheval qui est venue prendre ma fille et qui l’a
+                                raccompagnée à Machy en sortant de l’église ; les boîtes et les
+                                pistolets et les cloches faisaient à notre approche de Chasselai un
+                                bruit qui avec le cortège que formaient les voitures et la cavalerie
+                                avaient rassemblé, malgré que ce fut un jour ouvrable, la plus
+                                grande partie des habitants de notre bourg. La cérémonie de
+                                bénédiction s’est donnée dans ma chapelle dépendante de l’église de
+                                Chasselai, M. Navarre a fait la cérémonie, prononcé un très joli
+                                discours et plein de choses agréables pour les deux familles et dit
+                                la messe, M. le curé qui est très sensible à ce souvenir de ma tante
+                                a mis dans tout cela la plus grande complaisance. »</quote> <ref
+                                target="#morand645">Lettre d'Antoine à sa mère Antoinette, le 13
+                                novembre 1805</ref></cit>.</p>
+                            <p>Le couple aura une fille, Azélie, née le 1er septembre 1806. Albine
+                                décède le 8 juillet 1807 à l'âge de 21 ans, probablement des suites
+                                de ses couches.</p>
+                        </note>
+                    </person>
+                    <person xml:id="pers003">
+                        <persName>
+                            <surname>Morand de Jouffrey</surname>
+                            <forename>Antoine</forename>
+                        </persName>
+                        <birth when="1760-03-01">1760</birth>
+                        <death when="1838-02-22">1838</death>
+                        <note>
+                            <graphic url="Antoine.jpg"/>
+                            <p>Antoine Morand de Jouffrey naît le 1er mars 1760 à Lyon. Il est le
+                                fils de Jean Antoine Morand et d'Antoinette Levet. Il se marie le 26
+                                avril 1785 avec Magdeleine Guilloud – c'est à ce moment-là qu'il
+                                joint à son patronyme la particule « de Jouffrey ». Le couple aura
+                                trois enfants : Albine, née en 1786 ; James, né en 1787 ; Eléonore,
+                                née en 1795. Il décède le 22 février 1838 au château de Machy, dans
+                                la commune de Chasselay, au nord de Lyon.</p>
+                            <p>Antoine est celui dont a été conservé le plus grand nombre de lettres
+                                dans la correspondance de la famille Morand de Jouffrey, à cette
+                                époque de leur histoire. Il en est donc l'un des personnages
+                                principaux. </p>
+                            <p>Antoine fut un enfant choyé. Choyé par une nourrice qui, par chance,
+                                a su le rendre en bonne santé à ses parents, comme il l'écrit
+                                lui-même dans ses mémoires : <cit><quote>« J’ai été mis en nourrice
+                                à Lyon chez une femme fort jeune et fort jolie. Son mari trouvant
+                                que trop de personnes venaient me voir et voyant avec jalousie que
+                                j’attirais trop de visites à sa femme, engagea ma mère à me retirer,
+                                on me fit nourrir par une nommée Montet au château de Champvieux à
+                                Saint Germain, les dames … possédaient alors ce fief et je fus élevé
+                                avec les plus grands soins et remis à mon père et ma mère dans le
+                                meilleur état possible. » </quote><ref>Journal d’Antoine, cote 14 ii
+                                028.</ref></cit></p>
+                            <p>Placé en pension dès l'âge de 11 ans, il tombe malade et doit
+                                renoncer, pour quelques années, à vivre loin du domicile familial.
+                                C'est seulement à l’âge de 15 ans qu'il se résigne à quitter ses
+                                parents pour mener ses études de droit à Paris. Mais la séparation
+                                est douloureuse, comme en témoigne cette lettre d'Antoinette à son
+                                fils, en décembre 1775 : <cit><quote>« Tu as eu dans quelques unes
+                                de tes lettres un air de découragement qui m’inquiétait presque,
+                                serais-tu comme ces nigauds de Lyonnais qui ne savent pas quitter le
+                                clocher de Fourvière ? Et sitôt prendrais-tu la maladie du pays ? tu
+                                me rassures par ta dernière, l’expérience que tu as eue des
+                                différents partis que nous avons pris pour ton éducation doivent
+                                bien te persuader. Quoique tu es au mieux possible. Je ne puis que
+                                te savoir gré d’être fâché de ne me pas voir ainsi que tout ce qui
+                                t’est cher mais comme il n’est que trop prouvé que l’éducation
+                                privée ne vaut rien (...), il nous faut prendre notre parti et
+                                songer que tu es à la source du savoir, qu’en y sachant puiser tu te
+                                ménages des moyens de parvenir dans l’état que tu entreprendras, que
+                                le savoir ménage ses consolations dans l’adversité, nous rend utile
+                                aux autres et nous distingue de la multitude. »</quote> <ref>8
+                                décembre 1775.</ref></cit></p>
+                            <p>Antoine est reçu avocat en 1779, à 19 ans. Un an auparavant, et
+                                contre l'avis de ses parents, il a acquis un vaste domaine agricole.
+                                Il s’agit d’un petit château, situé dans la campagne au nord de
+                                Lyon, à une quinzaine de kilomètres (c'est-à-dire à deux bonnes
+                                heures de route) de la ville, entre Chasselay et Poleymieux, au lieu
+                                dit Machy. Cet endroit, où il se rendra chaque été jusqu'à sa mort,
+                                restera pour lui le lieu où il trouvera repos et réconfort ; cet
+                                attachement lui vaudra le premier et principal conflit avec son
+                                épouse Magdeleine, désireuse de s'en séparer après le décès de leur
+                                fille aînée, Albine. Le château existe encore, bien qu'il
+                                n'appartienne plus à la famille depuis la fin des années 1970.</p>
+                            <p>Antoine se marie en 1785 avec Magdeleine Guilloud. Il est l'héritier
+                                universel de ses parents, à la tête d'un patrimoine considérable,
+                                constitué principalement d'actions sur le pont de bois sur le Rhône,
+                                et de la propriété d'un vaste terrain partiellement loti, les
+                                Brotteaux. La Révolution, en détruisant son patrimoine, va le ruiner
+                                partiellement et l'obliger à entreprendre de multiples démarches
+                                pour obtenir des dérogations de taxes ; il s'agit de couvrir les
+                                frais de la reconstruction du pont, construction privée d'intérêt
+                                public justifiant un effort de l'Etat en la matière.</p>
+                            <p>Comme la plupart des familles aisées de l'époque, le couple partage
+                                son temps entre le château à la campagne, investi pendant les beaux
+                                jours, généralement de mai jusqu'en décembre ; et un appartement
+                                loué, au centre de la ville, plus confortable et plus facile à
+                                chauffer pendant les mois d'hiver ; il y vit avec les enfants et
+                                deux à trois domestiques qui logent à domicile. Dans les premiers
+                                temps de leur mariage, Antoine et Magdeleine vivent au n° 9 de la
+                                rue du plat, non loin de la place Bellecour, signifiant par cette
+                                inscription dans l'espace lyonnais leur appartenance à
+                                l'aristocratie. A la mort de Jean Antoine, ils s'installent au n°66
+                                de la rue Saint Dominique, l'actuelle rue Emile Zola, non loin elle
+                                aussi de la place Bellecour. Enfin, après le décès d'Albine, ils
+                                louent un appartement rue des deux maisons, dans le même quartier.
+                                Lorsqu'il doit se loger à Paris, lors des quatre séjours effectués
+                                au nom de la Compagnie du Pont (1796, 1801, 1802, 1807), Antoine
+                                réside soit à l'hôtel Ménars, rue Ménars ; soit à l'hôtel du
+                                Portugal, rue du Mail. Ces hôtels sont tous deux situés à proximité
+                                du Palais Royal, lieu de prédilection des hommes et des femmes en
+                                quête de divertissement à l'époque (spectacles, restaurants, jeux,
+                                courtisanes, etc.) et du théâtre du Français auquel il fait parfois
+                                référence (par exemple dans <ref target="#morand652">sa lettre du 15
+                                avril 1807 à Magdeleine</ref>).</p>
+                            <p>Physiquement, Antoine a les caractéristiques de l'amateur de bonne
+                                chère. A trente ans, il se décrit <quote>« rond comme une boule
+                                »</quote>. Il ne perdra plus cet embonpoint, malgré les souffrances
+                                que lui cause la goutte, et malgré les régimes auxquels son médecin,
+                                <ref target="#pers036">Louis Vitet</ref>, l'astreint régulièrement.
+                                Antoine se montre un époux amoureux et un père attentif. Il
+                                manifeste son désir et son attachement pour Magdeleine à de
+                                nombreuses reprises, presque dans toutes ses lettres. Il est
+                                sensible et ne cache ni ses émotions, ni ses sentiments :
+                                <cit><quote>« … si je revenais à vingt-cinq ans je ne voudrais
+                                travailler à être plus aimable que pour attacher à mon existence par
+                                des liens plus longs encore et plus sûrs s'il est possible, l'être
+                                cher qui m'attache à la vie et m'y fait trouver tant de charmes ; je
+                                ne pourrais t'aimer davantage mais j'aurais l'espoir d'ajouter
+                                encore à ton amour pour moi ; je ne redeviendrai pas jeune mais la
+                                douce espérance d'être toujours tendrement aimé de la meilleure
+                                moitié de moi-même ne m'abandonnera qu'avec la vie. (...) »</quote>
+                                <ref target="#morand584">10 juillet 1801</ref></cit>.</p>
+                            <p>C'est un père soucieux de connaître la mode enfantine, de rapporter
+                                des présents à ses enfants, lorsqu'il est en voyage à Paris ; il
+                                s'inquiète régulièrement de leur santé, et s'implique dans les choix
+                                importants (vaccination ou inoculation ?) comme dans les choix plus
+                                bénins concernant par exemple l'alimentation des nourrissons. Il
+                                semble être une figure paternelle plus proche des enfants que ne
+                                l'était son père, véritable figure tutélaire pour laquelle il
+                                ressentait crainte et admiration. Antoine est très lié à sa mère. Un
+                                conflit violent, aux conséquences importantes, va les opposer à
+                                l'occasion de l'héritage de son père Jean Antoine. Le conflit est
+                                double. C'est d'abord un procès qui l'oppose à sa mère à propos de
+                                revenus que la dévastation de leur propriétés a réduits à néant. Un
+                                procès au terme duquel Antoine devra verser une rente trimestrielle
+                                sur le paiement de laquelle ils ne cesseront de se chercher
+                                querelle. C'est ensuite une dispute autour de l'accès à
+                                l'appartement parental, qui conduit Antoinette à quitter
+                                définitivement Lyon pour vivre à Grenoble auprès de sa fille
+                                Eléonore.</p>
+                            <p>Malgré ce différend qui les opposera jusqu'à la mort d'Antoinette,
+                                ils garderont un lien épistolaire doublement nécessaire, tant du
+                                point de vue des affaires du pont que du point de vue affectif. Il
+                                sera auprès d'elle lorsqu'alitée, se sachant mourante, elle le fera
+                                venir à Grenoble pour vivre ses derniers jours.</p>
+                            <p>Carrière d'Antoine Morand de Jouffrey : <list><item>Reçu avocat au
+                                parlement de Paris en 1779.</item> <item>Pourvu de la charge de
+                                Procureur du roi au titre des finances de la généralité de Lyon en
+                                1785.</item> <item>Pendant le siège de Lyon, il est appelé par la
+                                section de Saône à la présider, après avoir été lieutenant des
+                                grenadiers. Mis nominativement hors la loi, il fuit devant l’armée
+                                révolutionnaire et se soustrait aux poursuites en s’installant à
+                                Briançon.</item> <item>1793-1794 : chargé de l’approvisionnement de
+                                l’armée, à Briançon, où il s’est réfugié pour échapper à la
+                                répression.</item> <item>Le 24 octobre 1795 : élu juge au tribunal
+                                du département du Rhône.</item> <item>Décembre 1800-1814 : membre du
+                                conseil municipal de Lyon.</item> <item>« Il fut oublié lors de
+                                l’organisation de la cour d’appel », oubli réparé par l’intervention
+                                de Napoléon Bonaparte lui-même, d’après le récit qu’en fait Antoine
+                                dans une « note remise à M. de Satonnay le 6 février 1810 » (cote 14
+                                ii 027).</item> <item>1802-1808 : administrateur des hôpitaux de
+                                Lyon</item> <item>1803 : obtient une place de juge auprès de la cour
+                                d’appel (place qu'il occupe jusqu'en 1810)</item> <item>1802-1809 :
+                                nommé membre du conseil général du département et du conseil de la
+                                commune de Lyon par Napoléon, le 29 germinal an 10 pour remplir la
+                                fonction de juge au tribunal d’appel séant à Lyon, pour remplacer le
+                                citoyen Blanc.</item> <item>Président du canton de Limonest</item>
+                                <item>Membre du collège électoral du département du Rhône</item>
+                                <item><ref
+                                target="http://www.culture.gouv.fr/LH/LH169/PG/FRDAFAN83_OL1924064V001.htm"
+                                >Chevalier de la légion d'honneur en 1810</ref>.</item>
+                                <item>Recteur des hospices civils</item> <item>Membre du jury des
+                                Ecoles chrétiennes (au moins jusqu'en 1821)</item> <item>Antoine
+                                prend sa retraite en 1822.</item> <item>Edification du monument des
+                                Brotteaux, commémorant les morts de 1793</item> <item>Création de la
+                                place Louis XVI</item></list> </p>
+                            <listBibl>
+                                <bibl>Anne Verjus et Denise Davidson, <title>Le roman conjugal.
+                                    Chroniques de la vie familiale à l'époque de la Révolution et de
+                                    l'Empire</title>, Seyssel, Champ Vallon, 2011. </bibl>
+                                <bibl>Denise Davidson et Anne Verjus, "Generational Conflict in
+                                    Revolutionary France : Widows, Inheritance Practices, and the
+                                    "Victory of Sons"", <title>The William and Mary
+                                    Quarterly</title>, 2013. </bibl>
+                            </listBibl>
+                        </note>
+                    </person>
+                    <person xml:id="pers004">
+                        <persName>
+                            <surname>Morand</surname>
+                            <surname type="maiden">Levet</surname>
+                            <forename>Antoinette</forename>
+                        </persName>
+                        <birth when="1734-12-17">1734</birth>
+                        <death when="1812-02-28">1812</death>
+                        <note>
+                            <graphic url="Antoinette.jpg"/>
+                            <p>Antoinette Levet est née à Lyon le 17 décembre 1734 ; elle a été
+                                baptisée le 18 décembre à la Platière ; elle est décédée le 28
+                                février 1812 à Grenoble.</p>
+                            <p>Son père, Etienne Levet, était conseiller au parlement de Grenoble.
+                                Il était lui-même le fils d’un notaire né en 1687 à Lyon, prénommé
+                                également Etienne. Sa mère était Louise Demouchy.</p>
+                            <p>Antoinette se marie en 1759 avec Jean Antoine Morand. Le couple aura
+                                deux enfants, Antoine, né en 1760 ; et Eléonore, née en 1762.</p>
+                            <p>C'est grâce à sa dot que le couple parvient à se constituer un
+                                important patrimoine tout en investissant dans des constructions qui
+                                deviendront fortement productives (tel le pont Morand), ce qui lui
+                                permettra de se hisser parmi les grandes fortunes de Lyon.</p>
+                            <p>Très impliquée dans la carrière de son époux, Antoinette prend en
+                                charge une grande partie de la gestion des affaires, de la
+                                surveillance des chantiers, et de la constitution du réseau
+                                d'interconnaissance nécessaire aux négociations liées au pont ou à
+                                l'aménagement des Brotteaux. C'est elle qui, dans la famille, assure
+                                l'éducation et l'instruction de ses enfants. Elle a en charge
+                                également l'économie domestique d'une maisonnée formée de la famille
+                                et de quelques serviteurs.</p>
+                            <p>Quelques années après le décès de son époux, elle quitte Lyon pour
+                                s'installer à Grenoble, non loin de chez sa fille. Elle continue à
+                                correspondre avec son fils Antoine qu'elle conseille dans la gestion
+                                du pont et dans ses relations avec les alliés politiques de Lyon et
+                                de Paris.</p>
+                            <p>Sa correspondance est l'une des plus riches du fonds Morand. On a
+                                conservé les lettres qu'elle échange avec son fils Antoine lorsque
+                                celui-ci est envoyé, à l'âge de 11 ans, un an en pension ; puis de
+                                15 à 18 ans, trois ans dans un collège parisien où il fait ses
+                                études de droit. On a également, ce qui est plus rare, conservé le
+                                courrier qu'elle envoie à son mari lorsque celui-ci se déplace en
+                                Italie ; enfin, on a toute la correspondance qu'elle échange avec
+                                Antoine devenu adulte, mari et père, et surtout héritier du pont et
+                                des Brotteaux. Cette correspondance de plusieurs centaines de
+                                lettres est en cours de retranscription ; elle offre un tableau
+                                précis de la vie d'une mère et épouse de la bourgeoisie lyonnaise, à
+                                l'interface entre la maîtrise des affaires politiques et sociales,
+                                la responsabilité du travail parental et l'orchestration de la
+                                gestion domestique.</p>
+                        </note>
+                    </person>                    
+                    <person xml:id="pers018">
+                        <persName>
+                            <surname>de Besson</surname>
+                            <surname type="maiden">Morand</surname>
+                            <forename>Eleonore</forename>
+                        </persName>
+                        <birth when="1762">1762</birth>
+                        <death when="1805-12">1805</death>
+                        <note>
+                            <p>Louise, Jeanne, Eléonore est née en 1762. Elle est la fille de Jean
+                                Antoine Morand et d’Antoinette Levet, et la sœur d’Antoine Morand de
+                                Jouffrey.</p>
+                            <p>Extrait du journal d'Antoine : <quote>« Le … février 1762 ma mère
+                                accoucha d’une fille qui fut baptisée sous les noms de Louise,
+                                Jeanne Eléonore dans la même paroisse que moi. Elle fut nourrie à
+                                Couson sur les bords de la Saône mais elle ne fut pas élevée avec
+                                autant de soin que moi, on la remit dans un état de dépérissement
+                                qui fit craindre à ma mère de ne la pouvoir pas conserver, à quatre
+                                ans elle ne marchait pas, et il a fallu tous les soins de ma mère
+                                pour avoir pu l’élever. Ma mère courait risque de perdre la vie en
+                                la donnant à sa fille, ses couches furent suivies d’accidents qui la
+                                réduisirent dès ce moment au même état où se trouvent ordinairement
+                                les femmes âgées de cinquante ans et empêchèrent l’augmentation de
+                                la famille. »</quote></p>
+                            <p>Eléonore est éduquée et instruite par sa mère Antoinette jusqu'à son
+                                mariage. C'est une enfant appliquée, d'une santé délicate, qui
+                                reçoit une instruction solide en orthographe, grammaire, algèbre et
+                                géométrie, ainsi qu'en histoire et géographie. Elle prend également
+                                des leçons de danse et de clavecin. Elle montre, d'après sa mère,
+                                des dispositions pour le dessin.</p>
+                            <p>Extrait d'une lettre d'Antoinette, sa mère, à Antoine : <cit><quote>«
+                                J’assure que l’éducation sérieuse que j’ai reçue m’a empêchée de
+                                n’être que frivole, m’a donné un peu de tournure aux affaires et de
+                                la satisfaction lorsque j’ai bien empli ma journée. Mais il est rare
+                                que cela m’arrive, ma tâche est à présent de bien élever ta sœur
+                                c’est à quoi je travaille, je n’en ferai jamais une savante elle est
+                                bien un peu la sœur de son frère pour l’application, mais on
+                                dispense les femmes de l’être, tu as voulu qu’elle te donnât de son
+                                orthographe, tu seras satisfait. Mais je te promets plus de peine à
+                                déchiffrer ce qu’elle t’écrit que tu en as à commenter tes auteurs
+                                les plus difficiles... ».</quote> <ref>8 décembre
+                                1775</ref></cit>.</p>
+                            <p>Quelques jours plus tard, elle ajoute : <cit><quote>« Elle étudie
+                                beaucoup, son esprit se développe, elle devient fort intéressante,
+                                elle est je t’assure bien raisonnable, comme elle ne me quitte point
+                                elle ne s’ennuie point dans la chambre, elle n’a pas le moindre
+                                désir de sortir, sa taille se développe, elle est toujours en petit
+                                caraco qui lui sied très bien... »</quote> <ref>15 décembre
+                                1775</ref></cit>.</p>
+                            <p>En 1777, alors qu'Eléonore a 15 ans, sa mère écrit : <cit><quote>« Tu
+                                as raison de désirer que ta sœur s’applique au dessin, cependant
+                                elle ne s’en occupe pas encore elle le prendra dans la belle saison,
+                                dans ce moment elle est toute à l’étude de son clavecin, comme elle
+                                ne m’a pas paru avoir de grandes dispositions, je me suis décidée à
+                                lui faire prendre leçon tous les jours, et à l’étudier beaucoup pour
+                                qu’en conséquence elle y fasse des progrès, ou qu’elle l’abandonne,
+                                il me semble que cela me réussit et qu’elle commence à se
+                                débrouiller, le reste de son temps est occupé par l’étude de sa
+                                grammaire, de l’histoire, de sa géographie, en sorte qu’il ne lui
+                                reste pas deux heures de temps pour les ouvrages de son sexe, mais
+                                comme elle a beaucoup d’adresse, cet article ne m’inquiète point. Je
+                                t’assure que sans être au collège son temps est bien employé. Je me
+                                flatte même que quoique son éducation soit très fort retardée, trois
+                                années employées de même en feraient un fort joli petit sujet, nous
+                                t’attendons pour les hautes sciences, car tu sais bien que lorsque
+                                dans ton enfance je t’ai enseigné les premiers éléments je t’ai fait
+                                promettre de me rendre avec usure cette instruction lorsque tu
+                                serais grand. Lorsque tu seras hors du collège tu pourras apprendre
+                                avec ta sœur la langue italienne, lui enseigner un peu d’algèbre et
+                                de géométrie, si sa tête le comporte et qu’elle y ait un peu de
+                                goût, je lui donne une légère idée des premières figures de
+                                géométrie pour l’intelligence de sa sphère. »</quote> <ref>22
+                                février 1777</ref></cit>.</p>
+                            <p>Eléonore se marie en 1786 avec Paul Bertrand de Besson. Le couple,
+                                qui vit place aux Herbes à Grenoble, aura trois enfants : Olimpe,
+                                Auguste et Louise. Elle décède en décembre 1805 des suites d'un
+                                cancer.</p>
+                        </note>
+                    </person>                    
+                    <person xml:id="pers250">
+                        <persName ref="Morand de Jouffrey_Marie">
+                            <surname>Morand</surname>
+                            <surname type="honorific">de Jouffrey</surname>
+                            <surname type="maiden">Guilloud</surname>
+                            <forename type="unused">Marie</forename>
+                            <forename>Magdeleine</forename>
+                        </persName>
+                        <birth when="1766-04-07">1766</birth>
+                        <death when="1847">1847</death>
+                        <note>
+                            <graphic url="Magdeleine.jpg"/>
+                            <p>Magdeleine Guilloud est née le 7 avril 1766 à Lyon. Elle est la fille
+                                de Jean Antoine Guilloud, négociant et capitaine commandant du
+                                bataillon de Saint Georges, et de Marie Tempier.</p>
+                            <p>Elle se marie en 1785 avec Antoine Morand de Jouffrey. Le couple aura
+                                trois enfants : Albine, née en 1786 ; James, né en 1787 ; Eléonore,
+                                née en 1795. Elle décèdera au château de Machy, dans la commune de
+                                Chasselay, au nord de Lyon, en 1847.</p>
+                            <p>Magdeleine, orpheline de mère depuis l’âge de 9 ans, a vécu une
+                                grande partie de sa jeunesse dans la maison de sa tante, située
+                                derrière la place des Terreaux, à l’angle de la rue de la Déserte et
+                                de la mal famée rue des Bouchers (la rue des Bouchers, actuelle rue
+                                Hippolyte Flandrin, était connue pour ses maisons closes). Elle est
+                                l’héritière d’une fortune très importante, composée de deux
+                                héritages : celui de sa mère Marie Tempier, dont elle est la fille
+                                unique et celui de sa tante maternelle, dont elle est aussi la seule
+                                nièce. Son père, un riche négociant lyonnais, lui a constitué une
+                                formidable dot de 60 000 livres. C’est cette dot qui permet à cette
+                                jeune bourgeoise de s’allier avec l'unique fils des Morand, comme le
+                                laisse entendre Jean Antoine Morand dans une lettre à un ami, alors
+                                qu’il évoque la naissance de sa première petite-fille :
+                                <cit><quote>« A propos de bonheur, je suis grand-père d’une fille
+                                    depuis hier matin à 7 heures. Si cette petite fille ressemble à sa
+                                    mère, mes vœux seront comblés, car mon fils a trouvé dans sa femme
+                                    toutes les qualités essentielles où nous n’avions vu d’abord les uns
+                                    et les autres que beaucoup de fortune. »</quote> <ref>18 avril
+                                        1786</ref></cit>.</p>
+                            <p>Magdeleine est une femme dont on sait peu de choses. Ses lettres ont,
+                                pour la plupart, été brûlées. On ne la rencontre, dans cette
+                                correspondance, qu'à travers le regard que porte sur elle son mari,
+                                Antoine ; soit quand il s'adresse à elle, soit quand il parle d'elle
+                                à sa mère Antoinette. Les rares lettres qu'on a conservées d'elle
+                                sont ses lettres de mère, adressées à James ; ainsi que les lettres
+                                qu'elle écrit à sa belle-mère à l'occasion de la négociation du
+                                mariage d'Albine, sa fille aînée.</p>
+                            <p>Magdeleine, comme avant elle sa belle-mère Antoinette, est une femme
+                                qui prend une large part aux activités économiques et politiques de
+                                la famille. Il semble que le goût et ce talent pour les affaires lui
+                                soient venus au moment de la fuite en exil de son époux Antoine.
+                                Voici comment celui-ci s'adresse à elle, alors qu'il est réfugié à
+                                Briançon et qu'elle est restée à Lyon pour s'occuper des enfants et
+                                de leur domaine agricole de Machy : <cit><quote>« J’approuve
+                                    infiniment ta manière généreuse d’agir, il n’y a pas à hésiter dans
+                                    de pareilles occasions et je crois que tu n’as pas douté que ton bon
+                                    ami n’applaudît au parti que tu prenais ; une fois pour toutes,
+                                    rends-lui compte de ce que tu fais parce que rien de ce qui te
+                                    regarde ne peut lui être indifférent, mais fais, défais, achète,
+                                    vends, ainsi que tu le croiras plus convenable aux intérêts de la
+                                    communauté et surtout des petits, c’est maintenant toi qui tiens le
+                                    gouvernail, tu sais éviter la tempête dans des moments bien orageux,
+                                    et le petit vaisseau a gagné à changer de conducteur. Au reste ma
+                                    bonne amie, je n’avais pas besoin de toutes ces circonstances, pour
+                                    avoir en toi cette entière confiance, je le devais à ton ordre et à
+                                    tes vertus, et dans aucun temps, je ne crois pas qu’il me soit
+                                    arrivé de ne pas trouver fort bon tout ce que tu faisais, il n’est
+                                    qu’une chose que tu as soin d’excepter aussi, de celles que tu as
+                                    été obligée de faire, j’avoue que de tous les biens, c’est celui
+                                    auquel j’attache le plus de prix, mais comme tu le sais, je suis
+                                    tranquille à cet égard et ai pour garants de ta conduite, tes
+                                    principes et ton attachement pour moi ; nous avons trop de tendresse
+                                    l’un pour l’autre pour avoir jamais aucun reproche à nous faire sur
+                                    cet article, sensibles comme nous le sommes tous les deux, le plus
+                                    léger doute suffirait pour anéantir le bonheur de tous les deux. (…)
+                                    »</quote> <ref target="#morand413">30 août 1794</ref></cit>.</p>
+                            <p>A chaque fois qu'Antoine s'absentera, ce qui arrivera à maintes
+                                reprises, sur des périodes pouvant aller jusqu'à plusieurs mois,
+                                elle lui servira d'agent de liaison (il parle de « fondée de pouvoir
+                                ») c'est à dire d'intermédiaire auprès de leurs réseaux lyonnais,
+                                pour faire passer un dossier auprès du préfet par exemple ; se
+                                rendre à un souper et recueillir des informations utiles aux
+                                affaires du pont ; elle organise également ce qu'ils appellent des «
+                                dîners de veuve », c'est-à-dire des dîners au cours desquels elle
+                                reçoit seule des acteurs politiques nécessaires à leurs affaires,
+                                afin d'obtenir ou de solidifier des alliances.</p>
+                            <p>C'est elle également qui s'occupe de l'éducation et de l'instruction
+                                de James jusqu'à ce qu'il entre au collège ; et d'Albine et Eléonore
+                                jusqu'à leur mariage. C'est elle que sa belle-mère félicite
+                                lorsqu'elle constate les progrès effectués par les enfants. Enfin,
+                                c'est elle également qui joue le rôle d'intermédiaire dans les
+                                négociations pour le mariage d'Albine. De ce point de vue, il y a
+                                une forte similarité entre les deux femmes de la famille, sur deux
+                                générations. La seule différence notable et conséquente étant que
+                                Magdeleine, suivant les préceptes de Rousseau, a allaité ses enfants
+                                alors qu'Antoinette les a placés en nourrice pendant plusieurs
+                                années.</p>
+                            <listBibl>
+                                <bibl>Verjus, Anne et Davidson, Denise. <title>Le roman conjugal.
+                                    Chroniques de la vie familiale à l’époque de la Révolution et de
+                                    l’Empire</title>, Seyssel, Champ-Vallon, 2011.</bibl>
+                                <bibl>Verjus, Anne. "Une informalité ordonnée : les « dîners de
+                                    veuve » du couple Morand de Jouffrey", in Le Gall, Laurent,
+                                    Offerlé, Michel et Ploux, François (dir.). <title>La politique
+                                        sans en avoir l’air. Aspects de la politique informelle
+                                        XIXe-XXIe siècle</title>, Rennes, Presses Universitaires de
+                                    Rennes, 2012, pp. 209-224. </bibl>
+                            </listBibl>
+                        </note>
+                    </person>
+                </listPerson>
+                <listPlace>
+                    <place xml:id="pl001">
+                        <placeName>Lyon</placeName>
+                        <location>
+                            <geo>45.7589 4.84139</geo>
+                        </location>
+                    </place>
+                    <place xml:id="pl000">
+                        <placeName>Lieu d’écriture inconnu</placeName>
+                        <location>
+                            <geo/>
+                        </location>
+                    </place>
+                    <place xml:id="pl005">
+                        <placeName>Briançon</placeName>
+                        <location>
+                            <geo>44.8958 6.635</geo>
+                        </location>
+                    </place>
+                    <place xml:id="pl002">
+                        <placeName>Grenoble</placeName>
+                        <location>
+                            <geo>45.1869 5.72639</geo>
+                        </location>
+                    </place>
+                    <place xml:id="pl016">
+                        <placeName>Miralou</placeName>
+                        <location>
+                            <geo/>
+                        </location>
+                    </place>
+                    <place xml:id="pl004">
+                        <placeName>Machi</placeName>
+                        <location>
+                            <geo>45.86264732 4.75910783</geo>
+                        </location>
+                    </place>
+                    <place xml:id="pl003">
+                        <placeName>Paris</placeName>
+                        <location>
+                            <geo/>
+                        </location>
+                    </place>
+                    <place xml:id="pl010">
+                        <placeName>Fontaine</placeName>
+                        <location>
+                            <geo>45.1931 5.685</geo>
+                        </location>
+                    </place>
+                    <place xml:id="pl011">
+                        <placeName>Villefranche</placeName>
+                        <location>
+                            <geo>45.9897 4.71972</geo>
+                        </location>
+                    </place>
+                    <place xml:id="pl009">
+                        <placeName>Ménerbes</placeName>
+                        <location>
+                            <geo>43.8322 5.20639</geo>
+                        </location>
+                    </place>
+                    <place xml:id="pl015">
+                        <placeName>Cossey</placeName>
+                        <location>
+                            <geo>45.1197 5.67167</geo>
+                        </location>
+                    </place>
+                    <place xml:id="pl013">
+                        <placeName>Lucy</placeName>
+                        <location>
+                            <geo/>
+                        </location>
+                    </place>
+                    <place xml:id="pl012">
+                        <placeName>Nice</placeName>
+                        <location>
+                            <geo>45.1197 5.67167</geo>
+                        </location>
+                    </place>
+                    <place xml:id="pl014">
+                        <placeName>Curis</placeName>
+                        <location>
+                            <geo>45.8703 4.82111</geo>
+                        </location>
+                    </place>
+                    <place xml:id="pl008">
+                        <placeName>Sion</placeName>
+                        <location>
+                            <geo>46.2317 7.36698</geo>
+                        </location>
+                    </place>
+                    <place xml:id="pl006">
+                        <placeName>Genève</placeName>
+                        <location>
+                            <geo>46.207 6.14234</geo>
+                        </location>
+                    </place>
+                    <place xml:id="pl007">
+                        <placeName>Châtillon</placeName>
+                        <location>
+                            <geo>46.0872 6.5825</geo>
+                        </location>
+                    </place>
+                </listPlace>
+            </sourceDesc>
+        </fileDesc>
+        <encodingDesc>
+            <!--description du projet en détail du but ou de l’objectif visé dans l’encodage d’un fichier électronique, ou information pertinente sur la manière dont il a été construit ou recueilli. -->
+            <projectDesc>
+                <p>This XML file is a TEI corpus sample for the SynopsX platform. 
+                    It's based on a digital edition of the Morand family correspondance.</p> 
+                 <p>We thank the Roman des Morand project for letting SynopsX use their work.
+                     For more information on this project, visit http://morand.ens-lyon.fr                    
+                </p>
+            </projectDesc>
+            <samplingDecl>
+                <p>Le fonds Morand est conservé aux Archives municipales de Lyon sous la cote 14II
+                    principalement. Il est constitué des archives de la famille Morand de Jouffrey
+                    depuis le XVIIème siècle jusqu'au début du XXème siècle. Jusqu'au moment de leur
+                    dépôt par la famille en 1978 puis en 1994, les lettres ont fait l'objet d'un
+                    soin tout particulier de la part de la famille qui les a triées, numérotées,
+                    étiquetées, entreposées à l'abri de l'humidité, de la poussière et de la
+                    lumière. C'est ainsi que ce fonds, qui compte une centaine de cartons, nous est
+                    parvenu dans un état de conservation remarquable. On y trouve plusieurs milliers
+                    de lettres, des dossiers, agendas de voyage, listes de toutes sortes,
+                    ordonnances de médecin, de multiples gravures, dessins, estampes, des tableaux,
+                    des cartes, et un très grand nombre de plans dessinés et peints par l'architecte
+                    Jean Antoine Morand. Il a déjà donné lieu à trois expositions et fait l'objet de
+                    plusieurs monographies. Voir également le descriptif détaillé du fonds.</p>
+                <p>Les Archives municipales de Lyon conservent les archives de la famille Morand de
+                    Jouffrey, qu’elles ont reçues en prêt à usage en 1994. Cet important ensemble de
+                    manuscrits, de correspondances, de dossiers familiaux, d’estampes, de dessins,
+                    de plans d’architecture est dénommé FOND MORAND.</p>
+                <p>Selon la typologie des documents, en raison de conditions différentes de
+                    conservation, il porte plusieurs cotes : <lb/>14 II : archives familiales,
+                    dessins et estampes (17e – début 20e siècle) <lb/>SMO : plans de l’architecte
+                    Jean Antoine Morand (2e moitié 18e siècle) <lb/>1 SMO : plans de grand format
+                    <lb/>2 SMO : plans de moyen format <lb/>3 SMO : plans de petit format <lb/>1 II
+                    255 petit ensemble de documents émouvants de la période révolutionnaire,
+                    correspondant au 2ème dépôt Morand de Jouffrey. <lb/>A ce fonds s’ajoutent
+                    quelques documents isolés acquis lors de ventes par les Archives municipales de
+                    Lyon : <lb/>1 II 116 : Antoine Morand de Jouffrey : brevet de l'ordre du Lys
+                    1814 <lb/>1 II 254: : documents familiaux et relatifs au pont Morand (18e-19e
+                    siècles) <lb/>1 II 277 : documents relatifs au pont Morand et à l’érection du
+                    monument des Brotteaux (1765-1818 <lb/>1 II 286 : Ordre de paiement au profit de
+                    Jean Antoine Morand, intimé au consulat lyonnais, Soufflot, Tholozan, la veuve
+                    Milannois et Munet, à la date du 22 octobre 1779 <lb/>1 II 325 : Lettre
+                    d'affaire, minute de la main de l'architecte lyonnais Jean Antoine Morand, datée
+                    de Lyon, le 27 septembre 1756. <lb/>1 II 449 : Documents préparatoires pour
+                    l'établissement d'un mémoire sur le pont Morand et concernant son origine et les
+                    titres de la concession, le nombre et la valeur des actions, le rétablissement
+                    du péage, l'exemption du droit de péage aux actionnaires du pont (fin 18e
+                    siècle) <lb/>1 II 475 : Livre de raison de Monsieur Morand de Pont de Veyle
+                    (s.d., vers 1750-1760) <lb/>95 II : carnets et agendas de Jean-Antoine et
+                    Antoine Morand <lb/>3 S 1470 : plan du pont Morand (Jean-Antoine Morand)</p>
+            </samplingDecl>
+            <appInfo>
+                <!--fournit des informations sur une application qui a été utilisée pour le traitement du document.-->
+                <application ident="oXygen" version="8.2">
+                    <label>oXygen</label>
+                </application>
+            </appInfo>
+            <editorialDecl>
+                <correction status="medium">
+                    <!--(règles de correction) établit comment et dans quelles circonstances des corrections ont été apportées au texte.-->
+                    <p>La plus grande partie de cette correspondance a été retranscrite. Nous avons
+                        cependant écarté les comptes-rendus, souvent fastidieux, de l'argent dépensé
+                        et gagné ; le récit parfois répétitif des visites rendues ; les infinies
+                        salutations et recommandations lorsqu'elles n'apportaient pas d'éléments
+                        d'information. Pour pallier ces absences, dont le choix est tout à fait
+                        subjectif, cette retranscription se double d'une édition numérique
+                        permettant de se reporter à l'intégralité des lettres manuscrites.</p>
+                    <p>Nous avons ajouté, en revanche, des textes qui ne forment pas, à proprement
+                        parler, de la correspondance. Ainsi, ce quatrain recopié à la main par
+                        Antoine, sur le tutoiement. Ou bien le mémoire sur son histoire
+                        physiologique, remis au médecin Louis Vitet.</p>
+                    <p>Afin de faciliter la lecture et la compréhension de ces lettres, nous avons
+                        également rétabli l'orthographe moderne. Les fautes d'accord, nombreuses, ne
+                        nous ont pas paru intéressantes à conserver, même pour une histoire de la
+                        langue.</p>
+                    <p>En revanche, nous avons maintenu l'orthographe, souvent évolutive, des noms
+                        propres. La particule, notamment, se promène, au gré des gouvernements :
+                        collée au patronyme pendant la période de la Terreur, parfois disparue, on
+                        la voit réapparaître et se distinguer lorsqu'il redevient avantageux
+                        d'afficher sa noblesse, comme sous l'Empire. D'une manière plus générale,
+                        les noms sont orthographiés comme on les entend, et selon une écriture
+                        parfois difficile à déchiffrer. Contrairement aux noms communs, le doute sur
+                        une lettre ne s'éclaircit pas à la lecture globale du mot. Une lettre entre
+                        un t et un e peut aussi bien être un h qu'un r, par exemple. Seule la
+                        répétition de ces noms propres permet, à la fin, de les identifier de
+                        manière certaine. 250 noms ont ainsi été identifiés (voir ici l'index
+                        complet des personnes citées), avec parfois plusieurs orthographes entre
+                        lesquelles nous n'avons pas souhaité trancher.</p>
+                    <p>Machi, qui aujourd'hui s'épèle Machy, n'est pas orthographié de la même
+                        manière par Antoine, qui emploie le i, que par les documents officiels de
+                        l'époque qui utilisent déjà le y. Nous n'avons rien rétabli, choisissant ici
+                        de privilégier la préférence du scripteur. </p>
+                </correction>
+                <segmentation>
+                    <!--décrit les principes selon lesquels le texte a été segmenté, par exemple en phrases, en strates graphématiques (niveaux superposés de signes graphiques), etc.-->
+                    <p>Les retours à la ligne n'ont pas été conservés. L'unité textuelle retenue est
+                        le paragraphe, marqué par les p.</p>
+                </segmentation>
+            </editorialDecl>
+        </encodingDesc>
+        <profileDesc>
+            <creation>
+                <date from="1787" to="1823">1787-1823</date>
+                <date when="2013-05-15">Année de la publication numérique : 15 mai 2013</date>
+            </creation>
+        </profileDesc>
+    </teiHeader>
+    <TEI xml:id="morand401">
+        <teiHeader>
+            <fileDesc>
+                <titleStmt>
+                    <title>Lettre d'Antoine à sa mère Antoinette, 28 mai 1787</title>
+                    <author key="Morand, Antoine (1760-1838)">Antoine Morand</author>
+                    <editor key="Verjus, Anne">Anne Verjus</editor>
+                    <editor key="Manchio, Corine">Corine Manchio</editor>
+                </titleStmt>
+                <publicationStmt>
+                    <publisher>Ecole Normale Supérieure de Lyon</publisher>
+                    <distributor>Archives Municipales de Lyon</distributor>
+                    <authority>Laboratoire Triangle</authority>
+                    <date when="2013">2013</date>
+                    <idno>http://morand.ens-lyon.fr/lettre/morand401</idno>
+                    <availability status="restricted">
+                        <licence target="http://creativecommons.org/licenses/by-nc-sa/2.0/fr/"/>
+                        <p>La correspondance est mise en ligne avec l’autorisation de la famille,
+                            conformément au document de prêt à usage. Les lettres ont été numérisées
+                            par Gilles Bernasconi, photographe des Archives municipales de Lyon.</p>
+                        <p>Les images des lettres mises en ligne issues du Fonds Morand peuvent être
+                            réutilisées sous certaines conditions. Bien qu’il n’y ait pas de
+                            propriété intellectuelle liée aux documents eux-mêmes, les conditions de
+                            réutilisation sont fixées par référence à un modèle de licence créative
+                            commons : attribution-pas d’utilisation commerciale-partage dans les
+                            mêmes conditions, qui respecte les modalités du prêt à usage</p>
+                        <p>Pas de réutilisation commerciale, respecter l’intégrité des informations
+                            et ne jamais en altérer le sens ni la portée, mentionner la légende
+                            complète à savoir la référence précise de l’image : Archives municipales
+                            de Lyon, fonds Morand, suivi des numéros.</p>
+                        <p>Il vous est également possible de nous envoyer un courrier postal à
+                            l'adresse suivante : Anne-Catherine Marin, Directrice des Archives
+                            Municipales de Lyon - 1, place des Archives - 69002 Lyon</p>
+                        <p>Conditions de réutilisation de la mise en valeur scientifique : Toute
+                            citation doit faire l’objet d’une introduction précisant le nom de
+                            l’auteur et l’adresse URL du site Roman des Morand. Les citations mises
+                            à part, le contenu de ce site ne peut être reproduit, diffusé et
+                            réutilisé sans accord préalable du responsable éditorial, Anne Verjus,
+                            chargée de recherche au CNRS, UMR 5206.</p>
+                        <p>Etablir un lien vers ce site : La mise en place de liens vers le site
+                            Roman des Morand, y compris "profonds", n’est conditionnée à aucun
+                            accord préalable. Seule la mention explicite du site dans l’intitulé du
+                            lien est souhaitée.</p>
+                        <p>Il vous est également possible de nous envoyer un courrier postal à l’une
+                            des adresses suivantes : Carole Boulai - ISH de Lyon - 14 avenue
+                            Berthelot, 69363 LYON cedex 07 ou Samantha Saïdi - ENS de Lyon, R 264 -
+                            15 parvis René Descartes - BP 7000, 69342 LYON Cedex 07</p>
+                    </availability>
+                </publicationStmt>
+                <sourceDesc>
+                    <msDesc>
+                        <msIdentifier>
+                            <country>France</country>
+                            <settlement>Lyon</settlement>
+                            <repository>Archives municipales de Lyon</repository>
+                            <collection>Fonds Morand de Jouffrey</collection>
+                            <idno>14 ii 35 2</idno>
+                        </msIdentifier>
+                    </msDesc>
+                </sourceDesc>
+            </fileDesc>
+            <profileDesc>
+                <langUsage>
+                    <language ident="fre"/>
+                </langUsage>
+                <creation>
+                    <date when="1787-05-28">28 mai 1787</date>
+                    <location>
+                        <placeName type="PlaceExp" ref="#pl001">Lyon</placeName>
+                        <geo>45.7589 4.84139</geo>
+                    </location>
+                    <persName type="expediteur" ref="#pers003">Antoine Morand</persName>
+                    <persName type="destinataire" ref="#pers004">Antoinette Morand</persName>
+                </creation>
+            </profileDesc>
+        </teiHeader>
+        <facsimile>
+            <graphic url="14II_35_2_1787_05_28_1.jpg"/>
+            <graphic url="14II_35_2_1787_05_28_2.jpg"/>
+        </facsimile>
+        <text>
+            <body>
+                <div1 type="letter">
+                    <opener>
+                        <address>
+                        <addrLine>Adresse ?</addrLine>
+                     </address>Lyon,
+                        ce 28 may à 10 heures du soir</opener>
+                    <p>
+                        <supplied>Naissance d'Olympe Bertrand de Besson, le 27 mai 1787.</supplied>
+                    </p>
+                    <p> <rs ref="#pers004">Ma chère maman</rs> , </p>
+                    <p>Je ne veux pas me coucher sans vous parler de la joie que votre lettre du 27
+                        a répandue dans la maison, nous avons tous appris avec transport l'heureuse
+                        délivrance de ma petite sœur maintenant petite maman, quelque naturels que
+                        soient ces moments on ne peut se défendre de certains mouvements de crainte,
+                        surtout quand on est éloigné et que comme moi l'on a assisté à une scène qui
+                        ne s'effacera jamais de ma mémoire.</p>
+                    <p>Nous voilà maintenant parfaitement tranquilles, et sur le compte de <rs
+                        ref="#pers018">ma sœur</rs> et sur le vôtre par conséquent, il me paraît
+                        qu'elle a été traitée bien doucement pour une première fois, qu'elle ne soit
+                        point fâchée du sexe de son enfant et qu'elle n'imagine pas que son mari
+                        doive l'être, je suis sûr que <rs ref="#pers350">Besson</rs> aimera sa fille
+                        de tout son cœur et comme moi, ne voudra pas la changer contre un garçon ;
+                        pour moi je suis tout fier d'avoir une petite nièce de mon sang et la petite
+                        <rs ref="#pers349">Olimpe</rs> me sera aussi chère dans la suite que l'<rs
+                        ref="#pers019">Eléonore</rs> qui m'a toujours tendrement aimé et à qui je le
+                        rends bien.</p>
+                    <p>Nous avons envoyé chez mon oncle qui comme il nous l'avait annoncé, ne
+                        s'informait pas du sexe de l'enfant mais seulement de la santé de la mère,
+                        il a été enchanté d'apprendre qu'elle était aussi bonne qu'elle peut l'être
+                        après une pareille secousse, je l'ai fait dire à <rs ref="#pers082">M. de
+                        Chambéry</rs> , je l'écrirai demain à Mme de Champvieux, et verrai <rs
+                        ref="#pers122">M. Dodieu</rs> . [...].</p>
+                    <p> <rs ref="#pers250">Ma bonne amie</rs> est dans la plus grande joie, elle
+                        embrasse et félicite bien sa sœur, elle la prie de donner de sa part à <rs
+                        ref="#pers349">la petite Olimpe</rs> un baiser bien tendre c'est-à-dire un
+                        baiser de mère ; <rs ref="#pers002">Albine</rs> aimera bien cette petite
+                        cousine, l'attachement des pères et mères est un sentiment constant qui sans
+                        diminuer se perpétuera et unira les enfants.</p>
+                    <p>Adieu <rs ref="#pers004">ma chère maman</rs> , je vais me coucher, mais bien
+                        plus content que je l'ai été depuis votre départ, je suis tranquille
+                        maintenant sur la santé de tout ce qui m'est cher et si mon sommeil est
+                        interrompu ce ne sera désormais que par des songes agréables.</p>
+                    <p>Ayez la bonté de nous donner exactement des nouvelles, de la santé de la
+                        nouvelle maman et croyez que le tendre attachement que j'ai pour la mienne
+                        est toujours pour moi un sentiment délicieux. Je suis avec respect, <rs
+                        ref="#pers004">chère maman</rs> , votre très humble et très obéissant
+                        serviteur et fils. Morand de Jouffrey. </p>
+                </div1>
+            </body>
+            <back>
+                <div type="notes"/>
+            </back>
+        </text>
+    </TEI>
+    <TEI xml:id="morand402">
+        <teiHeader>
+            <fileDesc>
+                <titleStmt>
+                    <title>Lettre d'Antoine à sa mère, Antoinette, Non daté, 1794</title>
+                    <author key="Morand, Antoine (1760-1838)">Antoine Morand</author>
+                    <editor key="Verjus, Anne">Anne Verjus</editor>
+                    <editor key="Manchio, Corine">Corine Manchio</editor>
+                </titleStmt>
+                <publicationStmt>
+                    <publisher>Ecole Normale Supérieure de Lyon</publisher>
+                    <distributor>Archives Municipales de Lyon</distributor>
+                    <authority>Laboratoire Triangle</authority>
+                    <date when="2013">2013</date>
+                    <idno>http://morand.ens-lyon.fr/lettre/morand402</idno>
+                    <availability status="restricted">
+                        <licence target="http://creativecommons.org/licenses/by-nc-sa/2.0/fr/"/>
+                        <p>La correspondance est mise en ligne avec l’autorisation de la famille,
+                            conformément au document de prêt à usage. Les lettres ont été numérisées
+                            par Gilles Bernasconi, photographe des Archives municipales de Lyon.</p>
+                        <p>Les images des lettres mises en ligne issues du Fonds Morand peuvent être
+                            réutilisées sous certaines conditions. Bien qu’il n’y ait pas de
+                            propriété intellectuelle liée aux documents eux-mêmes, les conditions de
+                            réutilisation sont fixées par référence à un modèle de licence créative
+                            commons : attribution-pas d’utilisation commerciale-partage dans les
+                            mêmes conditions, qui respecte les modalités du prêt à usage</p>
+                        <p>Pas de réutilisation commerciale, respecter l’intégrité des informations
+                            et ne jamais en altérer le sens ni la portée, mentionner la légende
+                            complète à savoir la référence précise de l’image : Archives municipales
+                            de Lyon, fonds Morand, suivi des numéros.</p>
+                        <p>Il vous est également possible de nous envoyer un courrier postal à
+                            l'adresse suivante : Anne-Catherine Marin, Directrice des Archives
+                            Municipales de Lyon - 1, place des Archives - 69002 Lyon</p>
+                        <p>Conditions de réutilisation de la mise en valeur scientifique : Toute
+                            citation doit faire l’objet d’une introduction précisant le nom de
+                            l’auteur et l’adresse URL du site Roman des Morand. Les citations mises
+                            à part, le contenu de ce site ne peut être reproduit, diffusé et
+                            réutilisé sans accord préalable du responsable éditorial, Anne Verjus,
+                            chargée de recherche au CNRS, UMR 5206.</p>
+                        <p>Etablir un lien vers ce site : La mise en place de liens vers le site
+                            Roman des Morand, y compris "profonds", n’est conditionnée à aucun
+                            accord préalable. Seule la mention explicite du site dans l’intitulé du
+                            lien est souhaitée.</p>
+                        <p>Il vous est également possible de nous envoyer un courrier postal à l’une
+                            des adresses suivantes : Carole Boulai - ISH de Lyon - 14 avenue
+                            Berthelot, 69363 LYON cedex 07 ou Samantha Saïdi - ENS de Lyon, R 264 -
+                            15 parvis René Descartes - BP 7000, 69342 LYON Cedex 07</p>
+                    </availability>
+                </publicationStmt>
+                <sourceDesc>
+                    <msDesc>
+                        <msIdentifier>
+                            <country>France</country>
+                            <settlement>Lyon</settlement>
+                            <repository>Archives municipales de Lyon</repository>
+                            <collection>Fonds Morand de Jouffrey</collection>
+                            <idno>14 ii 35 2</idno>
+                        </msIdentifier>
+                    </msDesc>
+                </sourceDesc>
+            </fileDesc>
+            <profileDesc>
+                <langUsage>
+                    <language ident="fre"/>
+                </langUsage>
+                <creation>
+                    <date when="1794-12-31">Non daté, 1794</date>
+                    <location>
+                        <placeName type="PlaceExp" ref="#pl000">Lieu d’écriture inconnu</placeName>
+                        <geo/>
+                    </location>
+                    <persName type="expediteur" ref="#pers003">Antoine Morand</persName>
+                    <persName type="destinataire" ref="#pers004">Antoinette Morand</persName>
+                </creation>
+            </profileDesc>
+        </teiHeader>
+        <facsimile>
+            <graphic url="14II_35_2_1794_12_31_0.jpg"/>
+        </facsimile>
+        <text>
+            <body>
+                <div1 type="letter">
+                    <opener>
+                        <address>
+                        <addrLine>Sans adresse</addrLine>
+                     </address>
+                    </opener>
+                    <p>
+                        <supplied>Sur papier vert d'eau, de 10 cm sur 15 à peu près</supplied>
+                    </p>
+                    <p>Billet pour ma mère</p>
+                    <p>Conservez <rs ref="#pers004">chère et tendre mère</rs> , des jours si
+                        précieux à vos enfants ; que les soins d'une <rs ref="#pers250">fille</rs> ,
+                        la société d'une bonne sœur et les caresses de vos petits-enfants – quand
+                        vous pourriez vous rapprocher d'eux, vous attachent encore à la vie. Que ne
+                        puis-je mêler mes pleurs aux vôtres, et me livrer avec vous à la douleur
+                        qu'il faut que j'étouffe en ce moment pour conserver ma tête. Mais ce trait
+                        inattendu est entré trop profond pour pouvoir l'arracher jamais. Adieu <rs
+                        ref="#pers004">ma tendre mère</rs> , sois sans inquiétude sur mon compte,
+                        vis pour continuer de m'aimer, et sois bien persuadée que jamais je n'ai
+                        cessé de te chérir et que ma tendresse durera autant que moi. Adieu adieu.
+                    </p>
+                </div1>
+            </body>
+            <back>
+                <div type="notes"/>
+            </back>
+        </text>
+    </TEI>
+    <TEI xml:id="morand403">
+        <teiHeader>
+            <fileDesc>
+                <titleStmt>
+                    <title>Lettre d'Antoine à sa mère Antoinette, 13 avril 1794</title>
+                    <author key="Morand, Antoine (1760-1838)">Antoine Morand</author>
+                    <editor key="Verjus, Anne">Anne Verjus</editor>
+                    <editor key="Manchio, Corine">Corine Manchio</editor>
+                </titleStmt>
+                <publicationStmt>
+                    <publisher>Ecole Normale Supérieure de Lyon</publisher>
+                    <distributor>Archives Municipales de Lyon</distributor>
+                    <authority>Laboratoire Triangle</authority>
+                    <date when="2013">2013</date>
+                    <idno>http://morand.ens-lyon.fr/lettre/morand403</idno>
+                    <availability status="restricted">
+                        <licence target="http://creativecommons.org/licenses/by-nc-sa/2.0/fr/"/>
+                        <p>La correspondance est mise en ligne avec l’autorisation de la famille,
+                            conformément au document de prêt à usage. Les lettres ont été numérisées
+                            par Gilles Bernasconi, photographe des Archives municipales de Lyon.</p>
+                        <p>Les images des lettres mises en ligne issues du Fonds Morand peuvent être
+                            réutilisées sous certaines conditions. Bien qu’il n’y ait pas de
+                            propriété intellectuelle liée aux documents eux-mêmes, les conditions de
+                            réutilisation sont fixées par référence à un modèle de licence créative
+                            commons : attribution-pas d’utilisation commerciale-partage dans les
+                            mêmes conditions, qui respecte les modalités du prêt à usage</p>
+                        <p>Pas de réutilisation commerciale, respecter l’intégrité des informations
+                            et ne jamais en altérer le sens ni la portée, mentionner la légende
+                            complète à savoir la référence précise de l’image : Archives municipales
+                            de Lyon, fonds Morand, suivi des numéros.</p>
+                        <p>Il vous est également possible de nous envoyer un courrier postal à
+                            l'adresse suivante : Anne-Catherine Marin, Directrice des Archives
+                            Municipales de Lyon - 1, place des Archives - 69002 Lyon</p>
+                        <p>Conditions de réutilisation de la mise en valeur scientifique : Toute
+                            citation doit faire l’objet d’une introduction précisant le nom de
+                            l’auteur et l’adresse URL du site Roman des Morand. Les citations mises
+                            à part, le contenu de ce site ne peut être reproduit, diffusé et
+                            réutilisé sans accord préalable du responsable éditorial, Anne Verjus,
+                            chargée de recherche au CNRS, UMR 5206.</p>
+                        <p>Etablir un lien vers ce site : La mise en place de liens vers le site
+                            Roman des Morand, y compris "profonds", n’est conditionnée à aucun
+                            accord préalable. Seule la mention explicite du site dans l’intitulé du
+                            lien est souhaitée.</p>
+                        <p>Il vous est également possible de nous envoyer un courrier postal à l’une
+                            des adresses suivantes : Carole Boulai - ISH de Lyon - 14 avenue
+                            Berthelot, 69363 LYON cedex 07 ou Samantha Saïdi - ENS de Lyon, R 264 -
+                            15 parvis René Descartes - BP 7000, 69342 LYON Cedex 07</p>
+                    </availability>
+                </publicationStmt>
+                <sourceDesc>
+                    <msDesc>
+                        <msIdentifier>
+                            <country>France</country>
+                            <settlement>Lyon</settlement>
+                            <repository>Archives municipales de Lyon</repository>
+                            <collection>Fonds Morand de Jouffrey</collection>
+                            <idno>14 ii 35 2/ Lettres de mon fils écrites de Briançon à l'époque de
+                                mon malheur.</idno>
+                        </msIdentifier>
+                    </msDesc>
+                </sourceDesc>
+            </fileDesc>
+            <profileDesc>
+                <langUsage>
+                    <language ident="fre"/>
+                </langUsage>
+                <creation>
+                    <date when="1794-04-13">13 avril 1794</date>
+                    <location>
+                        <placeName type="PlaceExp" ref="#pl005">Briançon</placeName>
+                        <geo>44.8958 6.635</geo>
+                    </location>
+                    <persName type="expediteur" ref="#pers003">Antoine Morand</persName>
+                    <persName type="destinataire" ref="#pers004">Antoinette Morand</persName>
+                </creation>
+            </profileDesc>
+        </teiHeader>
+        <facsimile>
+            <graphic url="14II_35_2_1794_04_13_1.jpg"/>
+            <graphic url="14II_35_2_1794_04_13_2.jpg"/>
+        </facsimile>
+        <text>
+            <body>
+                <div1 type="letter">
+                    <opener>
+                        <address>
+                        <addrLine>Sans adresse</addrLine>
+                     </address>Le
+                        24 germinal l'an 2 de la République française une et indivisible</opener>
+                    <p>
+                        <supplied>Exilé, recherché, Antoine se fait passer pour un ami de la famille
+                            qui aurait rencontré «ant. » et dont il donnerait des nouvelles à sa
+                            mère.</supplied>
+                    </p>
+                    <p>A <rs ref="#pers004">la Bonne maman d'Albine</rs> </p>
+                    <p>Je ne peux <rs ref="#pers004">ma chère amie</rs> expliquer mon silence auprès
+                        de vous, car je ne cesse cependant de penser à votre cruelle position et
+                        quoique je fasse pour éloigner de mon esprit cette terrible idée sans cesse
+                        elle me poursuit ; si j'étais près de vous et au milieu de nos amis communs,
+                        je ne craindrais point d'entretenir ma douleur en partageant la vôtre, mais
+                        j'avoue qu'isolé comme je le suis j'ai de la peine à la supporter, elle
+                        égare le peu de raison que j'ai et fait naître chez moi des instants de
+                        violence qui, dans tout autre pays, pourraient me compromettre ; je n'ai
+                        vraiment d'autre ressources que de chercher à m'étourdir et j'y réussis
+                        quelquefois. </p>
+                    <p>Il m'est impossible de relire votre première lettre, mais je la garde et la
+                        relirai quand ma raison sera devenue la plus forte, ah <rs ref="#pers004"
+                        >digne amie</rs> on est bien tenté de murmurer contre les inexplicables
+                        décrets de la Providence quand on voit un sort aussi affreux réservé à tant
+                        de vertus, quand on voit <rs ref="#pers029">un bon père de famille</rs>
+                        terminer ainsi une carrière aussi laborieuse ; quand on voit <rs
+                        ref="#pers004">une bonne mère</rs> , <rs ref="#pers004">une tendre
+                        épouse</rs> , livrée pour toujours à la douleur pour prix de ses peines et
+                        de ses vertus. En vérité ces réflexions sont déchirantes, quelquefois elles
+                        m'attendrissent, mais le plus souvent elles égarent ma raison et me rendent
+                        injuste vis à vis de l'être suprême dont il n'appartient pas à des êtres
+                        faibles d'expliquer les immuables volontés. Je le sens <rs ref="#pers004">ma
+                        bien bonne amie</rs> , ce n'est que par le secours de la religion et de la
+                        Morale que vous pourrez trouver des forces pour soutenir votre existence, et
+                        sans doute l'espoir de vous retrouver quelque jour au milieu d'enfants qui
+                        vous chérissent et qui travaillent à adoucir vos maux en les partageant,
+                        doit contribuer aussi à soutenir votre courage ; combien ne devront-ils pas
+                        tous à <rs ref="#pers008">la chère amie</rs> qui dans ce moment vous est
+                        envoyée pour consolation et dont l'esprit et le bon cœur vous sont d'une si
+                        grande ressource, je l'embrasse bien tendrement, je connaissais son
+                        attachement pour le meilleur de <rs ref="#pers029">mes amis</rs> , pour <rs
+                        ref="#pers029">mon seul ami</rs> , et je juge bien de son affliction…</p>
+                    <p>J'ai fait part à <rs ref="#pers003">ant.</rs> de tout ce que vous me dites de
+                        <rs ref="#pers004">sa Mère</rs> et des affaires qui peuvent l'intéresser ;
+                        il s'en rapporte absolument à tout ce qu'elle croira devoir faire pour leurs
+                        intérêts communs. </p>
+                    <p>Dans quelles mains peuvent-ils être mieux, m'a-t-il dit, <rs ref="#pers004"
+                        >cette bonne mère</rs> n'a jamais travaillé que pour ses enfants et sûrement
+                        elle ne négligera pas les moyens de conserver une partie de son ouvrage si
+                        toutefois cela est possible. Car <rs ref="#pers003">ant.</rs> pense comme
+                        moi il désire seulement que <rs ref="#pers004">sa tendre et bonne mère</rs>
+                        puisse conserver de quoi vivre bien libre et bien indépendante, c'est là ce
+                        qui l'occupe essentiellement, et s'il est vrai que certain acte ne soit pas
+                        anéanti cela peut lui en fournir de nouveaux moyens et comme il n'y avait
+                        point, autant qu'il le croit, d'exception pour le mobilier il fait également
+                        partie de l'héritage et doit par conséquent rester à <rs ref="#pers004">sa
+                        mère</rs> , <rs ref="#pers003">Antoine</rs> , comme elle, y tient beaucoup ;
+                        tout ce qui pourra entretenir sa douleur lorsqu'il sera dans sa famille et
+                        faire chérir et respecter à ses enfants la mémoire de <rs ref="#pers029"
+                        >leur infortuné grand-père</rs> sera toujours précieux à son cœur.</p>
+                    <p>Je n'avais pas besoin de nouvelles preuves de l'attachement de <rs
+                        ref="#pers250">Mion</rs> mais ce qui m'étonne c'est le courage et la
+                        présence d'esprit avec laquelle elle travaille pour moi, de tous les
+                        sacrifices qu'elle fait à ma tranquillité, celui qui lui doit coûter le plus
+                        est sans contredit l'obligation où elle se trouve de vivre dans un
+                        tourbillon et entourée de gens qui… j'imagine <damage/> <rs ref="#pers004">
+                        chère amie</rs> que vous vous entendez ensemble sur les démarches <damage/>
+                        et qu'une fois qu'elle aura assuré la tranquillité de quelqu<damage/> pourra
+                        défendre vos droits et assurer vos jouissances en faisant valoir ceux de
+                        cette personne, mais il faut pour cela que son innocence et son civisme
+                        aient été au paravant bien reconnus. </p>
+                    <p>Je serai fâché que vous vous décidiez à aller loger de l'autre côté de l'eau
+                        quand l'âme est dans la tristesse, il ne faut pas habiter un local triste,
+                        mais je sens bien que vous n'avez pas besoin d'un appartement aussi grand et
+                        que d'ailleurs vous devez désirer en changer. Au reste quelque parti que
+                        vous preniez, j'espère que vous passerez une partie de l'année à la
+                        campagne. Embrassez bien vos petits-enfants pour moi, ils ne peuvent
+                        partager encore vos chagrins mais leurs caresses peuvent cependant les
+                        adoucir [...].</p>
+                    <p>Vous voudrez bien remettre vos lettres à <rs ref="#pers250">Mion</rs> , la
+                        lettre qu'elle me faisait passer était si importante, que c'est là sans
+                        doute ce qui lui a fait craindre d'y insérer la vôtre. Ce sera pour moi une
+                        grande satisfaction que de recevoir de vos nouvelles, et vous donner des
+                        miennes, mais elle doit être un peu rare jusqu'à ce que tout l'ouvrage de
+                        <rs ref="#pers250">Mion</rs> ait pris une entière consistance.</p>
+                </div1>
+            </body>
+            <back>
+                <div type="notes">
+                    <note n="01" anchored="true"> Il s'agit d'aller loger soit sur les bords de la
+                        Saône, soit sur les bords du Rhône, ce qui était considéré comme une forme
+                        d'exil par l'aristocratie habituée à se loger sur la presqu'île et en
+                        particulier autour de la place Bellecour.</note>
+                </div>
+            </back>
+        </text>
+    </TEI>
+    <TEI xml:id="morand404">
+        <teiHeader>
+            <fileDesc>
+                <titleStmt>
+                    <title>Lettre d'Antoine à son épouse Magdeleine, 15 octobre 1793</title>
+                    <author key="Morand, Antoine (1760-1838)">Antoine Morand</author>
+                    <editor key="Verjus, Anne">Anne Verjus</editor>
+                    <editor key="Manchio, Corine">Corine Manchio</editor>
+                </titleStmt>
+                <publicationStmt>
+                    <publisher>Ecole Normale Supérieure de Lyon</publisher>
+                    <distributor>Archives Municipales de Lyon</distributor>
+                    <authority>Laboratoire Triangle</authority>
+                    <date when="2013">2013</date>
+                    <idno>http://morand.ens-lyon.fr/lettre/morand404</idno>
+                    <availability status="restricted">
+                        <licence target="http://creativecommons.org/licenses/by-nc-sa/2.0/fr/"/>
+                        <p>La correspondance est mise en ligne avec l’autorisation de la famille,
+                            conformément au document de prêt à usage. Les lettres ont été numérisées
+                            par Gilles Bernasconi, photographe des Archives municipales de Lyon.</p>
+                        <p>Les images des lettres mises en ligne issues du Fonds Morand peuvent être
+                            réutilisées sous certaines conditions. Bien qu’il n’y ait pas de
+                            propriété intellectuelle liée aux documents eux-mêmes, les conditions de
+                            réutilisation sont fixées par référence à un modèle de licence créative
+                            commons : attribution-pas d’utilisation commerciale-partage dans les
+                            mêmes conditions, qui respecte les modalités du prêt à usage</p>
+                        <p>Pas de réutilisation commerciale, respecter l’intégrité des informations
+                            et ne jamais en altérer le sens ni la portée, mentionner la légende
+                            complète à savoir la référence précise de l’image : Archives municipales
+                            de Lyon, fonds Morand, suivi des numéros.</p>
+                        <p>Il vous est également possible de nous envoyer un courrier postal à
+                            l'adresse suivante : Anne-Catherine Marin, Directrice des Archives
+                            Municipales de Lyon - 1, place des Archives - 69002 Lyon</p>
+                        <p>Conditions de réutilisation de la mise en valeur scientifique : Toute
+                            citation doit faire l’objet d’une introduction précisant le nom de
+                            l’auteur et l’adresse URL du site Roman des Morand. Les citations mises
+                            à part, le contenu de ce site ne peut être reproduit, diffusé et
+                            réutilisé sans accord préalable du responsable éditorial, Anne Verjus,
+                            chargée de recherche au CNRS, UMR 5206.</p>
+                        <p>Etablir un lien vers ce site : La mise en place de liens vers le site
+                            Roman des Morand, y compris "profonds", n’est conditionnée à aucun
+                            accord préalable. Seule la mention explicite du site dans l’intitulé du
+                            lien est souhaitée.</p>
+                        <p>Il vous est également possible de nous envoyer un courrier postal à l’une
+                            des adresses suivantes : Carole Boulai - ISH de Lyon - 14 avenue
+                            Berthelot, 69363 LYON cedex 07 ou Samantha Saïdi - ENS de Lyon, R 264 -
+                            15 parvis René Descartes - BP 7000, 69342 LYON Cedex 07</p>
+                    </availability>
+                </publicationStmt>
+                <sourceDesc>
+                    <msDesc>
+                        <msIdentifier>
+                            <country>France</country>
+                            <settlement>Lyon</settlement>
+                            <repository>Archives municipales de Lyon</repository>
+                            <collection>Fonds Morand de Jouffrey</collection>
+                            <idno>14 ii 35 3 004</idno>
+                        </msIdentifier>
+                    </msDesc>
+                </sourceDesc>
+            </fileDesc>
+            <profileDesc>
+                <langUsage>
+                    <language ident="fre"/>
+                </langUsage>
+                <creation>
+                    <date when="1793-10-15">15 octobre 1793</date>
+                    <location>
+                        <placeName type="PlaceExp" ref="#pl002">Grenoble</placeName>
+                        <geo>45.1869 5.72639</geo>
+                    </location>
+                    <persName type="expediteur" ref="#pers003">Antoine Morand</persName>
+                    <persName type="destinataire" ref="#pers250">Magdeleine Morand</persName>
+                </creation>
+            </profileDesc>
+        </teiHeader>
+        <facsimile>
+            <graphic url="14II_035_3_004_1.jpg"/>
+            <graphic url="14II_035_3_004_2.jpg"/>
+            <graphic url=""/>
+            <graphic url=""/>
+        </facsimile>
+        <text>
+            <body>
+                <div1 type="letter">
+                    <opener>
+                        <address>
+                        <addrLine>A la citoyenne Morand rue Chalier Saint-Dominique à Lyon.</addrLine>
+                     </address>
+                    </opener>
+                </div1>
+            </body>
+            <back>
+                <div type="notes"/>
+            </back>
+        </text>
+    </TEI>
+    <TEI xml:id="morand405">
+        <teiHeader>
+            <fileDesc>
+                <titleStmt>
+                    <title>Lettre d'Antoine à son épouse Magdeleine, 28 octobre 1793</title>
+                    <author key="Morand, Antoine (1760-1838)">Antoine Morand</author>
+                    <editor key="Verjus, Anne">Anne Verjus</editor>
+                    <editor key="Manchio, Corine">Corine Manchio</editor>
+                </titleStmt>
+                <publicationStmt>
+                    <publisher>Ecole Normale Supérieure de Lyon</publisher>
+                    <distributor>Archives Municipales de Lyon</distributor>
+                    <authority>Laboratoire Triangle</authority>
+                    <date when="2013">2013</date>
+                    <idno>http://morand.ens-lyon.fr/lettre/morand405</idno>
+                    <availability status="restricted">
+                        <licence target="http://creativecommons.org/licenses/by-nc-sa/2.0/fr/"/>
+                        <p>La correspondance est mise en ligne avec l’autorisation de la famille,
+                            conformément au document de prêt à usage. Les lettres ont été numérisées
+                            par Gilles Bernasconi, photographe des Archives municipales de Lyon.</p>
+                        <p>Les images des lettres mises en ligne issues du Fonds Morand peuvent être
+                            réutilisées sous certaines conditions. Bien qu’il n’y ait pas de
+                            propriété intellectuelle liée aux documents eux-mêmes, les conditions de
+                            réutilisation sont fixées par référence à un modèle de licence créative
+                            commons : attribution-pas d’utilisation commerciale-partage dans les
+                            mêmes conditions, qui respecte les modalités du prêt à usage</p>
+                        <p>Pas de réutilisation commerciale, respecter l’intégrité des informations
+                            et ne jamais en altérer le sens ni la portée, mentionner la légende
+                            complète à savoir la référence précise de l’image : Archives municipales
+                            de Lyon, fonds Morand, suivi des numéros.</p>
+                        <p>Il vous est également possible de nous envoyer un courrier postal à
+                            l'adresse suivante : Anne-Catherine Marin, Directrice des Archives
+                            Municipales de Lyon - 1, place des Archives - 69002 Lyon</p>
+                        <p>Conditions de réutilisation de la mise en valeur scientifique : Toute
+                            citation doit faire l’objet d’une introduction précisant le nom de
+                            l’auteur et l’adresse URL du site Roman des Morand. Les citations mises
+                            à part, le contenu de ce site ne peut être reproduit, diffusé et
+                            réutilisé sans accord préalable du responsable éditorial, Anne Verjus,
+                            chargée de recherche au CNRS, UMR 5206.</p>
+                        <p>Etablir un lien vers ce site : La mise en place de liens vers le site
+                            Roman des Morand, y compris "profonds", n’est conditionnée à aucun
+                            accord préalable. Seule la mention explicite du site dans l’intitulé du
+                            lien est souhaitée.</p>
+                        <p>Il vous est également possible de nous envoyer un courrier postal à l’une
+                            des adresses suivantes : Carole Boulai - ISH de Lyon - 14 avenue
+                            Berthelot, 69363 LYON cedex 07 ou Samantha Saïdi - ENS de Lyon, R 264 -
+                            15 parvis René Descartes - BP 7000, 69342 LYON Cedex 07</p>
+                    </availability>
+                </publicationStmt>
+                <sourceDesc>
+                    <msDesc>
+                        <msIdentifier>
+                            <country>France</country>
+                            <settlement>Lyon</settlement>
+                            <repository>Archives municipales de Lyon</repository>
+                            <collection>Fonds Morand de Jouffrey</collection>
+                            <idno>14 ii 35 3 005</idno>
+                        </msIdentifier>
+                    </msDesc>
+                </sourceDesc>
+            </fileDesc>
+            <profileDesc>
+                <langUsage>
+                    <language ident="fre"/>
+                </langUsage>
+                <creation>
+                    <date when="1793-10-28">28 octobre 1793</date>
+                    <location>
+                        <placeName type="PlaceExp" ref="#pl000">Lieu d’écriture inconnu</placeName>
+                        <geo/>
+                    </location>
+                    <persName type="expediteur" ref="#pers003">Antoine Morand</persName>
+                    <persName type="destinataire" ref="#pers250">Magdeleine Morand</persName>
+                </creation>
+            </profileDesc>
+        </teiHeader>
+        <facsimile>
+            <graphic url="14II_035_3_005_1.jpg"/>
+            <graphic url="14II_035_3_005_2.jpg"/>
+            <graphic url=""/>
+            <graphic url=""/>
+        </facsimile>
+        <text>
+            <body>
+                <div1 type="letter">
+                    <opener>
+                        <address>
+                        <addrLine>A la citoyenne Morand</addrLine>
+                     </address>
+                    </opener>
+                    <p>J'avais eu le plaisir chère amie de t'écrire il y a quelques jours [...].</p>
+                </div1>
+            </body>
+            <back>
+                <div type="notes"/>
+            </back>
+        </text>
+    </TEI>
+    <TEI xml:id="morand406">
+        <teiHeader>
+            <fileDesc>
+                <titleStmt>
+                    <title>Lettre d'Antoine à son épouse Magdeleine, 21 juin 1794</title>
+                    <author key="Morand, Antoine (1760-1838)">Antoine Morand</author>
+                    <editor key="Verjus, Anne">Anne Verjus</editor>
+                    <editor key="Manchio, Corine">Corine Manchio</editor>
+                </titleStmt>
+                <publicationStmt>
+                    <publisher>Ecole Normale Supérieure de Lyon</publisher>
+                    <distributor>Archives Municipales de Lyon</distributor>
+                    <authority>Laboratoire Triangle</authority>
+                    <date when="2013">2013</date>
+                    <idno>http://morand.ens-lyon.fr/lettre/morand406</idno>
+                    <availability status="restricted">
+                        <licence target="http://creativecommons.org/licenses/by-nc-sa/2.0/fr/"/>
+                        <p>La correspondance est mise en ligne avec l’autorisation de la famille,
+                            conformément au document de prêt à usage. Les lettres ont été numérisées
+                            par Gilles Bernasconi, photographe des Archives municipales de Lyon.</p>
+                        <p>Les images des lettres mises en ligne issues du Fonds Morand peuvent être
+                            réutilisées sous certaines conditions. Bien qu’il n’y ait pas de
+                            propriété intellectuelle liée aux documents eux-mêmes, les conditions de
+                            réutilisation sont fixées par référence à un modèle de licence créative
+                            commons : attribution-pas d’utilisation commerciale-partage dans les
+                            mêmes conditions, qui respecte les modalités du prêt à usage</p>
+                        <p>Pas de réutilisation commerciale, respecter l’intégrité des informations
+                            et ne jamais en altérer le sens ni la portée, mentionner la légende
+                            complète à savoir la référence précise de l’image : Archives municipales
+                            de Lyon, fonds Morand, suivi des numéros.</p>
+                        <p>Il vous est également possible de nous envoyer un courrier postal à
+                            l'adresse suivante : Anne-Catherine Marin, Directrice des Archives
+                            Municipales de Lyon - 1, place des Archives - 69002 Lyon</p>
+                        <p>Conditions de réutilisation de la mise en valeur scientifique : Toute
+                            citation doit faire l’objet d’une introduction précisant le nom de
+                            l’auteur et l’adresse URL du site Roman des Morand. Les citations mises
+                            à part, le contenu de ce site ne peut être reproduit, diffusé et
+                            réutilisé sans accord préalable du responsable éditorial, Anne Verjus,
+                            chargée de recherche au CNRS, UMR 5206.</p>
+                        <p>Etablir un lien vers ce site : La mise en place de liens vers le site
+                            Roman des Morand, y compris "profonds", n’est conditionnée à aucun
+                            accord préalable. Seule la mention explicite du site dans l’intitulé du
+                            lien est souhaitée.</p>
+                        <p>Il vous est également possible de nous envoyer un courrier postal à l’une
+                            des adresses suivantes : Carole Boulai - ISH de Lyon - 14 avenue
+                            Berthelot, 69363 LYON cedex 07 ou Samantha Saïdi - ENS de Lyon, R 264 -
+                            15 parvis René Descartes - BP 7000, 69342 LYON Cedex 07</p>
+                    </availability>
+                </publicationStmt>
+                <sourceDesc>
+                    <msDesc>
+                        <msIdentifier>
+                            <country>France</country>
+                            <settlement>Lyon</settlement>
+                            <repository>Archives municipales de Lyon</repository>
+                            <collection>Fonds Morand de Jouffrey</collection>
+                            <idno>14 ii 35 3 006</idno>
+                        </msIdentifier>
+                    </msDesc>
+                </sourceDesc>
+            </fileDesc>
+            <profileDesc>
+                <langUsage>
+                    <language ident="fre"/>
+                </langUsage>
+                <creation>
+                    <date when="1794-06-21">21 juin 1794</date>
+                    <location>
+                        <placeName type="PlaceExp" ref="#pl000">Lieu d’écriture inconnu</placeName>
+                        <geo/>
+                    </location>
+                    <persName type="expediteur" ref="#pers003">Antoine Morand</persName>
+                    <persName type="destinataire" ref="#pers250">Magdeleine Morand</persName>
+                </creation>
+            </profileDesc>
+        </teiHeader>
+        <facsimile>
+            <graphic url="14II_035_3_006_1.jpg"/>
+            <graphic url="14II_035_3_006_2.jpg"/>
+            <graphic url=""/>
+            <graphic url=""/>
+        </facsimile>
+        <text>
+            <body>
+                <div1 type="letter">
+                    <opener>
+                        <address>
+                        <addrLine>A la citoyenne Morand rue Chalier cy devant rue Saint-Dominique,
+            n°66, à ville Affranchie.</addrLine>
+                     </address>Ce
+                        3 messidor</opener>
+                    <p>Que ta lettre <rs ref="#pers250">chère amie </rs> du 23 me fait plaisir, elle
+                        est charmante, je la trouve des plus précieuses, juge de mon bonheur tu m'y
+                        permets de te tutoyer ha garde toi de te raviser, voilà qui est fait et pour
+                        toujours ; comment il est vrai que ma lettre t'a fait plaisir [...] ho <rs
+                        ref="#pers250">chère amie</rs> si le fond de mon cœur t'était connu, que
+                        dirais-tu, si tu savais que <rs ref="#pers250">mon amie</rs> occupe une bien
+                        grande place dans mon cœur ; souvent je gémis de t'obliger à recourir à une
+                        plume pour t'exprimer mes sentiments, mais que veux-tu il faut prendre
+                        patience ma mère m'a toujours dit que les femmes ne faisaient jamais leurs
+                        volontés ; elle avait ma foi bien raison, je croyais que c'était un dicton
+                        de mère mais je vois bien qu'elle en savait plus que moi, que j'ai de grâce
+                        à lui rendre elle m'a donné tant et tant de bons principes, que je suis
+                        heureux d'en avoir profité, oh comme je m'en trouve bien oui chère amie il
+                        faut que tu saches que depuis que je ne suis plus sous la tutelle de cette
+                        digne citoyenne, j'ai bien eu mes peines, et parfois du plaisir, mais ce
+                        dernier est toujours semé en si petite quantité, qu'on ne recueille presque
+                        jamais que la peine ; et cela en abondance ; mais j'ai, grâce à tous ceux
+                        qui m'ont donné l'éducation, un peu de raison ; ce qui me donne bien de la
+                        force pour supporter les ennuits (sic) ; et puis cet être suprême qui nous
+                        connaissons tous ; fait faire bien des choses ; tu ne savais pas chère amie
+                        encore que je savais m'exprimer énergiquement, oh cela m'arrive parfois
+                        surtout suivant les personnes desquelles je parle. [...]</p>
+                </div1>
+            </body>
+            <back>
+                <div type="notes"/>
+            </back>
+        </text>
+    </TEI>
+    <TEI xml:id="morand407">
+        <teiHeader>
+            <fileDesc>
+                <titleStmt>
+                    <title>Lettre d'Antoine à son épouse Magdeleine, 24 juin 1794</title>
+                    <author key="Morand, Antoine (1760-1838)">Antoine Morand</author>
+                    <editor key="Verjus, Anne">Anne Verjus</editor>
+                    <editor key="Manchio, Corine">Corine Manchio</editor>
+                </titleStmt>
+                <publicationStmt>
+                    <publisher>Ecole Normale Supérieure de Lyon</publisher>
+                    <distributor>Archives Municipales de Lyon</distributor>
+                    <authority>Laboratoire Triangle</authority>
+                    <date when="2013">2013</date>
+                    <idno>http://morand.ens-lyon.fr/lettre/morand407</idno>
+                    <availability status="restricted">
+                        <licence target="http://creativecommons.org/licenses/by-nc-sa/2.0/fr/"/>
+                        <p>La correspondance est mise en ligne avec l’autorisation de la famille,
+                            conformément au document de prêt à usage. Les lettres ont été numérisées
+                            par Gilles Bernasconi, photographe des Archives municipales de Lyon.</p>
+                        <p>Les images des lettres mises en ligne issues du Fonds Morand peuvent être
+                            réutilisées sous certaines conditions. Bien qu’il n’y ait pas de
+                            propriété intellectuelle liée aux documents eux-mêmes, les conditions de
+                            réutilisation sont fixées par référence à un modèle de licence créative
+                            commons : attribution-pas d’utilisation commerciale-partage dans les
+                            mêmes conditions, qui respecte les modalités du prêt à usage</p>
+                        <p>Pas de réutilisation commerciale, respecter l’intégrité des informations
+                            et ne jamais en altérer le sens ni la portée, mentionner la légende
+                            complète à savoir la référence précise de l’image : Archives municipales
+                            de Lyon, fonds Morand, suivi des numéros.</p>
+                        <p>Il vous est également possible de nous envoyer un courrier postal à
+                            l'adresse suivante : Anne-Catherine Marin, Directrice des Archives
+                            Municipales de Lyon - 1, place des Archives - 69002 Lyon</p>
+                        <p>Conditions de réutilisation de la mise en valeur scientifique : Toute
+                            citation doit faire l’objet d’une introduction précisant le nom de
+                            l’auteur et l’adresse URL du site Roman des Morand. Les citations mises
+                            à part, le contenu de ce site ne peut être reproduit, diffusé et
+                            réutilisé sans accord préalable du responsable éditorial, Anne Verjus,
+                            chargée de recherche au CNRS, UMR 5206.</p>
+                        <p>Etablir un lien vers ce site : La mise en place de liens vers le site
+                            Roman des Morand, y compris "profonds", n’est conditionnée à aucun
+                            accord préalable. Seule la mention explicite du site dans l’intitulé du
+                            lien est souhaitée.</p>
+                        <p>Il vous est également possible de nous envoyer un courrier postal à l’une
+                            des adresses suivantes : Carole Boulai - ISH de Lyon - 14 avenue
+                            Berthelot, 69363 LYON cedex 07 ou Samantha Saïdi - ENS de Lyon, R 264 -
+                            15 parvis René Descartes - BP 7000, 69342 LYON Cedex 07</p>
+                    </availability>
+                </publicationStmt>
+                <sourceDesc>
+                    <msDesc>
+                        <msIdentifier>
+                            <country>France</country>
+                            <settlement>Lyon</settlement>
+                            <repository>Archives municipales de Lyon</repository>
+                            <collection>Fonds Morand de Jouffrey</collection>
+                            <idno>14 ii 35 3 007</idno>
+                        </msIdentifier>
+                    </msDesc>
+                </sourceDesc>
+            </fileDesc>
+            <profileDesc>
+                <langUsage>
+                    <language ident="fre"/>
+                </langUsage>
+                <creation>
+                    <date when="1794-06-24">24 juin 1794</date>
+                    <location>
+                        <placeName type="PlaceExp" ref="#pl016">Miralou</placeName>
+                        <geo/>
+                    </location>
+                    <persName type="expediteur" ref="#pers003">Antoine Morand</persName>
+                    <persName type="destinataire" ref="#pers250">Magdeleine Morand</persName>
+                </creation>
+            </profileDesc>
+        </teiHeader>
+        <facsimile>
+            <graphic url="14II_035_3_007_1.jpg"/>
+            <graphic url="14II_035_3_007_2.jpg"/>
+            <graphic url=""/>
+            <graphic url=""/>
+        </facsimile>
+        <text>
+            <body>
+                <div1 type="letter">
+                    <opener>
+                        <address>
+                        <addrLine>Adresse ?</addrLine>
+                     </address>Miralou
+                        ( ?) le 6 messidor l'an 2 de la République une, indivisible et
+                        démocratique</opener>
+                    <p>
+                        <supplied>Où Antoine apprend que Magdeleine a raison de se plaindre de la
+                            brièveté de ses lettres ; qu'elle a un peu maigri, que sa santé est
+                            bonne, que enfants se portent bien. Où l'on apprend qu'il se trouve
+                            « rond comme une boule ».</supplied>
+                    </p>
+                    <p>[...] Il me paraît que nos affaires sont à peu près terminées, je le souhaite
+                        bien pour que tu puisses jouir de quelque tranquillité, t'occuper de
+                        l'éducation de nos petits marmots et respirer avec eux le bon air de la
+                        campagne. </p>
+                    <p>L'instant viendra, où nos ennemis vaincus de toute part nous demanderont la
+                        paix, alors la République n'aura pas besoin de mes faibles services et je
+                        m'empresserai d'aller partager les vrais jouissances du paisible
+                        cultivateur. [...]</p>
+                    <p>
+                        <supplied>Où l'on apprend qu'ils ont reçu des témoignages d'amitié des
+                            habitants de Chasselay.</supplied>
+                    </p>
+                    <p>[...] un peu plus ou un peu moins de fortune ne fait pas le bonheur, mais
+                        l'amitié des braves gens fait la félicité des bons citoyens et si nous
+                        parvenons à la mériter, si nous apprenons à nos enfants à s'en rendre dignes
+                        un jour nous leur laisserons le plus précieux héritage. [...]</p>
+                    <p>Ce que tu me dis de <rs ref="#pers026">ton fils</rs> et de la bonté de son
+                        cœur, me fait grand plaisir, mais <rs ref="#pers250">ma chère amie</rs> , je
+                        ne saurais trop te répéter qu'il est très important de ne le pas gâter, de
+                        chercher à fortifier sa santé, à accoutumer de bonne heure son corps à la
+                        fatigue, enfin de lui donner une éducation républicaine et sévère qui le
+                        mette dans le genre auquel il sera le plus propre. </p>
+                    <p>Embrasse bien <rs ref="#pers002">ma chère Albine</rs> , ou je me trompe fort
+                        ou elle aura le courage, le cœur et les vertus de <rs ref="#pers250">sa
+                        mère</rs> . [...]</p>
+                    <p>Je suis pour la vie <rs ref="#pers003">ton tendre et ton ami</rs> .
+                        Morand</p>
+                </div1>
+            </body>
+            <back>
+                <div type="notes"/>
+            </back>
+        </text>
+    </TEI>
+    <TEI xml:id="morand408">
+        <teiHeader>
+            <fileDesc>
+                <titleStmt>
+                    <title>Lettre d'Antoine à sa mère Antoinette, 29 juin 1794</title>
+                    <author key="Morand, Antoine (1760-1838)">Antoine Morand</author>
+                    <editor key="Verjus, Anne">Anne Verjus</editor>
+                    <editor key="Manchio, Corine">Corine Manchio</editor>
+                </titleStmt>
+                <publicationStmt>
+                    <publisher>Ecole Normale Supérieure de Lyon</publisher>
+                    <distributor>Archives Municipales de Lyon</distributor>
+                    <authority>Laboratoire Triangle</authority>
+                    <date when="2013">2013</date>
+                    <idno>http://morand.ens-lyon.fr/lettre/morand408</idno>
+                    <availability status="restricted">
+                        <licence target="http://creativecommons.org/licenses/by-nc-sa/2.0/fr/"/>
+                        <p>La correspondance est mise en ligne avec l’autorisation de la famille,
+                            conformément au document de prêt à usage. Les lettres ont été numérisées
+                            par Gilles Bernasconi, photographe des Archives municipales de Lyon.</p>
+                        <p>Les images des lettres mises en ligne issues du Fonds Morand peuvent être
+                            réutilisées sous certaines conditions. Bien qu’il n’y ait pas de
+                            propriété intellectuelle liée aux documents eux-mêmes, les conditions de
+                            réutilisation sont fixées par référence à un modèle de licence créative
+                            commons : attribution-pas d’utilisation commerciale-partage dans les
+                            mêmes conditions, qui respecte les modalités du prêt à usage</p>
+                        <p>Pas de réutilisation commerciale, respecter l’intégrité des informations
+                            et ne jamais en altérer le sens ni la portée, mentionner la légende
+                            complète à savoir la référence précise de l’image : Archives municipales
+                            de Lyon, fonds Morand, suivi des numéros.</p>
+                        <p>Il vous est également possible de nous envoyer un courrier postal à
+                            l'adresse suivante : Anne-Catherine Marin, Directrice des Archives
+                            Municipales de Lyon - 1, place des Archives - 69002 Lyon</p>
+                        <p>Conditions de réutilisation de la mise en valeur scientifique : Toute
+                            citation doit faire l’objet d’une introduction précisant le nom de
+                            l’auteur et l’adresse URL du site Roman des Morand. Les citations mises
+                            à part, le contenu de ce site ne peut être reproduit, diffusé et
+                            réutilisé sans accord préalable du responsable éditorial, Anne Verjus,
+                            chargée de recherche au CNRS, UMR 5206.</p>
+                        <p>Etablir un lien vers ce site : La mise en place de liens vers le site
+                            Roman des Morand, y compris "profonds", n’est conditionnée à aucun
+                            accord préalable. Seule la mention explicite du site dans l’intitulé du
+                            lien est souhaitée.</p>
+                        <p>Il vous est également possible de nous envoyer un courrier postal à l’une
+                            des adresses suivantes : Carole Boulai - ISH de Lyon - 14 avenue
+                            Berthelot, 69363 LYON cedex 07 ou Samantha Saïdi - ENS de Lyon, R 264 -
+                            15 parvis René Descartes - BP 7000, 69342 LYON Cedex 07</p>
+                    </availability>
+                </publicationStmt>
+                <sourceDesc>
+                    <msDesc>
+                        <msIdentifier>
+                            <country>France</country>
+                            <settlement>Lyon</settlement>
+                            <repository>Archives municipales de Lyon</repository>
+                            <collection>Fonds Morand de Jouffrey</collection>
+                            <idno>14 ii 35 2</idno>
+                        </msIdentifier>
+                    </msDesc>
+                </sourceDesc>
+            </fileDesc>
+            <profileDesc>
+                <langUsage>
+                    <language ident="fre"/>
+                </langUsage>
+                <creation>
+                    <date when="1794-06-29">29 juin 1794</date>
+                    <location>
+                        <placeName type="PlaceExp" ref="#pl000">Lieu d’écriture inconnu</placeName>
+                        <geo/>
+                    </location>
+                    <persName type="expediteur" ref="#pers003">Antoine Morand</persName>
+                    <persName type="destinataire" ref="#pers000"/>
+                </creation>
+            </profileDesc>
+        </teiHeader>
+        <facsimile>
+            <graphic url="14II_35_2_1794_06_29_1.jpg"/>
+            <graphic url="14II_35_2_1794_06_29_2.jpg"/>
+        </facsimile>
+        <text>
+            <body>
+                <div1 type="letter">
+                    <opener>
+                        <address>
+                        <addrLine>Adresse ?</addrLine>
+                     </address>Le
+                        11 messidor, l'an deux de la République une et indivisible</opener>
+                    <p>
+                        <supplied>En juin 1794, Antoine est en exil à Briançon. Pour mettre sa mère
+                            à l'abri de tout soupçon, au cas où son courrier serait intercepté, il
+                            lui écrit comme si elle était un ami de la famille.</supplied>
+                    </p>
+                    <p>Au <rs ref="#pers004">bon ami d'Albine</rs> </p>
+                    <p>Je demeure bien longtemps, <rs ref="#pers004">mon bon ami</rs> , sans te
+                        donner directement de mes nouvelles, mais tu sais qu'un bon républicain est
+                        souvent obligé de sacrifier ses plaisirs à son devoir. [...] j'ai eu bien du
+                        plaisir, <rs ref="#pers004">mon cher ami</rs> , à voir un citoyen qui
+                        t'avait vu et parlé et a pu me donner des nouvelles sûres de ta santé ;
+                        j'espère que l'être suprême te donnera la force, et que ton attachement pour
+                        tes amis t'inspirera le désir de conserver la vie et de supporter ton
+                        malheur ; je sais qu'ils sont de nature à n'être point affaiblis par le
+                        temps, je sais que le malheur des autres ne diminue point mais accroît au
+                        contraire celui de l'homme de bien ; cependant quand d'affreuses
+                        circonstances ont rendu l'infortune presque générale, quand on n'a pas pu
+                        l'éviter et qu'il est impossible d'y remédier, s'il est impossible de se
+                        consoler, il faut au moins avoir le courage de supporter le malheur et de se
+                        conserver pour ceux qui nous sont chers. </p>
+                    <p>Si j'étais près de toi, j'adoucirais peut-être tes chagrins en les
+                        partageant ; éloigné, je n'ai pas la force d'en parler et fais ce que je
+                        peux pour n'y pas penser <damage/>.</p>
+                    <p>Si je ne t'écris pas souvent <rs ref="#pers004">mon bien tendre ami</rs> sois
+                        bien persuadé que cependant je pense sans cesse à ta position, mais
+                        j'aggrave mes maux, sans que l'expression gênée de mes sentiments puisse
+                        soulager ta douleur. Ne doute jamais de mon inaltérable attachement, et si
+                        cela peut contribuer à te donner quelque consolation, prends soin d'une vie
+                        qui m'est si chère. Embrasse pour moi tes petits-enfants tout le monde m'en
+                        dit le plus grand bien ; leur petite société et leurs caresses doivent faire
+                        quelque diversion à ta douleur ; j'embrasse <rs ref="#pers008">ton
+                        inséparable</rs> et suis bien sûr que quel que soit son chagrin, elle
+                        l'oublie pour ne s'occuper qu'à adoucir le tien. Quant à ce qui regarde tes
+                        intérêts, je compte sur ta prudence et ton attachement et te prie de
+                        t'entendre à cet égard avec notre ami commun qui m'a donné des preuves bien
+                        rares d'un attachement dont je n'ai jamais douté.</p>
+                </div1>
+            </body>
+            <back>
+                <div type="notes"/>
+            </back>
+        </text>
+    </TEI>
+    <TEI xml:id="morand409">
+        <teiHeader>
+            <fileDesc>
+                <titleStmt>
+                    <title>Lettre d'Antoine à son épouse Magdeleine, 19 août 1794</title>
+                    <author key="Morand, Antoine (1760-1838)">Antoine Morand</author>
+                    <editor key="Verjus, Anne">Anne Verjus</editor>
+                    <editor key="Manchio, Corine">Corine Manchio</editor>
+                </titleStmt>
+                <publicationStmt>
+                    <publisher>Ecole Normale Supérieure de Lyon</publisher>
+                    <distributor>Archives Municipales de Lyon</distributor>
+                    <authority>Laboratoire Triangle</authority>
+                    <date when="2013">2013</date>
+                    <idno>http://morand.ens-lyon.fr/lettre/morand409</idno>
+                    <availability status="restricted">
+                        <licence target="http://creativecommons.org/licenses/by-nc-sa/2.0/fr/"/>
+                        <p>La correspondance est mise en ligne avec l’autorisation de la famille,
+                            conformément au document de prêt à usage. Les lettres ont été numérisées
+                            par Gilles Bernasconi, photographe des Archives municipales de Lyon.</p>
+                        <p>Les images des lettres mises en ligne issues du Fonds Morand peuvent être
+                            réutilisées sous certaines conditions. Bien qu’il n’y ait pas de
+                            propriété intellectuelle liée aux documents eux-mêmes, les conditions de
+                            réutilisation sont fixées par référence à un modèle de licence créative
+                            commons : attribution-pas d’utilisation commerciale-partage dans les
+                            mêmes conditions, qui respecte les modalités du prêt à usage</p>
+                        <p>Pas de réutilisation commerciale, respecter l’intégrité des informations
+                            et ne jamais en altérer le sens ni la portée, mentionner la légende
+                            complète à savoir la référence précise de l’image : Archives municipales
+                            de Lyon, fonds Morand, suivi des numéros.</p>
+                        <p>Il vous est également possible de nous envoyer un courrier postal à
+                            l'adresse suivante : Anne-Catherine Marin, Directrice des Archives
+                            Municipales de Lyon - 1, place des Archives - 69002 Lyon</p>
+                        <p>Conditions de réutilisation de la mise en valeur scientifique : Toute
+                            citation doit faire l’objet d’une introduction précisant le nom de
+                            l’auteur et l’adresse URL du site Roman des Morand. Les citations mises
+                            à part, le contenu de ce site ne peut être reproduit, diffusé et
+                            réutilisé sans accord préalable du responsable éditorial, Anne Verjus,
+                            chargée de recherche au CNRS, UMR 5206.</p>
+                        <p>Etablir un lien vers ce site : La mise en place de liens vers le site
+                            Roman des Morand, y compris "profonds", n’est conditionnée à aucun
+                            accord préalable. Seule la mention explicite du site dans l’intitulé du
+                            lien est souhaitée.</p>
+                        <p>Il vous est également possible de nous envoyer un courrier postal à l’une
+                            des adresses suivantes : Carole Boulai - ISH de Lyon - 14 avenue
+                            Berthelot, 69363 LYON cedex 07 ou Samantha Saïdi - ENS de Lyon, R 264 -
+                            15 parvis René Descartes - BP 7000, 69342 LYON Cedex 07</p>
+                    </availability>
+                </publicationStmt>
+                <sourceDesc>
+                    <msDesc>
+                        <msIdentifier>
+                            <country>France</country>
+                            <settlement>Lyon</settlement>
+                            <repository>Archives municipales de Lyon</repository>
+                            <collection>Fonds Morand de Jouffrey</collection>
+                            <idno>14 ii 35 3 008</idno>
+                        </msIdentifier>
+                    </msDesc>
+                </sourceDesc>
+            </fileDesc>
+            <profileDesc>
+                <langUsage>
+                    <language ident="fre"/>
+                </langUsage>
+                <creation>
+                    <date when="1794-08-19">19 août 1794</date>
+                    <location>
+                        <placeName type="PlaceExp" ref="#pl000">Lieu d’écriture inconnu</placeName>
+                        <geo/>
+                    </location>
+                    <persName type="expediteur" ref="#pers003">Antoine Morand</persName>
+                    <persName type="destinataire" ref="#pers250">Magdeleine Morand</persName>
+                </creation>
+            </profileDesc>
+        </teiHeader>
+        <facsimile>
+            <graphic url="14II_035_3_008_1.jpg"/>
+            <graphic url="14II_035_3_008_2.jpg"/>
+            <graphic url="14II_035_3_008_3.jpg"/>
+            <graphic url=""/>
+        </facsimile>
+        <text>
+            <body>
+                <div1 type="letter">
+                    <opener>
+                        <address>
+                        <addrLine>Adresse ?</addrLine>
+                     </address>Le
+                        2 fructidor l'an 2 de la République une et indivisible. </opener>
+                    <p>[...] G. va faire un voyage pour ses affaires particulières, il doit même je
+                        crois se marier à une fille bien élevée et riche de Grenoble. C'est un bon
+                        enfant mais il est bien jeune pour se marier et d'une conduite si leste
+                        qu'il y a bien à craindre qu'il ne se corrige pas aisément et ne prépare de
+                        grands chagrins à sa future.</p>
+                    <p>
+                        <supplied>Il lui fait passer sa montre. La malle est arrivée. Antoine
+                            demande son chapeau car le sien est « dans un état si affreux et si
+                            irréparable que j'ai honte de le porter, tout sans culotte que je
+                            suis ».</supplied>
+                    </p>
+                    <p>[...]</p>
+                    <p>Tu imagines bien avec quel plaisir j'ai lu la proclamation des Rép. Cette
+                        malheureuse cité peut compter enfin sur leur protection et leur justice et
+                        les dominations perfides qui abusaient de leur pouvoir pour la perdre ne
+                        s'opposeront plus à l'exécution des lois.</p>
+                    <p>
+                        <supplied>Sur la tranche de la troisième feuille, il a glissé ces quelques
+                            lignes :</supplied>
+                    </p>
+                    <p>J'espère <rs ref="#pers250">ma bien aimée</rs> que tu reprendras ton
+                        embonpoint quand tu auras un peu de tranquillité et que le plaisir achèvera
+                        ton rétablissement mais tu sens bien que celui qui n'en peut goûter sans toi
+                        veut être seul chargé d'opérer <damage/> changement. Adieu ma bien
+                        aimée.</p>
+                </div1>
+            </body>
+            <back>
+                <div type="notes"/>
+            </back>
+        </text>
+    </TEI>
+    <TEI xml:id="morand410">
+        <teiHeader>
+            <fileDesc>
+                <titleStmt>
+                    <title>Lettre d'Antoine à son épouse Magdeleine, 23 août 1794</title>
+                    <author key="Morand, Antoine (1760-1838)">Antoine Morand</author>
+                    <editor key="Verjus, Anne">Anne Verjus</editor>
+                    <editor key="Manchio, Corine">Corine Manchio</editor>
+                </titleStmt>
+                <publicationStmt>
+                    <publisher>Ecole Normale Supérieure de Lyon</publisher>
+                    <distributor>Archives Municipales de Lyon</distributor>
+                    <authority>Laboratoire Triangle</authority>
+                    <date when="2013">2013</date>
+                    <idno>http://morand.ens-lyon.fr/lettre/morand410</idno>
+                    <availability status="restricted">
+                        <licence target="http://creativecommons.org/licenses/by-nc-sa/2.0/fr/"/>
+                        <p>La correspondance est mise en ligne avec l’autorisation de la famille,
+                            conformément au document de prêt à usage. Les lettres ont été numérisées
+                            par Gilles Bernasconi, photographe des Archives municipales de Lyon.</p>
+                        <p>Les images des lettres mises en ligne issues du Fonds Morand peuvent être
+                            réutilisées sous certaines conditions. Bien qu’il n’y ait pas de
+                            propriété intellectuelle liée aux documents eux-mêmes, les conditions de
+                            réutilisation sont fixées par référence à un modèle de licence créative
+                            commons : attribution-pas d’utilisation commerciale-partage dans les
+                            mêmes conditions, qui respecte les modalités du prêt à usage</p>
+                        <p>Pas de réutilisation commerciale, respecter l’intégrité des informations
+                            et ne jamais en altérer le sens ni la portée, mentionner la légende
+                            complète à savoir la référence précise de l’image : Archives municipales
+                            de Lyon, fonds Morand, suivi des numéros.</p>
+                        <p>Il vous est également possible de nous envoyer un courrier postal à
+                            l'adresse suivante : Anne-Catherine Marin, Directrice des Archives
+                            Municipales de Lyon - 1, place des Archives - 69002 Lyon</p>
+                        <p>Conditions de réutilisation de la mise en valeur scientifique : Toute
+                            citation doit faire l’objet d’une introduction précisant le nom de
+                            l’auteur et l’adresse URL du site Roman des Morand. Les citations mises
+                            à part, le contenu de ce site ne peut être reproduit, diffusé et
+                            réutilisé sans accord préalable du responsable éditorial, Anne Verjus,
+                            chargée de recherche au CNRS, UMR 5206.</p>
+                        <p>Etablir un lien vers ce site : La mise en place de liens vers le site
+                            Roman des Morand, y compris "profonds", n’est conditionnée à aucun
+                            accord préalable. Seule la mention explicite du site dans l’intitulé du
+                            lien est souhaitée.</p>
+                        <p>Il vous est également possible de nous envoyer un courrier postal à l’une
+                            des adresses suivantes : Carole Boulai - ISH de Lyon - 14 avenue
+                            Berthelot, 69363 LYON cedex 07 ou Samantha Saïdi - ENS de Lyon, R 264 -
+                            15 parvis René Descartes - BP 7000, 69342 LYON Cedex 07</p>
+                    </availability>
+                </publicationStmt>
+                <sourceDesc>
+                    <msDesc>
+                        <msIdentifier>
+                            <country>France</country>
+                            <settlement>Lyon</settlement>
+                            <repository>Archives municipales de Lyon</repository>
+                            <collection>Fonds Morand de Jouffrey</collection>
+                            <idno>14 ii 35 3 009</idno>
+                        </msIdentifier>
+                    </msDesc>
+                </sourceDesc>
+            </fileDesc>
+            <profileDesc>
+                <langUsage>
+                    <language ident="fre"/>
+                </langUsage>
+                <creation>
+                    <date when="1794-08-23">23 août 1794</date>
+                    <location>
+                        <placeName type="PlaceExp" ref="#pl002">Grenoble</placeName>
+                        <geo>45.1869 5.72639</geo>
+                    </location>
+                    <persName type="expediteur" ref="#pers003">Antoine Morand</persName>
+                    <persName type="destinataire" ref="#pers250">Magdeleine Morand</persName>
+                </creation>
+            </profileDesc>
+        </teiHeader>
+        <facsimile>
+            <graphic url="14II_035_3_009_1.jpg"/>
+            <graphic url="14II_035_3_009_2.jpg"/>
+            <graphic url=""/>
+            <graphic url=""/>
+        </facsimile>
+        <text>
+            <body>
+                <div1 type="letter">
+                    <opener>
+                        <address>
+                        <addrLine>A la citoyenne Morand rue Chalier cy devant rue Saint-Dominique,
+            n°66, à ville Affranchie.</addrLine>
+                     </address>
+                    </opener>
+                    <p>Je crains, chère amie, [...].</p>
+                </div1>
+            </body>
+            <back>
+                <div type="notes"/>
+            </back>
+        </text>
+    </TEI>
+    <TEI xml:id="morand411">
+        <teiHeader>
+            <fileDesc>
+                <titleStmt>
+                    <title>Lettre d'Antoine à son épouse Magdeleine, 25 août 1794</title>
+                    <author key="Morand, Antoine (1760-1838)">Antoine Morand</author>
+                    <editor key="Verjus, Anne">Anne Verjus</editor>
+                    <editor key="Manchio, Corine">Corine Manchio</editor>
+                </titleStmt>
+                <publicationStmt>
+                    <publisher>Ecole Normale Supérieure de Lyon</publisher>
+                    <distributor>Archives Municipales de Lyon</distributor>
+                    <authority>Laboratoire Triangle</authority>
+                    <date when="2013">2013</date>
+                    <idno>http://morand.ens-lyon.fr/lettre/morand411</idno>
+                    <availability status="restricted">
+                        <licence target="http://creativecommons.org/licenses/by-nc-sa/2.0/fr/"/>
+                        <p>La correspondance est mise en ligne avec l’autorisation de la famille,
+                            conformément au document de prêt à usage. Les lettres ont été numérisées
+                            par Gilles Bernasconi, photographe des Archives municipales de Lyon.</p>
+                        <p>Les images des lettres mises en ligne issues du Fonds Morand peuvent être
+                            réutilisées sous certaines conditions. Bien qu’il n’y ait pas de
+                            propriété intellectuelle liée aux documents eux-mêmes, les conditions de
+                            réutilisation sont fixées par référence à un modèle de licence créative
+                            commons : attribution-pas d’utilisation commerciale-partage dans les
+                            mêmes conditions, qui respecte les modalités du prêt à usage</p>
+                        <p>Pas de réutilisation commerciale, respecter l’intégrité des informations
+                            et ne jamais en altérer le sens ni la portée, mentionner la légende
+                            complète à savoir la référence précise de l’image : Archives municipales
+                            de Lyon, fonds Morand, suivi des numéros.</p>
+                        <p>Il vous est également possible de nous envoyer un courrier postal à
+                            l'adresse suivante : Anne-Catherine Marin, Directrice des Archives
+                            Municipales de Lyon - 1, place des Archives - 69002 Lyon</p>
+                        <p>Conditions de réutilisation de la mise en valeur scientifique : Toute
+                            citation doit faire l’objet d’une introduction précisant le nom de
+                            l’auteur et l’adresse URL du site Roman des Morand. Les citations mises
+                            à part, le contenu de ce site ne peut être reproduit, diffusé et
+                            réutilisé sans accord préalable du responsable éditorial, Anne Verjus,
+                            chargée de recherche au CNRS, UMR 5206.</p>
+                        <p>Etablir un lien vers ce site : La mise en place de liens vers le site
+                            Roman des Morand, y compris "profonds", n’est conditionnée à aucun
+                            accord préalable. Seule la mention explicite du site dans l’intitulé du
+                            lien est souhaitée.</p>
+                        <p>Il vous est également possible de nous envoyer un courrier postal à l’une
+                            des adresses suivantes : Carole Boulai - ISH de Lyon - 14 avenue
+                            Berthelot, 69363 LYON cedex 07 ou Samantha Saïdi - ENS de Lyon, R 264 -
+                            15 parvis René Descartes - BP 7000, 69342 LYON Cedex 07</p>
+                    </availability>
+                </publicationStmt>
+                <sourceDesc>
+                    <msDesc>
+                        <msIdentifier>
+                            <country>France</country>
+                            <settlement>Lyon</settlement>
+                            <repository>Archives municipales de Lyon</repository>
+                            <collection>Fonds Morand de Jouffrey</collection>
+                            <idno>14 ii 35 3 010</idno>
+                        </msIdentifier>
+                    </msDesc>
+                </sourceDesc>
+            </fileDesc>
+            <profileDesc>
+                <langUsage>
+                    <language ident="fre"/>
+                </langUsage>
+                <creation>
+                    <date when="1794-08-25">25 août 1794</date>
+                    <location>
+                        <placeName type="PlaceExp" ref="#pl000">Lieu d’écriture inconnu</placeName>
+                        <geo/>
+                    </location>
+                    <persName type="expediteur" ref="#pers003">Antoine Morand</persName>
+                    <persName type="destinataire" ref="#pers250">Magdeleine Morand</persName>
+                </creation>
+            </profileDesc>
+        </teiHeader>
+        <facsimile>
+            <graphic url="14II_035_3_010_1.jpg"/>
+            <graphic url="14II_035_3_010_2.jpg"/>
+            <graphic url=""/>
+            <graphic url=""/>
+        </facsimile>
+        <text>
+            <body>
+                <div1 type="letter">
+                    <opener>
+                        <address>
+                        <addrLine>Pour remettre à la citoyenne</addrLine>
+                     </address>Le
+                        8 fructidor l'an 2 de la République une et indivisible.</opener>
+                    <p>Je te remercie bien <rs ref="#pers250">ma tendre amie</rs> , de n'avoir pas
+                        voulu te coucher sans m'avoir fait part de tes succès ; il semble que tout
+                        s'est accordé pour servir le désir que tu avais de me les communiquer
+                        promptement et ta lettre partie le 5 m'est parvenue hier sept, à dix heures
+                        du matin. Quelque justes que fussent tes réclamations, j'ai assez d'idée des
+                        affaires pour évaluer les difficultés que tu avais à vaincre ; ton courage
+                        ta constance et ton patriotisme ont tout surmonté ; jouis de ton ouvrage <rs
+                        ref="#pers250">ma chère amie</rs> et que le plaisir de voir triompher la
+                        cause des vrais républicains et les droits que tu acquiers sans cesse à
+                        l'attachement de tout ce qui t'est cher, te dédommagent de tes peines et
+                        seront la première récompense de ta conduite. </p>
+                    <p>J'ai reçu cette bonne nouvelle, le jour même où tu as dû aller avec le père
+                        du cousin à M[achi]. J'imagine <rs ref="#pers250">ma bonne amie</rs> que ce
+                        jour-là aura été bien agréable pour toi et pour mes voisins. C'est une bien
+                        grande satisfaction de ne trouver que des amis et de n'avoir que des
+                        remerciements à faire, malheur à ceux qui ne connaissent pas la
+                        reconnaissance, et pour qui elle est un fardeau. J'imagine que les petits
+                        auront accompagné leur tendre amie et ajouté par leur présence à sa
+                        satisfaction, et à celle de nos amis. Ils ne peuvent pas encore évaluer leur
+                        mère et les services qu'elle leur rend, mais leurs petits cœurs n'ont pas
+                        besoin de raisonnement pour la bien chérir. Et ce sera à leur meilleur ami à
+                        ne leur pas laisser ignorer tout ce qu'ils doivent à cette tendre mère,
+                        lorsqu'ils seront en âge de l'apprécier. [...]</p>
+                    <p>Je suis infiniment occupé dans ce moment, j'ai beaucoup de monde dans ma
+                        chambre, et un peu d'attendrissement dont je n'ai pu me défendre en
+                        commençant ma lettre, et en adressant à <rs ref="#pers250">ma bonne
+                        amie</rs> la faible expression de ma tendre reconnaissance m'empêche de
+                        continuer une lettre que je suis obligé au reste de faire partir sur le
+                        champ si je ne veux pas manquer le courrier… n'aurai-je donc un peu de
+                        courage que dans le malheur… mille choses bien tendres à Mes amies et aux
+                        heureux enfants d'une mère chérie. Adieu.</p>
+                </div1>
+            </body>
+            <back>
+                <div type="notes"/>
+            </back>
+        </text>
+    </TEI>
+    <TEI xml:id="morand412">
+        <teiHeader>
+            <fileDesc>
+                <titleStmt>
+                    <title>Lettre d'Antoine à son épouse Magdeleine, 30 août 1794</title>
+                    <author key="Morand, Antoine (1760-1838)">Antoine Morand</author>
+                    <editor key="Verjus, Anne">Anne Verjus</editor>
+                    <editor key="Manchio, Corine">Corine Manchio</editor>
+                </titleStmt>
+                <publicationStmt>
+                    <publisher>Ecole Normale Supérieure de Lyon</publisher>
+                    <distributor>Archives Municipales de Lyon</distributor>
+                    <authority>Laboratoire Triangle</authority>
+                    <date when="2013">2013</date>
+                    <idno>http://morand.ens-lyon.fr/lettre/morand412</idno>
+                    <availability status="restricted">
+                        <licence target="http://creativecommons.org/licenses/by-nc-sa/2.0/fr/"/>
+                        <p>La correspondance est mise en ligne avec l’autorisation de la famille,
+                            conformément au document de prêt à usage. Les lettres ont été numérisées
+                            par Gilles Bernasconi, photographe des Archives municipales de Lyon.</p>
+                        <p>Les images des lettres mises en ligne issues du Fonds Morand peuvent être
+                            réutilisées sous certaines conditions. Bien qu’il n’y ait pas de
+                            propriété intellectuelle liée aux documents eux-mêmes, les conditions de
+                            réutilisation sont fixées par référence à un modèle de licence créative
+                            commons : attribution-pas d’utilisation commerciale-partage dans les
+                            mêmes conditions, qui respecte les modalités du prêt à usage</p>
+                        <p>Pas de réutilisation commerciale, respecter l’intégrité des informations
+                            et ne jamais en altérer le sens ni la portée, mentionner la légende
+                            complète à savoir la référence précise de l’image : Archives municipales
+                            de Lyon, fonds Morand, suivi des numéros.</p>
+                        <p>Il vous est également possible de nous envoyer un courrier postal à
+                            l'adresse suivante : Anne-Catherine Marin, Directrice des Archives
+                            Municipales de Lyon - 1, place des Archives - 69002 Lyon</p>
+                        <p>Conditions de réutilisation de la mise en valeur scientifique : Toute
+                            citation doit faire l’objet d’une introduction précisant le nom de
+                            l’auteur et l’adresse URL du site Roman des Morand. Les citations mises
+                            à part, le contenu de ce site ne peut être reproduit, diffusé et
+                            réutilisé sans accord préalable du responsable éditorial, Anne Verjus,
+                            chargée de recherche au CNRS, UMR 5206.</p>
+                        <p>Etablir un lien vers ce site : La mise en place de liens vers le site
+                            Roman des Morand, y compris "profonds", n’est conditionnée à aucun
+                            accord préalable. Seule la mention explicite du site dans l’intitulé du
+                            lien est souhaitée.</p>
+                        <p>Il vous est également possible de nous envoyer un courrier postal à l’une
+                            des adresses suivantes : Carole Boulai - ISH de Lyon - 14 avenue
+                            Berthelot, 69363 LYON cedex 07 ou Samantha Saïdi - ENS de Lyon, R 264 -
+                            15 parvis René Descartes - BP 7000, 69342 LYON Cedex 07</p>
+                    </availability>
+                </publicationStmt>
+                <sourceDesc>
+                    <msDesc>
+                        <msIdentifier>
+                            <country>France</country>
+                            <settlement>Lyon</settlement>
+                            <repository>Archives municipales de Lyon</repository>
+                            <collection>Fonds Morand de Jouffrey</collection>
+                            <idno>14 ii 35 3 011</idno>
+                        </msIdentifier>
+                    </msDesc>
+                </sourceDesc>
+            </fileDesc>
+            <profileDesc>
+                <langUsage>
+                    <language ident="fre"/>
+                </langUsage>
+                <creation>
+                    <date when="1794-08-30">30 août 1794</date>
+                    <location>
+                        <placeName type="PlaceExp" ref="#pl002">Grenoble</placeName>
+                        <geo>45.1869 5.72639</geo>
+                    </location>
+                    <persName type="expediteur" ref="#pers003">Antoine Morand</persName>
+                    <persName type="destinataire" ref="#pers250">Magdeleine Morand</persName>
+                </creation>
+            </profileDesc>
+        </teiHeader>
+        <facsimile>
+            <graphic url="14II_035_3_011_1.jpg"/>
+            <graphic url="14II_035_3_011_2.jpg"/>
+            <graphic url=""/>
+            <graphic url=""/>
+        </facsimile>
+        <text>
+            <body>
+                <div1 type="letter">
+                    <opener>
+                        <address>
+                        <addrLine>A la citoyenne Morand rue Chalier cy devant rue Saint-Dominique,
+            n°66, à ville affranchie.</addrLine>
+                     </address>Le
+                        13 fructidor l'an 2 de la République [...]</opener>
+                    <p>Ta lettre, chère amie, était attendue et désirée depuis longtemps [...]</p>
+                </div1>
+            </body>
+            <back>
+                <div type="notes"/>
+            </back>
+        </text>
+    </TEI>
+    <TEI xml:id="morand413">
+        <teiHeader>
+            <fileDesc>
+                <titleStmt>
+                    <title>Lettre d'Antoine à son épouse Magdeleine, 30 août 1794</title>
+                    <author key="Morand, Antoine (1760-1838)">Antoine Morand</author>
+                    <editor key="Verjus, Anne">Anne Verjus</editor>
+                    <editor key="Manchio, Corine">Corine Manchio</editor>
+                </titleStmt>
+                <publicationStmt>
+                    <publisher>Ecole Normale Supérieure de Lyon</publisher>
+                    <distributor>Archives Municipales de Lyon</distributor>
+                    <authority>Laboratoire Triangle</authority>
+                    <date when="2013">2013</date>
+                    <idno>http://morand.ens-lyon.fr/lettre/morand413</idno>
+                    <availability status="restricted">
+                        <licence target="http://creativecommons.org/licenses/by-nc-sa/2.0/fr/"/>
+                        <p>La correspondance est mise en ligne avec l’autorisation de la famille,
+                            conformément au document de prêt à usage. Les lettres ont été numérisées
+                            par Gilles Bernasconi, photographe des Archives municipales de Lyon.</p>
+                        <p>Les images des lettres mises en ligne issues du Fonds Morand peuvent être
+                            réutilisées sous certaines conditions. Bien qu’il n’y ait pas de
+                            propriété intellectuelle liée aux documents eux-mêmes, les conditions de
+                            réutilisation sont fixées par référence à un modèle de licence créative
+                            commons : attribution-pas d’utilisation commerciale-partage dans les
+                            mêmes conditions, qui respecte les modalités du prêt à usage</p>
+                        <p>Pas de réutilisation commerciale, respecter l’intégrité des informations
+                            et ne jamais en altérer le sens ni la portée, mentionner la légende
+                            complète à savoir la référence précise de l’image : Archives municipales
+                            de Lyon, fonds Morand, suivi des numéros.</p>
+                        <p>Il vous est également possible de nous envoyer un courrier postal à
+                            l'adresse suivante : Anne-Catherine Marin, Directrice des Archives
+                            Municipales de Lyon - 1, place des Archives - 69002 Lyon</p>
+                        <p>Conditions de réutilisation de la mise en valeur scientifique : Toute
+                            citation doit faire l’objet d’une introduction précisant le nom de
+                            l’auteur et l’adresse URL du site Roman des Morand. Les citations mises
+                            à part, le contenu de ce site ne peut être reproduit, diffusé et
+                            réutilisé sans accord préalable du responsable éditorial, Anne Verjus,
+                            chargée de recherche au CNRS, UMR 5206.</p>
+                        <p>Etablir un lien vers ce site : La mise en place de liens vers le site
+                            Roman des Morand, y compris "profonds", n’est conditionnée à aucun
+                            accord préalable. Seule la mention explicite du site dans l’intitulé du
+                            lien est souhaitée.</p>
+                        <p>Il vous est également possible de nous envoyer un courrier postal à l’une
+                            des adresses suivantes : Carole Boulai - ISH de Lyon - 14 avenue
+                            Berthelot, 69363 LYON cedex 07 ou Samantha Saïdi - ENS de Lyon, R 264 -
+                            15 parvis René Descartes - BP 7000, 69342 LYON Cedex 07</p>
+                    </availability>
+                </publicationStmt>
+                <sourceDesc>
+                    <msDesc>
+                        <msIdentifier>
+                            <country>France</country>
+                            <settlement>Lyon</settlement>
+                            <repository>Archives municipales de Lyon</repository>
+                            <collection>Fonds Morand de Jouffrey</collection>
+                            <idno>14 ii 35 3 012</idno>
+                        </msIdentifier>
+                    </msDesc>
+                </sourceDesc>
+            </fileDesc>
+            <profileDesc>
+                <langUsage>
+                    <language ident="fre"/>
+                </langUsage>
+                <creation>
+                    <date when="1794-08-30">30 août 1794</date>
+                    <location>
+                        <placeName type="PlaceExp" ref="#pl000">Lieu d’écriture inconnu</placeName>
+                        <geo/>
+                    </location>
+                    <persName type="expediteur" ref="#pers003">Antoine Morand</persName>
+                    <persName type="destinataire" ref="#pers250">Magdeleine Morand</persName>
+                </creation>
+            </profileDesc>
+        </teiHeader>
+        <facsimile>
+            <graphic url="14II_035_3_012_1.jpg"/>
+            <graphic url="14II_035_3_012_2.jpg"/>
+            <graphic url="14II_035_3_012_3.jpg"/>
+            <graphic url="14II_035_3_012_4.jpg"/>
+        </facsimile>
+        <text>
+            <body>
+                <div1 type="letter">
+                    <opener>
+                        <address>
+                        <addrLine>Pour remettre à la citoyenne</addrLine>
+                     </address>Le
+                        13 fructidor l'an 2 de la République une, indivisible et
+                        démocratique</opener>
+                    <p>
+                        <supplied>La levée des séquestres sur Machy date du 7 fructidor an
+                            2.</supplied>
+                    </p>
+                    <p>Avant-hier, <rs ref="#pers250">ma bien aimée</rs> , j'ai reçu ta lettre du 8,
+                        et tu juges bien qu'elle m'a fait ressentir la satisfaction la plus vive ;
+                        le lieu d'où elle est datée, la pièce qu'elle contient, les nouvelles que tu
+                        m'y donnes, les détails dans lesquels tu entres, tout <rs ref="#pers250">ma
+                        chère amie</rs> était fort de mon goût, je l'ai déjà relue bien souvent et
+                        quoique ce soit après mon usage pour la dernière reçue je conviens que
+                        celle-ci est faite pour avoir la préférence sur d'autres.</p>
+                    <p>Tu n'auras sûrement pas été fort contente de mon dernier petit billet, ton
+                        attention (sic) de m'instruire sur le champ de tes succès méritait ce semble
+                        une réponse un peu plus longue ; mais indépendamment d'affaires qu'il ne
+                        dépendait pas de moi de renvoyer, je n'étais vraiment pas en état d'écrire
+                        mon cœur était trop plein et je ne pouvais exprimer ce qu'il sentait quoi
+                        que je n'aie pas reçu la lettre écrite la veille, qui comme je crois te
+                        l'avoir dit, ne m'est parvenue qu'après, j'étais loin d'espérer la fin de
+                        cette affaire quelque juste que fut ta demande ; cette nouvelle inattendue,
+                        le plaisir de voir toutes tes peines couronnées par le succès, le tableau
+                        reçu d'un coup d'œil, de tout ce que tu avais fait pour ton ami, un
+                        mouvement de joie dont on ne se croyait plus susceptible, tout cela m'avait
+                        jeté dans un trouble inexprimable. <rs ref="#pers250">Tendre épouse</rs> ,
+                        <rs ref="#pers250">bonne mère</rs> , jamais non jamais ceux qui te doivent
+                        tant ne pourront s'acquitter envers toi ; mon attachement, mon estime pour
+                        toi n'étaient pas susceptibles d'augmentation, cependant que de nouveaux
+                        droits tu acquiers à ma reconnaissance et à mon amour. Que de plaisirs je
+                        trouverai à t'en entretenir et à contribuer à ton bonheur ! Des
+                        circonstances terribles n'ont servi qu'à développer ton courage et ta
+                        vertu ; [jouir/jouis] de ton ouvrage, de l'estime des braves gens, du tendre
+                        attachement de tes amis, et de la satisfaction intérieure d'avoir fait bien
+                        au-delà de ton devoir. </p>
+                    <p>L'accueil que t'ont fait ces braves gens est bien flatteur, l'amitié qu'ils
+                        me témoignent m'est bien précieuse ; oui <rs ref="#pers250">ma tendre
+                        amie</rs> , le moment viendra où les Français n'ayant plus d'ennemis à
+                        vaincre, rentreront paisiblement dans leurs foyers ; alors j'irai joindre
+                        mes soins à ceux de la fermière pour augmenter par le travail notre
+                        propriété, parce qu'alors c'est un bien particulier qui tourne au bien
+                        général, je lui aiderai à former de bons citoyens et bonnes mères de famille
+                        (car à cet égard il faut doubler au moins nos richesses), je me réunirai à
+                        elle pour rendre service à nos voisins ; que de dettes à acquitter ! que de
+                        devoirs bien doux à remplir.</p>
+                    <p>[...]</p>
+                    <p>Je suis bien aise que les petits amis restent à la campagne, <rs
+                        ref="#pers250">la maman</rs> , je le sens, ne peut pas se livrer encore au
+                        plaisir d'y séjourner avec eux et je crains bien malgré l'échange de … dont
+                        elle dit un mot qu'elle ne soit trop sage et ne veuille me forcer à l'être
+                        aussi, cependant laisse-moi nourrir cette idée délicieuse, je suis bien
+                        seul, bien isolé et j'ai besoin d'espoirs ; je ne m'y livre cependant
+                        qu'avec modération pour n'avoir pas ensuite trop à décompter. Je désire cet
+                        instant avec toute l'ardeur dont je suis susceptible et je sens cependant
+                        que j'aurai de la peine à suffire à ma joie, mais nous traiterons cet
+                        article dans une autre lettre, il est assez intéressant pour n'être pas
+                        négligé. </p>
+                    <p>Je suis bien aise qu'on t'ait rendu toutes les pièces originales qui venaient
+                        à l'appui de ta demande ; tu feras bien à la première occasion d'avoir une
+                        copie en forme de l'arrêté du district que tu joindras à tes autres papiers
+                        et dont tu me feras passer copie de ta main, seulement pour satisfaire ma
+                        curiosité. J'approuve infiniment ta manière généreuse d'agir, il n'y a pas à
+                        hésiter dans de pareilles occasions et je crois que tu n'as pas douté que
+                        ton bon ami n'applaudît au parti que tu prenais ; une fois pour toutes,
+                        rends-lui compte de ce que tu fais parce que rien de ce qui te regarde ne
+                        peut lui être indifférent, mais fais, défais, achète, vends, ainsi que tu le
+                        croiras plus convenable aux intérêts de la communauté et surtout des petits,
+                        c'est maintenant toi qui tiens le gouvernail, tu sais éviter la tempête dans
+                        des moments bien orageux, et le petit vaisseau a gagné à changer de
+                        conducteur. Au reste <rs ref="#pers250">ma bonne amie</rs> , je n'avais pas
+                        besoin de toutes ces circonstances, pour avoir en toi cette entière
+                        confiance, je le devais à ton ordre et à tes vertus, et dans aucun temps, je
+                        ne crois pas qu'il me soit arrivé de ne pas trouver fort bon tout ce que tu
+                        faisais, il n'est qu'une chose que tu as soin d'excepter aussi, de celles
+                        que tu as été obligée de faire, j'avoue que de tous les biens, c'est celui
+                        auquel j'attache le plus de prix, mais comme tu le sais, je suis tranquille
+                        à cet égard et ai pour garants de ta conduite, tes principes et ton
+                        attachement pour moi ; nous avons trop de tendresse l'un pour l'autre pour
+                        avoir jamais aucun reproche à nous faire sur cet article, sensibles comme
+                        nous le sommes tous les deux, le plus léger doute suffirait pour anéantir le
+                        bonheur de tous les deux. [...]</p>
+                </div1>
+            </body>
+            <back>
+                <div type="notes"/>
+            </back>
+        </text>
+    </TEI>
+    <TEI xml:id="morand414">
+        <teiHeader>
+            <fileDesc>
+                <titleStmt>
+                    <title>Lettre d'Antoine à son épouse Magdeleine, 11 septembre 1794</title>
+                    <author key="Morand, Antoine (1760-1838)">Antoine Morand</author>
+                    <editor key="Verjus, Anne">Anne Verjus</editor>
+                    <editor key="Manchio, Corine">Corine Manchio</editor>
+                </titleStmt>
+                <publicationStmt>
+                    <publisher>Ecole Normale Supérieure de Lyon</publisher>
+                    <distributor>Archives Municipales de Lyon</distributor>
+                    <authority>Laboratoire Triangle</authority>
+                    <date when="2013">2013</date>
+                    <idno>http://morand.ens-lyon.fr/lettre/morand414</idno>
+                    <availability status="restricted">
+                        <licence target="http://creativecommons.org/licenses/by-nc-sa/2.0/fr/"/>
+                        <p>La correspondance est mise en ligne avec l’autorisation de la famille,
+                            conformément au document de prêt à usage. Les lettres ont été numérisées
+                            par Gilles Bernasconi, photographe des Archives municipales de Lyon.</p>
+                        <p>Les images des lettres mises en ligne issues du Fonds Morand peuvent être
+                            réutilisées sous certaines conditions. Bien qu’il n’y ait pas de
+                            propriété intellectuelle liée aux documents eux-mêmes, les conditions de
+                            réutilisation sont fixées par référence à un modèle de licence créative
+                            commons : attribution-pas d’utilisation commerciale-partage dans les
+                            mêmes conditions, qui respecte les modalités du prêt à usage</p>
+                        <p>Pas de réutilisation commerciale, respecter l’intégrité des informations
+                            et ne jamais en altérer le sens ni la portée, mentionner la légende
+                            complète à savoir la référence précise de l’image : Archives municipales
+                            de Lyon, fonds Morand, suivi des numéros.</p>
+                        <p>Il vous est également possible de nous envoyer un courrier postal à
+                            l'adresse suivante : Anne-Catherine Marin, Directrice des Archives
+                            Municipales de Lyon - 1, place des Archives - 69002 Lyon</p>
+                        <p>Conditions de réutilisation de la mise en valeur scientifique : Toute
+                            citation doit faire l’objet d’une introduction précisant le nom de
+                            l’auteur et l’adresse URL du site Roman des Morand. Les citations mises
+                            à part, le contenu de ce site ne peut être reproduit, diffusé et
+                            réutilisé sans accord préalable du responsable éditorial, Anne Verjus,
+                            chargée de recherche au CNRS, UMR 5206.</p>
+                        <p>Etablir un lien vers ce site : La mise en place de liens vers le site
+                            Roman des Morand, y compris "profonds", n’est conditionnée à aucun
+                            accord préalable. Seule la mention explicite du site dans l’intitulé du
+                            lien est souhaitée.</p>
+                        <p>Il vous est également possible de nous envoyer un courrier postal à l’une
+                            des adresses suivantes : Carole Boulai - ISH de Lyon - 14 avenue
+                            Berthelot, 69363 LYON cedex 07 ou Samantha Saïdi - ENS de Lyon, R 264 -
+                            15 parvis René Descartes - BP 7000, 69342 LYON Cedex 07</p>
+                    </availability>
+                </publicationStmt>
+                <sourceDesc>
+                    <msDesc>
+                        <msIdentifier>
+                            <country>France</country>
+                            <settlement>Lyon</settlement>
+                            <repository>Archives municipales de Lyon</repository>
+                            <collection>Fonds Morand de Jouffrey</collection>
+                            <idno>14 ii 35 3 013</idno>
+                        </msIdentifier>
+                    </msDesc>
+                </sourceDesc>
+            </fileDesc>
+            <profileDesc>
+                <langUsage>
+                    <language ident="fre"/>
+                </langUsage>
+                <creation>
+                    <date when="1794-09-11">11 septembre 1794</date>
+                    <location>
+                        <placeName type="PlaceExp" ref="#pl005">Briançon</placeName>
+                        <geo>44.8958 6.635</geo>
+                    </location>
+                    <persName type="expediteur" ref="#pers003">Antoine Morand</persName>
+                    <persName type="destinataire" ref="#pers250">Magdeleine Morand</persName>
+                </creation>
+            </profileDesc>
+        </teiHeader>
+        <facsimile>
+            <graphic url="14II_035_3_013_1.jpg"/>
+            <graphic url="14II_035_3_013_2.jpg"/>
+            <graphic url=""/>
+            <graphic url=""/>
+        </facsimile>
+        <text>
+            <body>
+                <div1 type="letter">
+                    <opener>
+                        <address>
+                        <addrLine>A La citoyenne Morand la jeune.</addrLine>
+                     </address>Briançon,
+                        le 25 fructidor l'an 2 de la République une et indivisible.</opener>
+                    <p>J'ai reçu <rs ref="#pers250">ma bien bonne amie</rs> , ta petite et ta grande
+                        lettre ; car jamais je n'emploierai le mot de longue pour ce qui me paraît
+                        toujours trop court.</p>
+                    <p>La petite lettre de ma fille m'a fait grand plaisir, mais je t'invite bien à
+                        ne pas la laisser écrire encore enfin et surtout à l'empêcher d'écrire sans
+                        toi pour qu'elle ne se fasse pas une orthographe à sa manière ou à celle de
+                        nos bonnes, ce qui double ensuite les difficultés. </p>
+                    <p>Je ne prends la place, <rs ref="#pers250">ma chère amie</rs> , que pour que
+                        mon silence ne te tienne pas en peine ; je suis malade depuis environ quinze
+                        jours et maintenant mon œil est pris de manière à m'empêcher absolument
+                        d'écrire. Je suis ici dans les mains d'un très bon médecin, mes cousines
+                        mère et fille ont grand soin de moi et avec de la patience dont je n'ai pas
+                        beaucoup il faut espérer que mon indisposition ne sera pas très longue. </p>
+                    <p>[...]</p>
+                    <p>Tu diras bien à <rs ref="#pers004">la bonne amie d'Albine</rs> que sans mon
+                        indisposition je n'aurais pas manqué de lui écrire, tes succès sont sûrement
+                        une grande consolation pour elle dans ses malheurs et je l'invite bien à en
+                        profiter un peu et à aller respirer le bon air avec ses petits amis. </p>
+                    <p>[...] </p>
+                    <p>Quant au projet de notre vendeur d'aller à M.[achy] c'est à toi à juger si
+                        l'exécution en serait prudente et ne produirait pas de mauvais effets. </p>
+                    <p>[...]</p>
+                    <p>J'embrasse mes bons petits amis et les invite à se bien amuser à la campagne,
+                        il m'est impossible de continuer, il m'est plus impossible encore de cesser
+                        de chérir tendrement <rs ref="#pers250">ma bien aimée</rs> . </p>
+                </div1>
+            </body>
+            <back>
+                <div type="notes"/>
+            </back>
+        </text>
+    </TEI>
+    <TEI xml:id="morand415">
+        <teiHeader>
+            <fileDesc>
+                <titleStmt>
+                    <title>Lettre d'Antoine à son épouse Magdeleine, 20 septembre 1794</title>
+                    <author key="Morand, Antoine (1760-1838)">Antoine Morand</author>
+                    <editor key="Verjus, Anne">Anne Verjus</editor>
+                    <editor key="Manchio, Corine">Corine Manchio</editor>
+                </titleStmt>
+                <publicationStmt>
+                    <publisher>Ecole Normale Supérieure de Lyon</publisher>
+                    <distributor>Archives Municipales de Lyon</distributor>
+                    <authority>Laboratoire Triangle</authority>
+                    <date when="2013">2013</date>
+                    <idno>http://morand.ens-lyon.fr/lettre/morand415</idno>
+                    <availability status="restricted">
+                        <licence target="http://creativecommons.org/licenses/by-nc-sa/2.0/fr/"/>
+                        <p>La correspondance est mise en ligne avec l’autorisation de la famille,
+                            conformément au document de prêt à usage. Les lettres ont été numérisées
+                            par Gilles Bernasconi, photographe des Archives municipales de Lyon.</p>
+                        <p>Les images des lettres mises en ligne issues du Fonds Morand peuvent être
+                            réutilisées sous certaines conditions. Bien qu’il n’y ait pas de
+                            propriété intellectuelle liée aux documents eux-mêmes, les conditions de
+                            réutilisation sont fixées par référence à un modèle de licence créative
+                            commons : attribution-pas d’utilisation commerciale-partage dans les
+                            mêmes conditions, qui respecte les modalités du prêt à usage</p>
+                        <p>Pas de réutilisation commerciale, respecter l’intégrité des informations
+                            et ne jamais en altérer le sens ni la portée, mentionner la légende
+                            complète à savoir la référence précise de l’image : Archives municipales
+                            de Lyon, fonds Morand, suivi des numéros.</p>
+                        <p>Il vous est également possible de nous envoyer un courrier postal à
+                            l'adresse suivante : Anne-Catherine Marin, Directrice des Archives
+                            Municipales de Lyon - 1, place des Archives - 69002 Lyon</p>
+                        <p>Conditions de réutilisation de la mise en valeur scientifique : Toute
+                            citation doit faire l’objet d’une introduction précisant le nom de
+                            l’auteur et l’adresse URL du site Roman des Morand. Les citations mises
+                            à part, le contenu de ce site ne peut être reproduit, diffusé et
+                            réutilisé sans accord préalable du responsable éditorial, Anne Verjus,
+                            chargée de recherche au CNRS, UMR 5206.</p>
+                        <p>Etablir un lien vers ce site : La mise en place de liens vers le site
+                            Roman des Morand, y compris "profonds", n’est conditionnée à aucun
+                            accord préalable. Seule la mention explicite du site dans l’intitulé du
+                            lien est souhaitée.</p>
+                        <p>Il vous est également possible de nous envoyer un courrier postal à l’une
+                            des adresses suivantes : Carole Boulai - ISH de Lyon - 14 avenue
+                            Berthelot, 69363 LYON cedex 07 ou Samantha Saïdi - ENS de Lyon, R 264 -
+                            15 parvis René Descartes - BP 7000, 69342 LYON Cedex 07</p>
+                    </availability>
+                </publicationStmt>
+                <sourceDesc>
+                    <msDesc>
+                        <msIdentifier>
+                            <country>France</country>
+                            <settlement>Lyon</settlement>
+                            <repository>Archives municipales de Lyon</repository>
+                            <collection>Fonds Morand de Jouffrey</collection>
+                            <idno>14 ii 35 3 014</idno>
+                        </msIdentifier>
+                    </msDesc>
+                </sourceDesc>
+            </fileDesc>
+            <profileDesc>
+                <langUsage>
+                    <language ident="fre"/>
+                </langUsage>
+                <creation>
+                    <date when="1794-09-20">20 septembre 1794</date>
+                    <location>
+                        <placeName type="PlaceExp" ref="#pl000">Lieu d’écriture inconnu</placeName>
+                        <geo/>
+                    </location>
+                    <persName type="expediteur" ref="#pers003">Antoine Morand</persName>
+                    <persName type="destinataire" ref="#pers250">Magdeleine Morand</persName>
+                </creation>
+            </profileDesc>
+        </teiHeader>
+        <facsimile>
+            <graphic url="14II_035_3_014_1.jpg"/>
+            <graphic url="14II_035_3_014_2.jpg"/>
+            <graphic url=""/>
+            <graphic url=""/>
+        </facsimile>
+        <text>
+            <body>
+                <div1 type="letter">
+                    <opener>
+                        <address>
+                        <addrLine>Adresse ?</addrLine>
+                     </address>Le
+                        4 sans-culottide, fête de l'opinion</opener>
+                    <p>J'ai lu ta lettre du 23, chère amie [...].</p>
+                </div1>
+            </body>
+            <back>
+                <div type="notes"/>
+            </back>
+        </text>
+    </TEI>
+</teiCorpus>

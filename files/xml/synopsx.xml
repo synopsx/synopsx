@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="http://www.tei-c.org/release/xml/tei/custom/schema/relaxng/tei_lite.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
+<?xml-model href="http://www.tei-c.org/release/xml/tei/custom/schema/relaxng/tei_lite.rng" type="application/xml"
+	schematypens="http://purl.oclc.org/dsdl/schematron"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0" xml:id="synopsx">
+  <teiHeader>
+      <fileDesc>
+         <titleStmt>
+            <title>SynopsX. A Lightweight XML Publishing Framework</title>
+         </titleStmt>
+         <publicationStmt>
+            <p>Publication information</p>        
+         </publicationStmt>
+         <sourceDesc>
+            <p>Information about the source</p>
+         </sourceDesc>
+      </fileDesc>
+  </teiHeader>
+  <text>
+      <body>
+         <div n="presentation">
+            <p>SynopsX est un système de publication léger, entièrement fondé sur des technologies XML à partir de la base de données XML native BaseX. Initié par l'Atelier des Humanités Numériques de Lyon (AHN), le projet est développé comme logiciel libre par une équipe de plusieurs contributeurs issus du monde académique. Le logiciel libre et open source est basé sur les fonctionnalités RESTXQ implémentées par BaseX.</p>
+            <p>Dans son état actuel, le logiciel permet :</p>
+            <list>
+               <item>une publication personnalisée de sources textuelles XML-TEI, </item>
+               <item>une publication d'entrepôt OAI-PMH,</item>
+               <item>une articulation entre des sources EAD et XML-TEI,</item>
+               <item>de disposer d'un moteur de recherche sommaire,</item>
+            </list><p>Le code du logiciel se caractérise par son extrême concision et son caractère modulaire. Il est donc très aisé de se l'approprier et de l'adapter à ses propres besoins. Ce logiciel est déjà en production pour différentes applications web de l'ENS Lyon. Plusieurs partenaires membres du consortium Cahier lyonnais et parisiens (ANR Ampère, et Projet des Guides de Paris notamment) participent déjà au projet.</p>
+         </div>
+         <div n="workshop-en">
+            <head>Start a new synopsX project (english documentation)</head>
+            <p>
+               <hi>Java requirements on your computer :</hi>
+               <list>
+                  <item>Make sure you have the last <hi>Java JDK</hi> installed on your computer (having the last <hi>Java JRE</hi> version installed won't be enough). 
+                     Download the last JDK Environnement from this Oracle Page: http://www.objis.com/formation-java/tutoriel-java-installation-jdk.html</item>
+                  <item>Before downloading choose the appropriate version (system + processor: i.e. Mac OSX x64)</item>
+                  <item>Go to you /Downloads/ page and double-click on the installation file: i.e.: jdk-8u60-macosx-x64.dmg or jdk-8u60-macosx-x64.exe</item>
+                  <item>Complete installation</item>
+                  <item>Open a terminal to check the Java JDK version with the following command: java -version </item>
+               </list>
+            </p>
+            
+            <p>
+               <hi>Install BaseX:</hi>
+               <list>
+                  <item>Go to http://basex.org/</item>
+                  <item>Click on "Download BaseX 8.3"</item>
+               </list>
+            </p>
+                 <p><hi>Add Saxon processor HE to BaseX:</hi>
+               <list>
+                  <item>Dowload from (choose the zipped directory, on top of the page): http://sourceforge.net/projects/saxon/files/</item>
+                  <item>Unzip downloaded file</item>
+                  <item>Put content on the following directory: basex/lib</item>
+               </list>
+               
+            </p>
+            
+            <p>
+               <hi>Install SynopsX:</hi>
+              <list>
+                 <item>Go to: https://github.com/ahn-ens-lyon/synopsx</item> <!--  a la fin ce sera un répo synopsX propre et non le répo de l'AHN -->
+
+                 <item>If you don’t have a github app: download the zipped synopsX directory</item>
+                 <item>Unzip synopsx-dev.zip</item> <!--  A la fin ce sera la branche master et non dev -->
+
+                 <item>Rename synopsx-dev to synopsx</item>
+                 <item>Place synopsx directory in basex/webapp</item>
+              </list>
+            </p>
+       
+         </div>
+         
+         <div n="atelier-fr">
+            <head>Démarrer un nouveau project synopsX (documentation en français)</head>
+            <p>
+               <hi>Pré-requis Java :</hi>
+               <list>
+                  <item>Installez la dernière version de <hi>Java JDK</hi> sur votre ordinateur car l’environnement Java JRE ne sera pas suffisant : télécharger la dernière version sur cette page d’Oracle : http://www.objis.com/formation-java/tutoriel-java-installation-jdk.html</item>
+                  <item>Choisissez la version à télécharger en fonction du système d’exploitation et du processeur de votre ordinateur (ex: Linux x64)</item>
+                  <item>Allez dans votre page de téléchargements Downloads/ et double-cliquez sur le fichier d'installation : i.e. : jdk-8u60-macosx-x64.dmg ou jdk-8u60-macosx-x64.exe</item> 
+                  <item>Finalisez votre installation</item>
+                  <item>Vous pouvez vérifier la version Java JDK installée avec la ligne suivante dans un terminal :
+                  java -version </item>
+               </list>
+            </p>
+            <p>
+               <hi>Installer BaseX :</hi>
+              <list> 
+                 <item>Allez sur : http://basex.org/</item>
+                  <item>Cliquez sur : "Download BaseX 8.3"</item>
+              </list>
+            </p>
+             <p><hi>Ajouter le processeur Saxon HE à BaseX :</hi>
+               <list>
+                  <item>Télécharger depuis (choisir le dossier zipé en haut de la page) : http://sourceforge.net/projects/saxon/files/</item>
+                  <item>Dézipper le dossier téléchargé</item>
+                  <item>Installer le contenu dans basex/lib</item>
+               </list>         
+            </p>
+            <p>
+               <hi>Installer SynopsX :</hi>
+               <list>
+                  <item>Allez sur : https://github.com/ahn-ens-lyon/synopsx</item><!--  a la fin ce sera un répo synopsX propre et non le répo de l'AHN -->
+                  <item>Si vous n’avez pas d'applicatif github cliquez sur : "download Zip" </item>
+                  <item>déziper synopsx-dev.zip</item>
+                  <item>renommer le dossier "synopsx-dev" en "synopsx"</item> <!--  A la fin ce sera la branche master et non dev -->
+                  <item>Déposer le dossier synopsx dans basex/webapp</item>
+               </list>
+            </p>
+           
+         </div>
+      </body>
+  </text>
+</TEI>

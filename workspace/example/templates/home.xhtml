@@ -1,0 +1,120 @@
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr">
+   <head>
+      <meta charset="utf-8" />
+      <title>{title}</title>
+      <meta name="description" content="{description}" />
+      <meta name="author" content="{author}" />
+      <meta name="keywords" content="{subject}" />
+      <link rel="copyright" href="{copyright}"/>
+     
+     <!-- Bootstrap core CSS -->
+     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet" />
+     <link href="/synopsx/files/css/ahn.css" rel="stylesheet" />
+     
+     <!-- JS -->
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+     <script src="/synopsx/files/js/synopsx.js"></script>
+     
+   </head>
+  <body id="home">
+    <div id="wrap">
+      
+      <!-- Top navigation bar -->
+      <div class="navbar navbar-fixed-top navbar-inverse" role="navigation">
+       <div class="navbar container">
+         <div class="collapse navbar-collapse">
+           <ul class="nav navbar-nav">
+             <li class="active"><a href="/example/a-propos">à propos</a></li>
+             <li><a href="/example/mentions-legales">mentions légales</a></li>
+             <li><a href="/example/credits">crédits</a></li>
+             <li><a href="/example/contacts">contacts</a></li>
+           </ul>
+         </div> <!-- /.nav-collapse -->
+       </div> <!-- /.navbar container -->
+     </div><!-- /.navbar navbar-fixed-top navbar-inverse-->
+
+     <div class="container">
+        
+        <!-- top row -->
+        <div class="row row-offcanvas">
+            <div class="col-xs-12 col-sm-12">
+                <p class="pull-right visible-xs">
+                  <button class="btn btn-primary btn-xs" data-toggle="offcanvas" type="button">
+                    Toggle nav
+                  </button>
+                </p><!-- /.col-xs-12 col-sm-12-->
+               
+                <!-- header content (site title, logos) -->
+                <header data-url="inc_header"/>
+                
+                <!-- banner -->
+                <div id="header-image">
+                  <img src="/synopsx/files/img/bandeau_Morand.jpg" />
+                </div>
+                
+                <!-- horizontal navigation -->
+                <div id="horizontal-nav">
+                  <ul class="navigation">
+                    <li class="nav-accueil current"><a href="/example/home">Accueil</a></li>
+                    <li class="nav-lettres2"><a href="/example/tei">TEI sample</a></li>
+                        <li class="nav-ead"><a href="/example/ead">EAD sample</a></li>
+                  </ul>
+                  
+                </div>  
+            </div>
+        </div>
+       
+       <!-- main page content -->
+        <div id="content">
+          <div id="main row row-offcanvas row-offcanvas-right">
+            
+            <!-- Contextual navigation content -->
+            <div id="contextual">
+              <ul class="navigation">
+                <div class="well sidebar-nav">
+                  <h2>Menu entry #1</h2>
+                  <ul>
+                    <li>Entry #1.1</li>
+                    <li>Entry #1.2</li>
+                    <li>Entry #1.3</li>
+                  </ul>
+                  <h2>Menu entry #2</h2>
+                  <ul>
+                    <li>Entry #2.1</li>
+                    <li>Entry #2.2</li>
+                    <li>Entry #2.3</li>
+                  </ul>
+                </div><!--/.well -->
+              </ul>
+              
+            </div>
+            <div id="main row row-offcanvas row-offcanvas-right">
+              <div class="col-8 col-sm-8 col-lg-8">
+
+                <div class="row">
+                  <section>
+                  {content}
+                  </section>
+           
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+       
+     </div> <!-- /.container-->
+
+    <!-- footer -->
+     <footer data-url="inc_footer"/>
+
+    <!-- Javascript -->
+     <script type="text/javascript">
+         // synopsx's composition
+         $(document).ready(function(){
+              init();
+         }); 
+       </script>
+    </div>
+   </body>
+</html>
