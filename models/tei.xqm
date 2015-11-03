@@ -56,7 +56,7 @@ declare function queryCorpus($queryParams as map(*)) as map(*) {
 };
 
 
-declare function getCorpusItems($queryParams){
+declare function getCorpusItems($queryParams) as item()*{
 
   let $sequence := synopsx.models.synopsx:getDb($queryParams)//tei:teiCorpus
   (: TODO : analyse query params : is an id specified ?  is a sorting order specified ? ... :)
@@ -104,7 +104,7 @@ declare function queryTEI($queryParams as map(*)) as map(*) {
 };
 
 
-declare function getTEIItems($queryParams){
+declare function getTEIItems($queryParams) as item()*{
 
   let $sequence := synopsx.models.synopsx:getDb($queryParams)//tei:TEI
   (: TODO : analyse query params : is an id specified ?  is a sorting order specified ? ... :)
