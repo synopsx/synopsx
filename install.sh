@@ -6,8 +6,7 @@ tempDir=$synopsxBaseDirectory"temp/"
 
 baseXFileUrl=http://files.basex.org/releases/8.3/BaseX83.zip
 saxonUrl=http://downloads.sourceforge.net/project/saxon/Saxon-HE/9.6/SaxonHE9-6-0-7J.zip
-synopsxBranch=dev
-synopsxUrl=https://github.com/ahn-ens-lyon/synopsx/archive/$synopsxBranch".zip"
+synopsxUrl=https://github.com/synopsx/synopsx/archive/master.zip
 dbaUrl=https://github.com/ahn-ens-lyon/dba/archive/master.zip
 user=`who am i | awk '{print $1}'`
 
