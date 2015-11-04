@@ -45,7 +45,7 @@ declare function queryCorpus($queryParams as map(*)) as map(*) {
    let $missingIds := fn:count($texts[fn:not(@xml:id)])
    
    let $meta := map{
-    'title' : fn:count($texts) || ' corpus TEI' ,
+     'title' : if (fn:count($texts) = 1) then synopsx.models.tei:getTitles($texts[1]) else fn:count($texts) || ' TEI corpus',
       'msg' :  if ($missingIds = 0 ) then '' else 'WARNING : ' || $missingIds || ' teiCorpus elements require(s) the @xml:id attribute (generating errors in the SynopsX webapp !)'
     }
   let $content := for $text in $texts return getCorpusMap($text)
@@ -73,7 +73,8 @@ declare function getCorpusMap($item as item()) as map(*) {
  map{
       'description':getProjectDesc($item),
       'title' : getTitles($item),
-      'msg' : checkEncoding($item)
+      'msg' : checkEncoding($item),
+      'text': $item/tei:TEI
       }
   };
   
@@ -89,19 +90,22 @@ declare function getCorpusMap($item as item()) as map(*) {
  : 
  : @rmq for testing with new htmlWrapping
  :)
-declare function queryTEI($queryParams as map(*)) as map(*) {
-  let $texts := getTEIItems($queryParams)
+ 
+ declare function queryTEI($queryParams as map(*)) as map(*) {
+  let $texts := synopsx.models.tei:getTEIItems($queryParams)
   let $missingIds := fn:count($texts[fn:not(@xml:id)])
    let $meta := map{
-    'title' : fn:count($texts) || ' TEI texts' ,
+    'title' : if (fn:count($texts) = 1) then synopsx.models.tei:getTitles($texts[1]) else fn:count($texts) || ' TEI texts',
     'msg' :  if ($missingIds = 0 ) then '' else 'WARNING : ' || $missingIds || ' TEI elements require(s) the @xml:id attribute (generating errors in the SynopsX webapp !)'
     }
-  let $content := for $text in $texts return getTEIMap($text)
+  let $content := for $text in $texts return synopsx.models.tei:getTEIMap($text)
   return  map{
     'meta'    : $meta,
     'content' : $content
     }
 };
+ 
+
 
 
 declare function getTEIItems($queryParams) as item()*{
@@ -123,7 +127,7 @@ declare function getTEIMap($item as item()) as map(*) {
       'title' : getTitles($item),
       'date' : getDate($item/tei:teiHeader),
       'author' : getAuthors($item/tei:teiHeader),
-      'text' : $item/tei:text,
+      'text' : $item,
       'id' : fn:string($item/@xml:id) ,
       'msg' : checkEncoding($item)
       }
