@@ -78,8 +78,8 @@ declare function wrapper($queryParams as map(*), $data as map(*), $outputParams 
           then replace node $text with pattern($queryParams, $data, $outputParams)
           else 
            let $value := map:get($meta, $key)
-           return if ($value instance of node()* and  fn:not(fn:empty($value))) 
-           then replace node $text with render($queryParams, $outputParams, $value)
+           return if (fn:empty($value)) then ()
+           else if($value instance of element()*) then replace node $text with render($queryParams, $outputParams, $value)
            else replace node $text with replace($text, $meta, fn:true())      
      (: inc :)
     
@@ -117,8 +117,8 @@ declare function pattern($queryParams as map(*), $data as map(*), $outputParams 
         where fn:matches($text, $regex)
         let $key := fn:replace($text, '\{|\}', '')
         let $value := map:get($content, $key)
-        return if ($value instance of node()* and fn:not(fn:empty($value))) 
-          then replace node $text with render($queryParams, $outputParams, $value)
+        return if (fn:empty($value)) then ()
+          else if($value instance of element()*) then replace node $text with (render($queryParams, $outputParams, $value))
           else replace node $text with replace($text, $content, fn:true())
       )
 };
@@ -163,10 +163,9 @@ declare function render($queryParams as map(*), $outputParams as map(*), $value 
   return 
     if ($xquery) 
       then synopsx.mappings.tei2html:entry($value, $options)
-    else if ($xsl) 
-      then for $item in $value
-           return xslt:transform($item, synopsx.models.synopsx:getXsltPath($queryParams, $xsl))
-      else $value
+    else for $item in $value return
+        if ($xsl) then xslt:transform($item, synopsx.models.synopsx:getXsltPath($queryParams, $xsl))
+        else $item
 };
 
 
