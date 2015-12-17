@@ -73,7 +73,7 @@ declare
 function home() {
   let $queryParams := map {
     'project' : $example.webapp:project,
-    'dbName' :  $example.webapp:db,
+    
     'model' : 'tei' ,
     'function' : 'queryCorpus',
     'id' : $example.webapp:project
@@ -105,7 +105,7 @@ declare
 function textsJS() {
    let $queryParams := map {
       'project' : $example.webapp:project,     
-      'dbName' : $example.webapp:db,
+      
       'model' : 'tei',
       'function' : 'queryTEI'
     }    
@@ -127,7 +127,7 @@ declare
 function textsHtml() {  
     let $queryParams := map {
     'project' : $example.webapp:project,
-    'dbName' :  $example.webapp:db,
+    
     'model' : 'tei' ,
     'function' : 'queryTEI'
     }
@@ -155,7 +155,7 @@ declare
 function textHtml($id) {
   let $queryParams := map {
   'project' : $example.webapp:project,
-  'dbName' :  $example.webapp:db,
+  
   'model' : 'tei' ,
   'function' : 'queryTEI',
   'id':$id
@@ -184,7 +184,7 @@ declare
 function eadHtml() {
   let $queryParams := map {
   'project' : $example.webapp:project,
-  'dbName' :  $example.webapp:db,
+  
   'model' : 'ead' ,
   'function' : 'queryEad'
   }
@@ -211,7 +211,7 @@ declare
 function cHtml() {
   let $queryParams := map {
   'project' : $example.webapp:project,
-  'dbName' :  $example.webapp:db,
+  
   'model' : 'ead' ,
   'function' : 'queryC'
   }

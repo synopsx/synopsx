@@ -79,7 +79,7 @@ function index() {
 function home($myProject) {
   let $queryParams := map {
     'project' : $myProject,
-    'dbName' :  synopsx.models.synopsx:getProjectDB($myProject),
+    
     'model' : 'tei' ,
     'function' :  'queryTEI'    }
     
@@ -107,7 +107,7 @@ declare
 function textHtml($myProject, $id) {
   let $queryParams := map {
     'project' : $myProject,
-    'dbName' :   synopsx.models.synopsx:getProjectDB($myProject),
+
     'model' : 'tei' ,
     'function' : 'queryTEI',
     'id' : $id

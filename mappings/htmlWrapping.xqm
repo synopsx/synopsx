@@ -78,7 +78,7 @@ declare function wrapper($queryParams as map(*), $data as map(*), $outputParams 
           then replace node $text with pattern($queryParams, $data, $outputParams)
           else 
            let $value := map:get($meta, $key)
-           return if (fn:empty($value)) then ()
+           return if (fn:empty($value)) then replace node $text with ()
            else if($value instance of element()*) then replace node $text with render($queryParams, $outputParams, $value)
            else replace node $text with replace($text, $meta, fn:true())      
      (: inc :)
@@ -117,7 +117,7 @@ declare function pattern($queryParams as map(*), $data as map(*), $outputParams 
         where fn:matches($text, $regex)
         let $key := fn:replace($text, '\{|\}', '')
         let $value := map:get($content, $key)
-        return if (fn:empty($value)) then ()
+        return if (fn:empty($value)) then replace node $text with ()
           else if($value instance of element()*) then replace node $text with (render($queryParams, $outputParams, $value))
           else replace node $text with replace($text, $content, fn:true())
       )
