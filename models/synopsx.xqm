@@ -122,7 +122,7 @@ declare function getLayoutPath($queryParams as map(*), $template as xs:string?) 
  : @return a path 
  :)
 declare function getXsltPath($queryParams as map(*), $xsl as xs:string?) as xs:string { 
-  let $path :=  $G:WEBAPP || 'static/' || map:get($queryParams, 'project') || '/xsl/' || $xsl
+  let $path :=  fn:trace($G:WEBAPP || 'synopsx/files/' || map:get($queryParams, 'project') || '/xsl/' || $xsl)
   return 
     if (file:exists($path)) 
     then $path
