@@ -55,7 +55,9 @@
 	     seg
 	     note -->
 	<xsl:template match="/">
+		<section>
 		<xsl:apply-templates/>
+	</section>
 	</xsl:template>
 	<xsl:template match="teiHeader"/>
 	<xsl:template match="TEI">

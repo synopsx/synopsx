@@ -81,7 +81,7 @@ function home(){
     'lang' : 'fr',
     'layout' : 'synopsx.xhtml',
     'pattern' : 'inc_defaultItem.xhtml',
-    'xsl':'tei2html5.xsl'
+    'xsl':'tei2html.xsl'
     }  
  return synopsx.models.synopsx:htmlDisplay($queryParams, $outputParams)
 };
