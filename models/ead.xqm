@@ -42,7 +42,7 @@ declare function queryEad($queryParams as map(*)) as map(*) {
    let $missingIds := fn:count($repos[fn:not(@xml:id)])
    
    let $meta := map{
-    'title' : fn:count($repos) || ' EAD repositories dans la base ' ||synopsx.models.synopsx:getDb($queryParams) 
+    'title' : fn:count($repos) || ' EAD repositories dans la base ' || $queryParams('dbName') 
     }
   let $content := for $text in $repos return getEadMap($text)
   return  map{

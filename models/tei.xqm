@@ -43,10 +43,9 @@ declare default function namespace "synopsx.models.tei";
 declare function queryCorpus($queryParams as map(*)) as map(*) {
   let $texts := getCorpusItems($queryParams)
    let $missingIds := fn:count($texts[fn:not(@xml:id)])
-   let $title :=  if (fn:count($texts) = 1) then synopsx.models.tei:getTitles($texts) else fn:count($texts) || ' TEI corpus'
+   
    let $meta := map{
-     'title' : $title,
-     'page-title': fn:data($title),
+     'title' : if (fn:count($texts) = 1) then synopsx.models.tei:getTitles($texts[1]) else fn:count($texts) || ' TEI corpus',
       'msg' :  if ($missingIds = 0 ) then '' else 'WARNING : ' || $missingIds || ' teiCorpus elements require(s) the @xml:id attribute (generating errors in the SynopsX webapp !)'
     }
   let $content := for $text in $texts return getCorpusMap($text)
@@ -95,10 +94,8 @@ declare function getCorpusMap($item as item()) as map(*) {
  declare function queryTEI($queryParams as map(*)) as map(*) {
   let $texts := synopsx.models.tei:getTEIItems($queryParams)
   let $missingIds := fn:count($texts[fn:not(@xml:id)])
-  let $title :=  if (fn:count($texts) = 1) then synopsx.models.tei:getTitles($texts) else fn:count($texts) || ' TEI texts'
    let $meta := map{
-    'title' : $title,
-      'page-title': fn:data($title),
+    'title' : if (fn:count($texts) = 1) then synopsx.models.tei:getTitles($texts[1]) else fn:count($texts) || ' TEI texts',
     'msg' :  if ($missingIds = 0 ) then '' else 'WARNING : ' || $missingIds || ' TEI elements require(s) the @xml:id attribute (generating errors in the SynopsX webapp !)'
     }
   let $content := for $text in $texts return synopsx.models.tei:getTEIMap($text)
@@ -141,7 +138,7 @@ declare function getTEIMap($item as item()) as map(*) {
  : this function creates a map of two maps : one for metadata, one for content data
  :)
 declare function queryBibl($queryParams) {
-  let $texts := db:open(synopsx.models.synopsx:getDb($queryParams))//tei:bibl
+  let $texts := db:open(map:get($queryParams, 'dbName'))//tei:bibl
   let $meta := map{
     'title' : 'Bibliographie'
     }
@@ -156,7 +153,7 @@ declare function queryBibl($queryParams) {
  : this function creates a map of two maps : one for metadata, one for content data
  :)
 declare function queryResp($queryParams) {
-  let $texts := db:open(synopsx.models.synopsx:getDb($queryParams))//tei:respStmt
+  let $texts := db:open(map:get($queryParams, 'dbName'))//tei:respStmt
   let $meta := map{
     'title' : 'Responsables de l édition'
     }
@@ -230,8 +227,10 @@ declare function getResp($item as element()) {
  : @param $lang iso langcode starts
  : @return a string of comma separated titles
  :)
-declare function getTitles($content as node()*){
-  $content/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title
+declare function getTitles($content as element()*){
+  fn:string-join(
+    for $title in $content/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title/text()
+    return fn:string-join($title), ' ')
 };
 
 (:~

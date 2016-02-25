@@ -210,23 +210,21 @@
 		</strong>
 	</xsl:template>
 	<xsl:template match="hi[@rend='italic']">
-		<i>
+		<em>
 			<xsl:apply-templates />
-		</i>
+		</em>
 	</xsl:template>
-	<xsl:template match="hi[@rend='superscript'] | hi[@rend='sup']">
+	<xsl:template match="hi[@rend='superscript']">
 		<sup>
 			<xsl:apply-templates/>
 		</sup>
 	</xsl:template>
-	<xsl:template match="hi[@rend='underscript'] | hi[@rend='sub']">
+	<xsl:template match="hi[@rend='underscript']">
 		<sub>
 			<xsl:apply-templates/>
 		</sub>
 	</xsl:template>
 
-
-  
 	<xsl:template match="foreign">
 		<span class="{local-name()}">
 			<xsl:apply-templates/>
