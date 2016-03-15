@@ -223,4 +223,3 @@ function cHtml() {
   }
 return synopsx.models.synopsx:htmlDisplay($queryParams, $outputParams)
 };  
-
