@@ -165,7 +165,7 @@ declare function render($queryParams as map(*), $outputParams as map(*), $value 
       then synopsx.mappings.tei2html:entry($value, $options)
     else if ($xsl) 
       then for $node in $value
-           return xslt:transform($node, synopsx.models.synopsx:getXsltPath($queryParams, $xsl))/*
+           return xslt:transform($node, synopsx.models.synopsx:getXsltPath($queryParams, $xsl), map{'saxon:strip-space':'no'})
       else $value
 };
 

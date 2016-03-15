@@ -133,6 +133,58 @@ declare function getTEIMap($item as item()) as map(*) {
       }
   };
   
+  
+  (:~
+ : this function returns a sequence of map for meta and content 
+ : !! the result structure has changed to allow sorting early in mapping
+ : 
+ : @rmq for testing with new htmlWrapping
+ :)
+(:~
+ : this function returns a sequence of map for meta and content 
+ : !! the result structure has changed to allow sorting early in mapping
+ : 
+ : @rmq for testing with new htmlWrapping
+ :)
+ 
+ declare function queryDiv($queryParams as map(*)) as map(*) {
+  let $texts := synopsx.models.tei:getDivItems($queryParams)
+ 
+   let $meta := map{
+    'title' : $texts/tei:head[1]
+    }
+  let $content := for $text in $texts return synopsx.models.tei:getDivMap($text)
+  return  map{
+    'meta'    : $meta,
+    'content' : $content
+    }
+};
+ 
+
+
+
+declare function getDivItems($queryParams) as item()*{
+
+  let $sequence := synopsx.models.synopsx:getDb($queryParams)//tei:div
+  (: TODO : analyse query params : is an id specified ?  is a sorting order specified ? ... :)
+  return 
+      if ($queryParams('id'))  then $sequence[@xml:id = $queryParams('id')] else $sequence
+};
+
+
+
+
+
+
+declare function getDivMap($item as item()) as map(*) {
+ map{
+     
+      'title' : $item/tei:head,
+      'text' : $item,
+      'id' : fn:string($item/@xml:id)
+      }
+  };
+  
 
 (:~
  : this function creates a map of two maps : one for metadata, one for content data
