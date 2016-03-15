@@ -78,8 +78,8 @@ declare function wrapper($queryParams as map(*), $data as map(*), $outputParams 
           then replace node $text with pattern($queryParams, $data, $outputParams)
           else 
            let $value := map:get($meta, $key)
-           return if (fn:empty($value)) then replace node $text with ()
-           else if($value instance of element()*) then replace node $text with render($queryParams, $outputParams, $value)
+           return if ($value instance of node()* and  fn:not(fn:empty($value))) 
+           then replace node $text with render($queryParams, $outputParams, $value)
            else replace node $text with replace($text, $meta, fn:true())      
      (: inc :)
     
@@ -117,8 +117,8 @@ declare function pattern($queryParams as map(*), $data as map(*), $outputParams 
         where fn:matches($text, $regex)
         let $key := fn:replace($text, '\{|\}', '')
         let $value := map:get($content, $key)
-        return if (fn:empty($value)) then replace node $text with ()
-          else if($value instance of element()*) then replace node $text with (render($queryParams, $outputParams, $value))
+        return if ($value instance of node()* and fn:not(fn:empty($value))) 
+          then replace node $text with render($queryParams, $outputParams, $value)
           else replace node $text with replace($text, $content, fn:true())
       )
 };
@@ -154,7 +154,7 @@ declare function replace($text as xs:string, $input as map(*), $delete as xs:boo
  :
  : @todo check the xslt with an xslt 1.0
  :)
-declare function render($queryParams as map(*), $outputParams as map(*), $value as item()* ) as item()* {
+declare function render($queryParams as map(*), $outputParams as map(*), $value as node()* ) as item()* {
   let $xquery := map:get($outputParams, 'xquery')
   let $xsl :=  map:get($outputParams, 'xsl')
   let $options := map{
@@ -163,9 +163,10 @@ declare function render($queryParams as map(*), $outputParams as map(*), $value 
   return 
     if ($xquery) 
       then synopsx.mappings.tei2html:entry($value, $options)
-    else for $item in $value return
-        if ($xsl) then xslt:transform($item, synopsx.models.synopsx:getXsltPath($queryParams, $xsl))
-        else $item
+    else if ($xsl) 
+      then for $node in $value
+           return xslt:transform($node, synopsx.models.synopsx:getXsltPath($queryParams, $xsl), map{'saxon:strip-space':'no'})
+      else $value
 };
 
 

@@ -72,7 +72,7 @@ declare
 function home(){
   let $queryParams := map {
     'project' : $synopsx.synopsx:project,
-    
+    'dbName' :  $synopsx.synopsx:db,
     'model' : 'tei' ,
     'function' : 'queryTEI',
     'id':'synopsx'
@@ -94,7 +94,7 @@ declare
 function config() as element(html) {
   let $queryParams := map {
     'project' : $synopsx.synopsx:project,
-    
+    'dbName' :  $synopsx.synopsx:db,
     'model' : 'synopsx' ,
     'function' : 'getProjectsList'
     }
