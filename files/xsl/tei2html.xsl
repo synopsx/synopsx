@@ -1,9 +1,9 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0"
 	xpath-default-namespace="http://www.tei-c.org/ns/1.0"
 	xmlns="http://www.w3.org/1999/xhtml" xmlns:xs="http://www.w3.org/2001/XMLSchema" exclude-result-prefixes="xs">
 	<xsl:output method="xml" encoding="UTF-8" indent="yes" omit-xml-declaration="yes"/>
-	<xsl:strip-space elements="*"/>
+	<xsl:preserve-space elements="*"/>
 	<!--
 	     group
 	     text

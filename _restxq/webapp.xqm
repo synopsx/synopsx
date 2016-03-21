@@ -57,28 +57,12 @@ declare default function namespace 'synopsx.webapp' ;
 declare 
   %restxq:path("")
 function index() {
-  <rest:response>
-    <http:response status="303" message="See Other">
-      <http:header name="location" value="/home"/>
-    </http:response>
-  </rest:response>
-};
-
-(:~
- : this resource function is the default home
- : @return a home based on the default project in 'config.xml'
- : @todo move project test to lib/ ?
- :)
-declare 
-  %restxq:path("/home")
-  %restxq:produces('text/html')
-  %output:method("html")
-  %output:html-version("5.0")
-function home() {
    web:redirect(if(db:exists("synopsx"))
               then synopsx.models.synopsx:getDefaultProject() || '/' (: rediriger vers le projet par défault :)
               else '/synopsx/install')
 };
+
+
 
 
 (:~
