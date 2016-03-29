@@ -2,8 +2,8 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0"
 	xpath-default-namespace="http://www.tei-c.org/ns/1.0"
 	xmlns="http://www.w3.org/1999/xhtml" xmlns:xs="http://www.w3.org/2001/XMLSchema" exclude-result-prefixes="xs">
-	<xsl:output method="xml" encoding="UTF-8" indent="yes" omit-xml-declaration="yes"/>
-	<xsl:preserve-space elements="*"/>
+	<xsl:output method="xml" encoding="UTF-8" indent="no" omit-xml-declaration="yes"/>
+<!--	<xsl:preserve-space elements="*"/>-->
 	<!--
 	     group
 	     text
@@ -188,11 +188,7 @@
 		<span class="{local-name()}">[…]</span>
 	</xsl:template>
 	<xsl:template match="supplied | unclear">
-		<span class="{local-name()}">
-			<xsl:text> [</xsl:text>
-				<xsl:apply-templates/>
-			<xsl:text>] </xsl:text>
-		</span>
+		<span class="{local-name()}">[<xsl:apply-templates/>]</span>
 	</xsl:template>
 	<xsl:template match="sic">
 		<span class="{local-name()}">
@@ -215,6 +211,11 @@
 		<i>
 			<xsl:apply-templates />
 		</i>
+	</xsl:template>
+	<xsl:template match="hi[@rend='underline']">
+		<u>
+			<xsl:apply-templates />
+		</u>
 	</xsl:template>
 	<xsl:template match="hi[@rend='superscript'] | hi[@rend='sup']">
 		<sup>
