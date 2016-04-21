@@ -36,18 +36,11 @@ import module namespace G = 'synopsx.globals' at '../globals.xqm' ;
 declare
 %rest:path('/synopsx/files/{$file=.+}')
 function synopsx.files:file($file as xs:string) as item()+ {
-  let $path := $G:FILES || $file
-  return (
-    <rest:response>
-      <http:response>
-        <http:header name='Cache-Control' value='max-age=3600,public'/>
-      </http:response>
-      <output:serialization-parameters>
-      <output:media-type value='{ synopsx.files:mime-type($path) }'/>
-      <output:method value='raw'/>
-      </output:serialization-parameters>
-    </rest:response>,
-    file:read-binary($path))
+    let $path := $G:FILES || $file
+    return (
+      web:response-header(map { 'media-type': web:content-type($path) }),
+      file:read-binary($path)
+    )
 };
 
 (:~
