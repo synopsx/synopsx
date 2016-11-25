@@ -52,5 +52,5 @@ function synopsx.files:file($file as xs:string) as item()+ {
 declare function synopsx.files:mime-type(
   $name  as xs:string
 ) as xs:string {
-  Q{java:org.basex.io.MimeTypes}get($name)
+  fetch:content-type($name)
 };
