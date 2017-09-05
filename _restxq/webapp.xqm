@@ -57,6 +57,24 @@ declare default function namespace 'synopsx.webapp' ;
 declare 
   %restxq:path("")
 function index() {
+  <rest:response>
+    <http:response status="303" message="See Other">
+      <http:header name="location" value="/home"/>
+    </http:response>
+  </rest:response>
+};
+
+(:~
+ : this resource function is the default home
+ : @return a home based on the default project in 'config.xml'
+ : @todo move project test to lib/ ?
+ :)
+declare 
+  %restxq:path("/home")
+  %restxq:produces('text/html')
+  %output:method("html")
+  %output:html-version("5.0")
+function home() {
    web:redirect(if(db:exists("synopsx"))
               then synopsx.models.synopsx:getDefaultProject() || '/' (: rediriger vers le projet par défault :)
               else '/synopsx/install')
@@ -64,34 +82,6 @@ function index() {
 
 
 
-
-(:~
- : this resource function is the html representation of the corpus resource
- :
- : @return an html representation of the corpus resource with a bibliographical list
- : the HTML serialization also shows a bibliographical list
- :)
- declare 
-  %restxq:path('/{$myProject}')
-  %rest:produces('text/html')
-  %output:method("html")
-  %output:html-version("5.0")
-function home($myProject) {
-  let $queryParams := map {
-    'project' : $myProject,
-    'dbName' :  synopsx.models.synopsx:getProjectDB($myProject),
-    'model' : 'tei' ,
-    'function' :  'queryTEI'    }
-    
-    let $outputParams := map {
-    'lang' : 'fr',
-    'layout' : 'home.xhtml',
-    'pattern' : 'inc_defaultList.xhtml'
-    (: specify an xslt mode and other kind of output options :)
-    }
-    
-    return synopsx.models.synopsx:htmlDisplay($queryParams, $outputParams)
-}; 
 
 (:~
  : this resource function is the html representation of the corpus resource

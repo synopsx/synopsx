@@ -59,7 +59,7 @@ declare default function namespace 'synopsx.mappings.htmlWrapping' ;
 declare function wrapper($queryParams as map(*), $data as map(*), $outputParams as map(*)) as node()* {
   let $meta := map:get($data, 'meta')
   let $layout := synopsx.models.synopsx:getLayoutPath($queryParams, map:get($outputParams, 'layout'))
-  let $wrap := fn:doc($layout)
+  let $wrap := fetch:xml($layout)
   let $regex := '\{(.*?)\}'
   return
     $wrap/* update (
@@ -134,13 +134,13 @@ declare function pattern($queryParams as map(*), $data as map(*), $outputParams 
  :)
 declare function replace($text as xs:string, $input as map(*), $delete as xs:boolean) as xs:string {
   let $tokens := fn:tokenize($text, '\{|\}')
-  let $updated := fn:string-join( 
+  let $updated := fn:string-join(fn:data( 
     for $token in $tokens
-    let $value := map:get($input, $token)
+    let $value := fn:data(map:get($input, $token))
     return if (fn:empty($value)) 
       then if ($delete) then () (: delete :) else $token (: leave :)
       else $value
-    )
+    ))
   return $updated
 };
 
