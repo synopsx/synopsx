@@ -25,6 +25,8 @@ module namespace example.webapp = 'example.webapp' ;
  :
  :)
 
+import module namespace rest = "http://exquery.org/ns/restxq";
+
 (: Import synopsx's globals variables and libraries :)
 import module namespace G = "synopsx.globals" at '../../../globals.xqm' ;
 import module namespace synopsx.models.synopsx = 'synopsx.models.synopsx' at '../../../models/synopsx.xqm' ;
@@ -50,7 +52,7 @@ declare variable $example.webapp:db := synopsx.models.synopsx:getProjectDB($exam
  :
  :)
 declare 
-  %restxq:path("/example")
+  %rest:path("/example")
 function index() {
   <rest:response>
     <http:response status="303" message="See Other">
@@ -66,7 +68,7 @@ function index() {
  : the HTML serialization also shows a bibliographical list
  :)
 declare 
-  %restxq:path('/example/home')
+  %rest:path('/example/home')
   %rest:produces('text/html')
   %output:method("html")
   %output:html-version("5.0")
@@ -99,7 +101,7 @@ function home() {
  : @bug not working curl -I -H "Accept:text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8" http://localhost:8984/corpus/
  :)
 declare 
-  %restxq:path('/example/tei')
+  %rest:path('/example/tei')
   %rest:produces('application/json')
   %output:method('json')
 function textsJS() {
@@ -120,7 +122,7 @@ function textsJS() {
  : the HTML serialization also shows a bibliographical list
  :)
 declare 
-  %restxq:path('/example/tei')
+  %rest:path('/example/tei')
   %rest:produces('text/html')
   %output:method("html")
   %output:html-version("5.0")
@@ -148,7 +150,7 @@ function textsHtml() {
  : the HTML serialization also shows a bibliographical list
  :)
 declare 
-  %restxq:path('/example/tei/{$id}')
+  %rest:path('/example/tei/{$id}')
   %rest:produces('text/html')
   %output:method("html")
   %output:html-version("5.0")
@@ -177,7 +179,7 @@ return synopsx.models.synopsx:htmlDisplay($queryParams, $outputParams)
  : the HTML serialization also shows a bibliographical list
  :)
 declare 
-  %restxq:path('/example/ead')
+  %rest:path('/example/ead')
   %rest:produces('text/html')
   %output:method("html")
   %output:html-version("5.0")
@@ -204,7 +206,7 @@ return synopsx.models.synopsx:htmlDisplay($queryParams, $outputParams)
  : the HTML serialization also shows a bibliographical list
  :)
 declare 
-  %restxq:path('/example/ead/c')
+  %rest:path('/example/ead/c')
   %rest:produces('text/html')
   %output:method("html")
   %output:html-version("5.0")
