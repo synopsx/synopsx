@@ -25,6 +25,7 @@ module namespace synopsx.webapp = 'synopsx.webapp' ;
  :
  :)
 
+import module namespace rest = "http://exquery.org/ns/restxq";
 import module namespace G = "synopsx.globals" at '../globals.xqm' ;
 import module namespace synopsx.models.synopsx = 'synopsx.models.synopsx' at '../models/synopsx.xqm' ;
 import module namespace synopsx.models.tei = "synopsx.models.tei" at '../models/tei.xqm';
@@ -55,7 +56,7 @@ declare default function namespace 'synopsx.webapp' ;
  : this resource function redirect to /home
  :)
 declare 
-  %restxq:path("")
+  %rest:path("")
 function index() {
    web:redirect(if(db:exists("synopsx"))
               then synopsx.models.synopsx:getDefaultProject() || '/' (: rediriger vers le projet par défault :)
@@ -72,7 +73,7 @@ function index() {
  : the HTML serialization also shows a bibliographical list
  :)
  declare 
-  %restxq:path('/{$myProject}')
+  %rest:path('/{$myProject}')
   %rest:produces('text/html')
   %output:method("html")
   %output:html-version("5.0")
@@ -100,7 +101,7 @@ function home($myProject) {
  : the HTML serialization also shows a bibliographical list
  :)
 declare 
-  %restxq:path('/{$myProject}/text/{$id}')
+  %rest:path('/{$myProject}/text/{$id}')
   %rest:produces('text/html')
   %output:method("html")
   %output:html-version("5.0")

@@ -25,6 +25,7 @@ module namespace synopsx.oai = 'synopsx.oai' ;
  :
  :)
 
+import module namespace rest = "http://exquery.org/ns/restxq";
 import module namespace request = 'http://exquery.org/ns/request' ;
 
 declare namespace xsi = 'http://www.w3.org/2001/XMLSchema-instance' ;
@@ -35,7 +36,7 @@ declare default element namespace 'http://www.openarchives.org/OAI/2.0/' ;
 
 declare variable $synopsx.oai:tei2dc := '../files/xsl/tei2dc.xsl' ;
 
-declare %restxq:path('{$project}/oai')
+declare %rest:path('{$project}/oai')
   %output:method('xml')
   %rest:query-param('verb', '{$verb}', '')
   %rest:query-param('identifier', '{$identifier}')
