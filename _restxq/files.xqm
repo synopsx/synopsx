@@ -25,6 +25,7 @@ module namespace synopsx.files = 'synopsx.files' ;
  :
  :)
 
+import module namespace rest = "http://exquery.org/ns/restxq";
 import module namespace G = 'synopsx.globals' at '../globals.xqm' ;
 
 (:~

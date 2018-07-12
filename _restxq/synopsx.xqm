@@ -25,6 +25,7 @@ module namespace synopsx.synopsx = 'synopsx.synopsx' ;
  :
  :)
 
+import module namespace rest = "http://exquery.org/ns/restxq";
 import module namespace G = 'synopsx.globals' at '../globals.xqm' ;
 import module namespace synopsx.models.tei = 'synopsx.models.tei' at '../models/tei.xqm' ;
 import module namespace synopsx.models.synopsx = 'synopsx.models.synopsx' at '../models/synopsx.xqm' ;
@@ -39,7 +40,7 @@ declare variable $synopsx.synopsx:db := synopsx.models.synopsx:getProjectDB($syn
  : this resource function redirects to the synopsx' home
  :)
 declare 
-  %restxq:path('/synopsx')
+  %rest:path('/synopsx')
 function index() {
   web:redirect(if(db:exists("synopsx"))
               then '/synopsx/home' 
@@ -51,7 +52,7 @@ function index() {
  : @todo give contents
  :)
 declare 
-  %restxq:path('/synopsx/install')
+  %rest:path('/synopsx/install')
   %output:method('html')
   %output:html-version('5.0')
   %updating
@@ -66,7 +67,7 @@ function install(){
  : @todo give contents
  :)
 declare 
-  %restxq:path('/synopsx/home')
+  %rest:path('/synopsx/home')
   %output:method('html')
   %output:html-version('5.0')
 function home(){
@@ -88,10 +89,10 @@ function home(){
 
 declare 
   %rest:GET
-  %restxq:path('/synopsx/config')
+  %rest:path('/synopsx/config')
   %output:method('html')
   %output:html-version('5.0')
-function config() as element(html) {
+function config() as element() {
   let $queryParams := map {
     'project' : $synopsx.synopsx:project,
     'dbName' :  $synopsx.synopsx:db,
@@ -110,7 +111,7 @@ function config() as element(html) {
 
 declare 
   %rest:POST
-  %restxq:path('/synopsx/config')
+  %rest:path('/synopsx/config')
   %output:method('html')
   %rest:query-param("project",  "{$project}")
   %updating
@@ -124,7 +125,7 @@ function config($project) {
 
 declare 
   %rest:GET
-  %restxq:path('/synopsx/create-project')
+  %rest:path('/synopsx/create-project')
   %output:method('html')
   %output:html-version('5.0')
 function create_project() as element(html) {
@@ -140,7 +141,7 @@ function create_project() as element(html) {
 
 declare 
   %rest:POST
-  %restxq:path('/synopsx/create-project')
+  %rest:path('/synopsx/create-project')
   %output:method('html')
   %rest:query-param("project",  "{$project}")
   %updating

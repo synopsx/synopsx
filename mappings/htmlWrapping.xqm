@@ -109,7 +109,7 @@ declare function pattern($queryParams as map(*), $data as map(*), $outputParams 
     if ($order = 'descending') then () else map:get($content, $sorting) descending
   let $regex := '\{(.*?)\}'
   return
-    fn:doc($pattern)/* update (
+   fn:doc($pattern)/* update (
        for $text in .//@*
         where fn:matches($text, $regex)
         return replace value of node $text with replace($text, $content, fn:false()),
