@@ -193,7 +193,7 @@ declare
   %perm:allow("admin")
   %output:method('html')
   %output:html-version('5.0')
-function create_project() as element(html) {
+function create_project()  {
   let $queryParams := map {
     
     }
@@ -212,6 +212,7 @@ declare
   %rest:query-param("project",  "{$project}")
   %updating
 function create_project($project) {
+  if(db:exists($project)) then () else
   db:create($project, (), (), map { 'chop': fn:true(), 'textindex': fn:true(),'attrindex': fn:true() }),
   insert node 
       <project> 
