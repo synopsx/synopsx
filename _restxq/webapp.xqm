@@ -75,10 +75,15 @@ declare
   %rest:produces('text/html')
   %output:method("html")
   %output:html-version("5.0")
-function home() {
-   web:redirect(if(db:exists("synopsx"))
-              then synopsx.models.synopsx:getDefaultProject() || '/' (: rediriger vers le projet par défault :)
-              else '/synopsx/install')
+function home() { 
+   web:redirect(
+           if(db:exists("synopsx")) then 
+           let $default := synopsx.models.synopsx:getDefaultProject()
+           return     if (fn:empty($default)) then    '/synopsx/config' 
+                else  '/'  || $default  (: rediriger vers le projet par défault :)
+           else  '/synopsx/install'             
+            )
+             
 };
 
 
@@ -109,8 +114,8 @@ function home($myProject) {
     'pattern' : 'inc_defaultList.xhtml'
     (: specify an xslt mode and other kind of output options :)
     }
-    
-    return synopsx.models.synopsx:htmlDisplay($queryParams, $outputParams)
+    return if(fn:empty($queryParams('dbName'))) then  fn:error() 
+    else synopsx.models.synopsx:htmlDisplay($queryParams, $outputParams)
 }; 
 
 (:~

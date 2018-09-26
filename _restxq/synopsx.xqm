@@ -222,3 +222,7 @@ function create_project($project) {
   into db:open('synopsx', 'config.xml')//projects,
   db:output(web:redirect("/synopsx/config"))
 };
+
+declare %rest:path("/synopsx/erreur") function error404() {
+   fn:doc($G:HOME || 'templates/error404.xhtml')
+};
