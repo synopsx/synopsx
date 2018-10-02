@@ -160,12 +160,16 @@ declare function render($queryParams as map(*), $outputParams as map(*), $value 
   let $options := map{
     'lb' : map:get($outputParams, 'lb')
     }
+  let $params := map:get($outputParams, 'params')
   return 
     if ($xquery) 
       then synopsx.mappings.tei2html:entry($value, $options)
     else if ($xsl) 
       then for $node in $value
-           return xslt:transform($node, synopsx.models.synopsx:getXsltPath($queryParams, $xsl))
+           return 
+               if (fn:empty($params) )
+                 then xslt:transform($node, synopsx.models.synopsx:getXsltPath($queryParams, $xsl))
+                 else xslt:transform($node, synopsx.models.synopsx:getXsltPath($queryParams, $xsl), $params)
       else $value
 };
 

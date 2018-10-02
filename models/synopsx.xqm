@@ -167,7 +167,7 @@ declare function htmlDisplay($queryParams as map(*), $outputParams as map(*)) as
     let $data := fn:function-lookup($function, 1)($queryParams)
     return synopsx.mappings.htmlWrapping:wrapper($queryParams, $data, $outputParams)
   }catch err:*{   
-       synopsx.models.synopsx:error($queryParams, $err:code, $err:additional)
+       synopsx.models.synopsx:error($queryParams, $err:code, $err:additional, $err:line-number)
     }
 };
 
@@ -179,11 +179,12 @@ declare function htmlDisplay($queryParams as map(*), $outputParams as map(*)) as
  : @param $err:additional the error description, module, line and column numbers, error message
  : @return an html view of the error messages
  :)
-declare function error($queryParams as map(*), $err:code as xs:QName, $err:additional as xs:string) as element() {
+declare function error($queryParams as map(*), $err:code as xs:QName, $err:additional as xs:string,  $err:line-number as xs:integer) as element() {
   let $error := map {
     'title' : 'An error occured :(',
     'error code' : fn:string($err:code),
-    'error stack trace' : $err:additional
+    'error stack trace' : $err:additional,
+    'error in line': $err:line-number 
     }
   let $data := map{
     'meta' : $error,
