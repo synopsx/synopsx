@@ -59,7 +59,7 @@ declare
 function install(){
   db:create("synopsx", ($G:FILES||"xml/synopsx.xml",$G:FILES||"xml/config.xml"), (), map {'chop':fn:false()}),
   db:create("example", ($G:FILES||"xml/teiSample.xml", $G:FILES||"xml/eadSample.xml"), (), map {'chop':fn:false()}),
-  db:output(web:redirect("/synopsx/home"))
+  update:output(web:redirect("/synopsx/home"))
 };
 
 (:~
@@ -119,7 +119,7 @@ function config($project) {
     db:create-backup('synopsx'),
     delete node db:open('synopsx', 'config.xml')//@default, (: supprimer tout attribut défault préexistant :)
     insert node (attribute { 'default' } { 'true' }) into db:open('synopsx', 'config.xml')//project[resourceName/text()=$project],
-    db:output(web:redirect("/synopsx/config"))  
+    update:output(web:redirect("/synopsx/config"))  
 };
 
 
@@ -153,5 +153,5 @@ function create_project($project) {
         <dbName>{$project}</dbName>
       </project>      
   into db:open('synopsx', 'config.xml')//projects,
-  db:output(web:redirect("/synopsx/config"))
+  update:output(web:redirect("/synopsx/config"))
 };

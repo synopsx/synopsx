@@ -1,0 +1,52 @@
+ <html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr">
+   <head>
+      <meta charset="utf-8" />
+      <title>SynopsX</title>
+      <meta name="description" content="SynopsX : moteur d'affichage html de fichiers XML" />
+      <meta name="author" content="SynopsX" />
+      <meta name="keywords" content="Free software" />
+      <link rel="copyright" href="© See license"/>
+     
+     
+      <!-- Bootstrap core CSS -->
+      <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet" />
+      <link href="/synopsx/files/css/main.css" rel="stylesheet" />
+      
+      <!-- JS -->
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+      <script src="/synopsx/files/js/synopsx.js"></script>
+      <!-- ajouter js pour lt IE 9 -->
+   </head>
+   <body>
+ 
+<header data-url="inc_header"/>
+
+<div class="container">
+<div class="row">
+
+ <h3>L'accès aux pages d'installation et de configuration de SynopsX est réservé aux administrateur·trice·s</h3>
+
+ <hr/>
+  <section>
+   
+    <form action="/synopsx/login-check" method="post">
+      Login : <input name="name"/>
+      Mot de passe : <input type="password" name="pass"/>
+      <input type="submit"/>
+    </form>
+  </section>  
+</div>
+</div>
+
+
+<footer data-url="inc_footer"/>
+
+  </body>
+  <script type="text/javascript">
+        // synopsx's composition
+        $(document).ready(function(){
+          init();
+        }); 
+      </script>
+</html>
