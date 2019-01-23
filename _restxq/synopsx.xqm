@@ -26,8 +26,6 @@ module namespace synopsx.synopsx = 'synopsx.synopsx' ;
  :)
 
 import module namespace rest = "http://exquery.org/ns/restxq";
-import module namespace Session = 'http://basex.org/modules/session';
-
 import module namespace G = 'synopsx.globals' at '../globals.xqm' ;
 import module namespace synopsx.models.tei = 'synopsx.models.tei' at '../models/tei.xqm' ;
 import module namespace synopsx.models.synopsx = 'synopsx.models.synopsx' at '../models/synopsx.xqm' ;
@@ -49,7 +47,20 @@ function index() {
               else '/synopsx/install')
 };
 
-
+(:~
+ : this resource function is the synopsx' home
+ : @todo give contents
+ :)
+declare 
+  %rest:path('/synopsx/install')
+  %output:method('html')
+  %output:html-version('5.0')
+  %updating
+function install(){
+  db:create("synopsx", ($G:FILES||"xml/synopsx.xml",$G:FILES||"xml/config.xml"), (), map {'chop':fn:false()}),
+  db:create("example", ($G:FILES||"xml/teiSample.xml", $G:FILES||"xml/eadSample.xml"), (), map {'chop':fn:false()}),
+  update:output(web:redirect("/synopsx/home"))
+};
 
 (:~
  : this resource function is the synopsx' home
@@ -76,86 +87,12 @@ function home(){
  return synopsx.models.synopsx:htmlDisplay($queryParams, $outputParams)
 };
 
-
-
-(:~ Login page (visible to everyone). :)
-declare
-  %rest:path("/synopsx/login")
-  %output:method("html")
-function login() {
-    fn:doc($G:HOME || 'templates/login.xhtml')
-};
-
-declare
-  %rest:path("/synopsx/login-check")
-  %rest:query-param("name", "{$name}")
-  %rest:query-param("pass", "{$pass}")
-  function login($name, $pass) {
-  if (fn:empty($name)) then  web:redirect("/synopsx/login")
-  else
-  try {
-    user:check($name, $pass),
-    Session:set('id', $name),
-    web:redirect("/synopsx")
-  } catch user:* {
-    web:redirect("/synopsx/login")
-  }
-};
- 
-declare
-  %rest:path("/synopsx/logout")
-function logout() {
-  Session:delete('id'),
-  web:redirect("/synopsx")
-};
-
-declare %perm:check('/synopsx/install', '{$perm}') function check-install($perm) {
-  if (fn:empty(Session:get('id'))) then  web:redirect("/synopsx/login")
-  else
-  let $user := Session:get('id')
-  where fn:not(user:list-details($user)/@permission = $perm?allow)
-  return web:redirect("/synopsx/login")
-};
-
-declare %perm:check('/synopsx/config', '{$perm}') function check-config($perm) {
-   if (fn:empty(Session:get('id'))) then  web:redirect("/synopsx/login")
-  else
-  let $user := Session:get('id')
-  where fn:not(user:list-details($user)/@permission = $perm?allow)
-  return web:redirect("/synopsx/login")
-};
-
-declare %perm:check('/synopsx/create-project', '{$perm}') function check-create-project($perm) {
-  if (fn:empty(Session:get('id'))) then  web:redirect("/synopsx/login")
-  else
-  let $user := Session:get('id')
-  where fn:not(user:list-details($user)/@permission = $perm?allow)
-  return web:redirect("/synopsx/login")
-};
-
-(:~
- : this resource function is the synopsx' home
- : @todo give contents
- :)
-declare 
-  %rest:path('/synopsx/install')
-  %perm:allow("admin")
-  %output:method('html')
-  %output:html-version('5.0')
-  %updating
-function install(){
-  db:create("synopsx", ($G:FILES||"xml/synopsx.xml",$G:FILES||"xml/config.xml"), (), map {'chop':fn:false()}),
-  db:create("example", ($G:FILES||"xml/teiSample.xml", $G:FILES||"xml/eadSample.xml"), (), map {'chop':fn:false()}),
-  db:output(web:redirect("/synopsx/home"))
-};
-
 declare 
   %rest:GET
   %rest:path('/synopsx/config')
-  %perm:allow("admin")
   %output:method('html')
   %output:html-version('5.0')
-function config() as element() {
+function config() as element(html) {
   let $queryParams := map {
     'project' : $synopsx.synopsx:project,
     'dbName' :  $synopsx.synopsx:db,
@@ -175,7 +112,6 @@ function config() as element() {
 declare 
   %rest:POST
   %rest:path('/synopsx/config')
-  %perm:allow("admin")
   %output:method('html')
   %rest:query-param("project",  "{$project}")
   %updating
@@ -183,17 +119,16 @@ function config($project) {
     db:create-backup('synopsx'),
     delete node db:open('synopsx', 'config.xml')//@default, (: supprimer tout attribut défault préexistant :)
     insert node (attribute { 'default' } { 'true' }) into db:open('synopsx', 'config.xml')//project[resourceName/text()=$project],
-    db:output(web:redirect("/synopsx/config"))  
+    update:output(web:redirect("/synopsx/config"))  
 };
 
 
 declare 
   %rest:GET
   %rest:path('/synopsx/create-project')
-  %perm:allow("admin")
   %output:method('html')
   %output:html-version('5.0')
-function create_project()  {
+function create_project() as element(html) {
   let $queryParams := map {
     
     }
@@ -207,12 +142,10 @@ function create_project()  {
 declare 
   %rest:POST
   %rest:path('/synopsx/create-project')
-  %perm:allow("admin")
   %output:method('html')
   %rest:query-param("project",  "{$project}")
   %updating
 function create_project($project) {
-  if(db:exists($project)) then () else
   db:create($project, (), (), map { 'chop': fn:true(), 'textindex': fn:true(),'attrindex': fn:true() }),
   insert node 
       <project> 
@@ -220,9 +153,5 @@ function create_project($project) {
         <dbName>{$project}</dbName>
       </project>      
   into db:open('synopsx', 'config.xml')//projects,
-  db:output(web:redirect("/synopsx/config"))
-};
-
-declare %rest:path("/synopsx/erreur") function error404() {
-   fn:doc($G:HOME || 'templates/error404.xhtml')
+  update:output(web:redirect("/synopsx/config"))
 };
