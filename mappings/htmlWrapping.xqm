@@ -57,8 +57,8 @@ declare default function namespace 'synopsx.mappings.htmlWrapping' ;
  :
  :)
 declare function wrapper($queryParams as map(*), $data as map(*), $outputParams as map(*)) as node()* {
-  let $meta := map:get($data, 'meta')
-  let $layout := synopsx.models.synopsx:getLayoutPath($queryParams, map:get($outputParams, 'layout'))
+  let $meta := $data('meta')
+  let $layout := synopsx.models.synopsx:getLayoutPath($queryParams, $outputParams('layout'))
   let $wrap := fetch:xml($layout)
   let $regex := '\{(.*?)\}'
   return

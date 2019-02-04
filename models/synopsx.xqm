@@ -42,10 +42,12 @@ declare default function namespace "synopsx.models.synopsx";
  :)
 declare function getProjectsList($queryParams as map(*)) as map(*) {
   let $projects := db:open('synopsx', 'config.xml')//project
+  let $count := fn:string(fn:count($projects))
+  let $checkName := if ($queryParams('checkName') = 'unavailable') then 'A project with this name already exists' else  ''
   let $meta := map{
-    'title' : 'Liste des projets',
-    'count' : fn:string(fn:count($projects)),
-    'defaultProject' : getDefaultProject()
+    'title' : $count || ' configured projects',
+    'defaultProject' : getDefaultProject(),
+    'checkName' : $checkName
     }
   let $content := for $project in $projects return 
     getSynopsxStatus($project)
@@ -56,7 +58,7 @@ declare function getProjectsList($queryParams as map(*)) as map(*) {
   };
 
 declare function getSynopsxStatus($project) as map(*) {
-  let $isDefault := if (fn:exists($project/@default) and $project/@default=fn:true())
+  let $isDefault := if (fn:exists($project/@default) and $project/@default='true')
                     then "checked"
                     else ""
   return map {'project':fn:string($project/resourceName/text()), 'isDefault':$isDefault}

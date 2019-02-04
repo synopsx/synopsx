@@ -97,7 +97,8 @@ declare function getCorpusMap($item as item()) as map(*) {
    let $meta := map{
     'title' : if (fn:count($texts) = 1) then getTitles($texts[1]) else fn:count($texts) || ' TEI texts',
     'msg' :  if ($missingIds = 0 ) then '' else 'WARNING : ' || $missingIds || ' TEI elements require(s) the @xml:id attribute (generating errors in the SynopsX webapp !)',
-    'description' :   if (fn:count($texts) = 1) then getTitles($texts[1]) else fn:count($texts) || ' TEI texts'
+    'description' :   if (fn:count($texts) = 1) then getTitles($texts[1]) else fn:count($texts) || ' TEI texts',
+    'project' : $queryParams('project')
     }
   let $content := for $text in $texts return getTEIMap($text)
   return  map{
