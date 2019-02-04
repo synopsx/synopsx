@@ -92,7 +92,7 @@ declare
   %rest:path('/synopsx/config')
   %output:method('html')
   %output:html-version('5.0')
-function config() as element(html) {
+function config() as element() {
   let $queryParams := map {
     'project' : $synopsx.synopsx:project,
     'dbName' :  $synopsx.synopsx:db,
