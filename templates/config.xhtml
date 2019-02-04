@@ -33,7 +33,9 @@
       <p>Default project : <span>{defaultProject}</span></p>
       <p>Change default project</p>
       <form action="/synopsx/config" method="POST" class="form-inline">
-        <select name="project">{content}</select>
+        <select name="project">
+        {content}
+      </select>
         <input type="submit" value="OK"  style="display:inline;"/>
       </form>  
 

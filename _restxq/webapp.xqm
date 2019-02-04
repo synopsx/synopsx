@@ -58,32 +58,9 @@ declare default function namespace 'synopsx.webapp' ;
 declare 
   %rest:path("")
 function index() {
-  <rest:response>
-    <http:response status="303" message="See Other">
-      <http:header name="location" value="/home"/>
-    </http:response>
-  </rest:response>
-};
-
-(:~
- : this resource function is the default home
- : @return a home based on the default project in 'config.xml'
- : @todo move project test to lib/ ?
- :)
-declare 
-  %rest:path("/home")
-  %rest:produces('text/html')
-  %output:method("html")
-  %output:html-version("5.0")
-function home() { 
-   web:redirect(
-           if(db:exists("synopsx")) then 
-           let $default := synopsx.models.synopsx:getDefaultProject()
-           return     if (fn:empty($default)) then    '/synopsx/config' 
-                else  '/'  || $default  (: rediriger vers le projet par défault :)
-           else  '/synopsx/install'             
-            )
-             
+   web:redirect(if(db:exists("synopsx"))
+              then synopsx.models.synopsx:getDefaultProject() || '/' (: rediriger vers le projet par défault :)
+              else '/synopsx/install')
 };
 
 
@@ -95,7 +72,6 @@ function home() {
  : @return an html representation of the corpus resource with a bibliographical list
  : the HTML serialization also shows a bibliographical list
  :)
-
  declare 
   %rest:path('/{$myProject}')
   %rest:produces('text/html')
@@ -114,8 +90,8 @@ function home($myProject) {
     'pattern' : 'inc_defaultList.xhtml'
     (: specify an xslt mode and other kind of output options :)
     }
-    return if(fn:empty($queryParams('dbName'))) then  fn:error() 
-    else synopsx.models.synopsx:htmlDisplay($queryParams, $outputParams)
+    
+    return synopsx.models.synopsx:htmlDisplay($queryParams, $outputParams)
 }; 
 
 (:~
@@ -124,7 +100,6 @@ function home($myProject) {
  : @return an html representation of the corpus resource with a bibliographical list
  : the HTML serialization also shows a bibliographical list
  :)
-
 declare 
   %rest:path('/{$myProject}/text/{$id}')
   %rest:produces('text/html')

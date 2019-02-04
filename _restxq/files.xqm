@@ -44,3 +44,14 @@ function synopsx.files:file($file as xs:string) as item()+ {
     )
 };
 
+(:~
+ : this function return a mime-type for a specified file
+ :
+ : @param  $name  file name
+ : @return a mime type for the specified file
+ :)
+declare function synopsx.files:mime-type(
+  $name  as xs:string
+) as xs:string {
+  fetch:content-type($name)
+};

@@ -109,7 +109,7 @@ declare function pattern($queryParams as map(*), $data as map(*), $outputParams 
     if ($order = 'descending') then () else map:get($content, $sorting) descending
   let $regex := '\{(.*?)\}'
   return
-   fn:doc($pattern)/* update (
+    fetch:xml($pattern)/* update (
        for $text in .//@*
         where fn:matches($text, $regex)
         return replace value of node $text with replace($text, $content, fn:false()),
@@ -134,13 +134,13 @@ declare function pattern($queryParams as map(*), $data as map(*), $outputParams 
  :)
 declare function replace($text as xs:string, $input as map(*), $delete as xs:boolean) as xs:string {
   let $tokens := fn:tokenize($text, '\{|\}')
-  let $updated := fn:string-join(fn:data( 
+  let $updated := fn:string-join( 
     for $token in $tokens
-    let $value := fn:data(map:get($input, $token))
+    let $value := map:get($input, $token)
     return if (fn:empty($value)) 
       then if ($delete) then () (: delete :) else $token (: leave :)
       else $value
-    ))
+    )
   return $updated
 };
 
@@ -160,16 +160,12 @@ declare function render($queryParams as map(*), $outputParams as map(*), $value 
   let $options := map{
     'lb' : map:get($outputParams, 'lb')
     }
-  let $params := map:get($outputParams, 'params')
   return 
     if ($xquery) 
       then synopsx.mappings.tei2html:entry($value, $options)
     else if ($xsl) 
       then for $node in $value
-           return 
-               if (fn:empty($params) )
-                 then xslt:transform($node, synopsx.models.synopsx:getXsltPath($queryParams, $xsl))
-                 else xslt:transform($node, synopsx.models.synopsx:getXsltPath($queryParams, $xsl), $params)
+           return xslt:transform($node, synopsx.models.synopsx:getXsltPath($queryParams, $xsl))
       else $value
 };
 
@@ -193,7 +189,7 @@ declare function render($queryParams as map(*), $outputParams as map(*), $value 
 declare function wrapperNew($queryParams as map(*), $data as map(*), $outputParams as map(*)) as node()* {
   let $meta := map:get($data, 'meta')
   let $layout := map:get($outputParams, 'layout')
-  let $wrap := fn:doc(synopsx.models.synopsx:getLayoutPath($queryParams, $layout))
+  let $wrap := fetch:xml(synopsx.models.synopsx:getLayoutPath($queryParams, $layout))
   let $regex := '\{(.+?)\}'
   return
     $wrap/* update (
@@ -217,7 +213,7 @@ declare function wrapperNew($queryParams as map(*), $data as map(*), $outputPara
 declare function patternNew($queryParams as map(*), $data as map(*), $outputParams as map(*)) as node()* {
   let $contents := map:get($data, 'content')
   let $pattern := map:get($outputParams, 'pattern')
-  let $pattern := fn:doc(synopsx.models.synopsx:getLayoutPath($queryParams, $pattern))
+  let $pattern := fetch:xml(synopsx.models.synopsx:getLayoutPath($queryParams, $pattern))
   let $regex := '\{(.+?)\}'
   for $content in $contents
   return
