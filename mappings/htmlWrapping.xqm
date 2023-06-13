@@ -59,10 +59,10 @@ declare default function namespace 'synopsx.mappings.htmlWrapping' ;
 declare function wrapper($queryParams as map(*), $data as map(*), $outputParams as map(*)) as node()* {
   let $meta := $data('meta')
   let $layout := synopsx.models.synopsx:getLayoutPath($queryParams, $outputParams('layout'))
-  let $wrap := fetch:xml($layout)
+  let $wrap := fetch:doc($layout)
   let $regex := '\{(.*?)\}'
   return
-    $wrap/* update (
+    $wrap/* update {
       for $text in .//*[@data-url] 
             let $incOutputParams := map:put($outputParams, 'layout', $text/@data-url || '.xhtml')
             let $inc :=  wrapper($queryParams, $data, $incOutputParams)
@@ -83,7 +83,7 @@ declare function wrapper($queryParams as map(*), $data as map(*), $outputParams 
            else replace node $text with replace($text, $meta, fn:true())      
      (: inc :)
     
-      )
+    }
 };
 
 (:~
@@ -109,7 +109,7 @@ declare function pattern($queryParams as map(*), $data as map(*), $outputParams 
     if ($order = 'descending') then () else map:get($content, $sorting) descending
   let $regex := '\{(.*?)\}'
   return
-    fetch:xml($pattern)/* update (
+    fetch:doc($pattern)/* update {
        for $text in .//@*
         where fn:matches($text, $regex)
         return replace value of node $text with replace($text, $content, fn:false()),
@@ -120,7 +120,7 @@ declare function pattern($queryParams as map(*), $data as map(*), $outputParams 
         return if ($value instance of node()* and fn:not(fn:empty($value))) 
           then replace node $text with render($queryParams, $outputParams, $value)
           else replace node $text with replace($text, $content, fn:true())
-      )
+    }
 };
 
 (:~
@@ -193,16 +193,16 @@ declare function render($queryParams as map(*), $outputParams as map(*), $value 
 declare function wrapperNew($queryParams as map(*), $data as map(*), $outputParams as map(*)) as node()* {
   let $meta := map:get($data, 'meta')
   let $layout := map:get($outputParams, 'layout')
-  let $wrap := fetch:xml(synopsx.models.synopsx:getLayoutPath($queryParams, $layout))
+  let $wrap := fetch:doc(synopsx.models.synopsx:getLayoutPath($queryParams, $layout))
   let $regex := '\{(.+?)\}'
   return
-    $wrap/* update (
+    $wrap/* update {
       for $node in .//*[fn:matches(text(), $regex)] | .//@*[fn:matches(., $regex)]
       let $key := fn:analyze-string($node, $regex)//fn:group/text()
       return if ($key = 'content') 
         then replace node $node with patternNew($queryParams, $data, $outputParams)
         else associate($queryParams, $meta, $outputParams, $node)
-      )
+    }
   };
 
 (:~
@@ -217,14 +217,14 @@ declare function wrapperNew($queryParams as map(*), $data as map(*), $outputPara
 declare function patternNew($queryParams as map(*), $data as map(*), $outputParams as map(*)) as node()* {
   let $contents := map:get($data, 'content')
   let $pattern := map:get($outputParams, 'pattern')
-  let $pattern := fetch:xml(synopsx.models.synopsx:getLayoutPath($queryParams, $pattern))
+  let $pattern := fetch:doc(synopsx.models.synopsx:getLayoutPath($queryParams, $pattern))
   let $regex := '\{(.+?)\}'
   for $content in $contents
   return
-    $pattern/* update (
+    $pattern/* update {
       for $node in .//*[fn:matches(text(), $regex)] | .//@*[fn:matches(., $regex)]
       return associate($queryParams, $content, $outputParams, $node)
-      )
+    }
   };
 
 (:~
