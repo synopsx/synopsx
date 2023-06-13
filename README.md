@@ -1,4 +1,4 @@
-NEW : An update of SynopsX for *BaseX 10* is available at https://gitlab.in2p3.fr/ihrim/synopsx-basex10 
+
 
 # Synopsx
 
