@@ -24,7 +24,7 @@ For Mac OS and Linux, you may use the [install.sh](https://raw.githubusercontent
 #### BaseX installation:
 
 * Go to http://basex.org/
-* Click on "Download BaseX 8.3"
+* Click on "Download BaseX zip"
 
 #### Add Saxon processor HE to BaseX:
 * Download from (choose the zipped directory, on top of the page): http://sourceforge.net/projects/saxon/files/
