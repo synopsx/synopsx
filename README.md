@@ -16,12 +16,12 @@ SynopsX requires Java 11 or higher
 
 * Go to http://basex.org/
 * Download the BaseX ZIP package
-* Extract it in your workspace
+* Unzip it and extract it into your workspace
 
 #### Add Saxon processor HE and XML resolver to BaseX:
 * Download Saxon HE 12.x from https://www.saxonica.com/download/java.xml
 * Unzip downloaded file
-* Put content on the following directory: basex/lib
+* Extract it into the following directory: basex/lib
 
 
 #### SynopsX installation
