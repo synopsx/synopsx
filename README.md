@@ -8,16 +8,7 @@ SynopsX is a light framework to publish full XML corpus with BaseX XML native da
 ## Installation
 
 ### Prerequisites
-SynopsX requires Java version 8
-
-* Download the last JDK from this Oracle Page (not the JRE!): http://www.objis.com/formation-java/tutoriel-java-installation-jdk.html. Before downloading choose the appropriate version (system + processor: i.e. Mac OSX x64)
-* Go to you Downloads directory and double-click on the installation file: i.e.: jdk-8u60-macosx-x64.dmg or jdk-8u60-macosx-x64.exe
-* Complete installation
-* Open a terminal to check the Java JDK version with the following command: java -version
-
-### Automatic installation
-
-For Mac OS and Linux, you may use the [install.sh](https://raw.githubusercontent.com/synopsx/synopsx/master/install.sh) script
+SynopsX requires Java version 11 or higher and BaseX 10.x
 
 ### Manual installation
 
@@ -26,8 +17,8 @@ For Mac OS and Linux, you may use the [install.sh](https://raw.githubusercontent
 * Go to http://basex.org/
 * Click on "Download BaseX zip"
 
-#### Add Saxon processor HE to BaseX:
-* Download from (choose the zipped directory, on top of the page): http://sourceforge.net/projects/saxon/files/
+#### Add Saxon processor HE and XML resolver to BaseX:
+* Download Saxon HE 12.x from https://www.saxonica.com/download/java.xml
 * Unzip downloaded file
 * Put content on the following directory: basex/lib
 
