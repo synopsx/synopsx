@@ -8,7 +8,7 @@ SynopsX is a light framework to publish full XML corpus with BaseX XML native da
 ## Installation
 
 ### Prerequisites
-SynopsX requires Java version 11 or higher and BaseX 10.x
+SynopsX requires Java 11 or higher and BaseX 10.x
 
 ### Manual installation
 
@@ -16,6 +16,7 @@ SynopsX requires Java version 11 or higher and BaseX 10.x
 
 * Go to http://basex.org/
 * Click on "Download BaseX zip"
+* Extract it in your workspace
 
 #### Add Saxon processor HE and XML resolver to BaseX:
 * Download Saxon HE 12.x from https://www.saxonica.com/download/java.xml
