@@ -38,5 +38,5 @@ declare function search:query ($db as xs:string, $word as xs:string) {
     'fuzzy' : true()
   }
   return if ($ftindex) then ( ft:search($db, $word, $outputParams) ) 
-  else ( db:open($db)//*[ft:contains($db, $word, $outputParams)] )
+  else ( db:get($db)//*[ft:contains($db, $word, $outputParams)] )
 };

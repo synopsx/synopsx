@@ -112,7 +112,7 @@ declare function synopsx.oai:ListRecords($project, $from, $until, $metadataPrefi
 declare function synopsx.oai:ListSets($project, $resumptionToken){
   <ListSets>
     {
-      for $set in db:open($project)//*:teiCorpus 
+      for $set in db:get($project)//*:teiCorpus 
       return 
       <set>
         <setSpec>

@@ -192,7 +192,7 @@ declare function getDivMap($item as item()) as map(*) {
  : this function creates a map of two maps : one for metadata, one for content data
  :)
 declare function queryBibl($queryParams) {
-  let $texts := db:open(map:get($queryParams, 'dbName'))//tei:bibl
+  let $texts := db:get(map:get($queryParams, 'dbName'))//tei:bibl
   let $meta := map{
     'title' : 'Bibliographie'
     }
@@ -207,7 +207,7 @@ declare function queryBibl($queryParams) {
  : this function creates a map of two maps : one for metadata, one for content data
  :)
 declare function queryResp($queryParams) {
-  let $texts := db:open(map:get($queryParams, 'dbName'))//tei:respStmt
+  let $texts := db:get(map:get($queryParams, 'dbName'))//tei:respStmt
   let $meta := map{
     'title' : 'Responsables de l édition'
     }

@@ -120,8 +120,8 @@ declare
   %updating
 function config($project) {
     db:create-backup('synopsx'),
-    delete node db:open('synopsx', 'config.xml')//@default, (: supprimer tout attribut défault préexistant :)
-    insert node (attribute { 'default' } { 'true' }) into db:open('synopsx', 'config.xml')//project[resourceName/text()=$project][1],
+    delete node db:get('synopsx', 'config.xml')//@default, (: supprimer tout attribut défault préexistant :)
+    insert node (attribute { 'default' } { 'true' }) into db:get('synopsx', 'config.xml')//project[resourceName/text()=$project][1],
     update:output(web:redirect("/synopsx/config"))  
 };
 
@@ -151,7 +151,7 @@ declare
   %rest:query-param("project",  "{$project}")
   %updating
 function create_project($project) {
-  if(db:open('synopsx', 'config.xml')//project[resourceName/text()=$project]) then 
+  if(db:get('synopsx', 'config.xml')//project[resourceName/text()=$project]) then 
   update:output(web:redirect("/synopsx/config/unavailable"))
   else
       (db:create($project, (), (), map { 'chop': fn:true(), 'textindex': fn:true(),'attrindex': fn:true() }),
@@ -160,7 +160,7 @@ function create_project($project) {
             <resourceName>{$project}</resourceName>
             <dbName>{$project}</dbName>
           </project>      
-      into db:open('synopsx', 'config.xml')//projects,
+      into db:get('synopsx', 'config.xml')//projects,
       update:output(web:redirect("/synopsx/config"))
       )
 };

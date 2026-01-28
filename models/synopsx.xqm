@@ -41,7 +41,7 @@ declare default function namespace "synopsx.models.synopsx";
  : @rmq for testing with new htmlWrapping
  :)
 declare function getProjectsList($queryParams as map(*)) as map(*) {
-  let $projects := db:open('synopsx', 'config.xml')//project
+  let $projects := db:get('synopsx', 'config.xml')//project
   let $count := fn:string(fn:count($projects))
   let $checkName := if ($queryParams('checkName') = 'unavailable') then 'A project with this name already exists' else  ''
   let $meta := map{
@@ -77,9 +77,9 @@ declare function getSynopsxStatus($project) as map(*) {
  :)
 declare function getDefaultProject() as xs:string {
     if(db:exists('synopsx')) then
-      if(db:open('synopsx', 'config.xml')//project[@default="true"]/resourceName/text()) then 
-         db:open('synopsx', 'config.xml')//project[@default="true"]/resourceName/text()
-         else  db:open('synopsx', 'config.xml')//project[1]/resourceName/text()
+      if(db:get('synopsx', 'config.xml')//project[@default="true"]/resourceName/text()) then 
+         db:get('synopsx', 'config.xml')//project[@default="true"]/resourceName/text()
+         else  db:get('synopsx', 'config.xml')//project[1]/resourceName/text()
       else ''
 };
 
@@ -90,8 +90,8 @@ declare function getDefaultProject() as xs:string {
  : @return the dbName according to the project in the config file
  :)
 declare function getProjectDB($project as xs:string) as xs:string {
-  if (db:open('synopsx', 'config.xml')//config/projects/project[resourceName/text() = $project]/dbName)
-   then db:open('synopsx', 'config.xml')//config/projects/project[resourceName/text() = $project]/dbName/text()
+  if (db:get('synopsx', 'config.xml')//config/projects/project[resourceName/text() = $project]/dbName)
+   then db:get('synopsx', 'config.xml')//config/projects/project[resourceName/text() = $project]/dbName/text()
   else ''
 };
 
@@ -223,6 +223,6 @@ declare function getDb($queryParams as map(*)) as document-node()* {
   let $path := $queryParams('path')
   return
     if ($path)
-    then db:open($dbName, $path)
-    else db:open($dbName)
+    then db:get($dbName, $path)
+    else db:get($dbName)
 };
