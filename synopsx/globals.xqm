@@ -30,7 +30,7 @@ declare variable $G:_RESTXQ := $G:HOME || '_restxq/' ;
 declare variable $G:FILES := $G:HOME || 'files/' ;
 declare variable $G:MODELS :=  $G:HOME || 'models/' ;
 declare variable $G:TEMPLATES :=  $G:HOME || 'templates/' ;
-declare variable $G:WORKSPACE :=  $G:HOME || 'workspace/' ;
+declare variable $G:WORKSPACE :=  $G:WEBAPP || 'workspace/' ;
 
 (:~ Status: everything ok. :)
 declare variable $G:OK := '1' ;

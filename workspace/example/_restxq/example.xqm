@@ -28,15 +28,15 @@ module namespace example.webapp = 'example.webapp' ;
 import module namespace rest = "http://exquery.org/ns/restxq";
 
 (: Import synopsx's globals variables and libraries :)
-import module namespace G = "synopsx.globals" at '../../../globals.xqm' ;
-import module namespace synopsx.models.synopsx = 'synopsx.models.synopsx' at '../../../models/synopsx.xqm' ;
+import module namespace G = "synopsx.globals" at '../../../synopsx/globals.xqm' ;
+import module namespace synopsx.models.synopsx = 'synopsx.models.synopsx' at '../../../synopsx/models/synopsx.xqm' ;
 
 (: Put here all import modules declarations as needed :)
-import module namespace synopsx.models.tei = 'synopsx.models.tei' at '../../../models/tei.xqm' ;
-import module namespace synopsx.models.ead = 'synopsx.models.ead' at '../../../models/ead.xqm' ;
+import module namespace synopsx.models.tei = 'synopsx.models.tei' at '../../../synopsx/models/tei.xqm' ;
+import module namespace synopsx.models.ead = 'synopsx.models.ead' at '../../../synopsx/models/ead.xqm' ;
 
 (: Put here all import declarations for mapping according to models :)
-import module namespace synopsx.mappings.htmlWrapping = 'synopsx.mappings.htmlWrapping' at '../../../mappings/htmlWrapping.xqm' ;
+import module namespace synopsx.mappings.htmlWrapping = 'synopsx.mappings.htmlWrapping' at '../../../synopsx/mappings/htmlWrapping.xqm' ;
 
 (: Use a default namespace :)
 declare default function namespace 'example.webapp' ;
