@@ -1,8 +1,8 @@
 xquery version "3.1" ;
-module namespace synopsx.models.templating = "synopsx.models.templating" ;
+module namespace synopsx.mappings.templating = "synopsx.mappings.templating" ;
 
 (:~
- : This module provides models for SynopsX
+ : This module provides mappings for SynopsX
  :
  : @author SynopsX’ team
  : @since 2025-03
@@ -21,7 +21,7 @@ import module namespace G = "synopsx.globals" at "../globals.xqm" ;
 import module namespace synopsx.models.synopsx = 'synopsx.models.synopsx' at '../models/synopsx.xqm' ;
 import module namespace synopsx.mappings.tei2html = 'synopsx.mappings.tei2html' at 'tei2html.xqm' ;
 
-declare default function namespace "synopsx.models.templating" ;
+declare default function namespace "synopsx.mappings.templating" ;
 
 (:~
  : this function wrap the content in an HTML layout
@@ -39,13 +39,13 @@ declare function wrapper($queryParams as map(*), $data as map(*), $outputParams 
   let $wrap := fn:doc(synopsx.models.synopsx:getLayoutPath($queryParams, $layout))
   let $regex := '\{(.+?)\}'
   return
-    $wrap/* update (
+    $wrap/* update {
       for $node in .//*[fn:matches(text(), $regex)] | .//@*[fn:matches(., $regex)]
       let $key := fn:analyze-string($node, $regex)//fn:group/text()
       return if ($key = 'content')
         then replace node $node with pattern($queryParams, $data, $outputParams)
         else associate($queryParams, $meta, $outputParams, $node)
-      )
+      }
   };
 
 (:~
@@ -64,10 +64,10 @@ declare function pattern($queryParams as map(*), $data as map(*), $outputParams 
   let $regex := '\{(.+?)\}'
   for $content in $contents
   return
-    $pattern/* update (
+    $pattern/* update {
       for $node in .//*[fn:matches(text(), $regex)] | .//@*[fn:matches(., $regex)]
       return associate($queryParams, $content, $outputParams, $node)
-      )
+      }
   };
 
 (:~
@@ -133,7 +133,8 @@ declare %updating function associate($queryParams as map(*), $data as map(*), $o
     let $params := map:get($outputParams, 'params')
     return
       if ($xquery)
-        then synopsx.mappings.tei2html:entry($value, $options)
+        (:then synopsx.mappings.tei2html:dispatch($value, $options):)
+        then synopsx.models.synopsx:getMappingsFunction($queryParams, $outputParams)
       else if ($xsl)
         then for $node in $value
              return

@@ -30,7 +30,7 @@ declare namespace map = "http://www.w3.org/2005/xpath-functions/map" ;
 
 import module namespace G = "synopsx.globals" at "../globals.xqm" ;
 import module namespace synopsx.models.synopsx = "synopsx.models.synopsx" at "../models/synopsx.xqm" ;
-import module namespace synopsx.models.templating = "synopsx.models.templating" at "../models/templating.xqm" ;
+import module namespace synopsx.mappings.templating = "synopsx.mappings.templating" at "../mappings/templating.xqm" ;
 
 declare default function namespace "synopsx.restxq.synopsx" ;
 
@@ -57,7 +57,9 @@ declare
   %output:html-version("5.0")
 function home() {
   let $queryParams := map {
-    "function" : synopsx.models.synopsx:getHome()
+    "project" : 'synopsx',
+    "model" : 'synopsx',
+    "function" : "getHome"
   }
   let $outputParams := map {
     "lang" : "fr",
@@ -66,6 +68,7 @@ function home() {
     "xquery" : "tei2html"
     }
   let $function := xs:QName(synopsx.models.synopsx:getModelFunction($queryParams))
-  let $data := fn:function-lookup($function, 1)($queryParams)
-  return synopsx.models.templating:render($queryParams, $outputParams, $data)
+  (: let $data := fn:function-lookup($function, 1)($queryParams) :)
+  let $data := synopsx.models.synopsx:getHome($queryParams)
+  return synopsx.mappings.templating:render($queryParams, $outputParams, $data)
 };

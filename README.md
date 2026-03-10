@@ -31,3 +31,10 @@ L’introduction des templating et de jsoner dans les models.synopsx est-elle co
 Synopsx est un cadre léger pour la publication de sources structurées.
 
 Les fichiers sont organisés
+
+
+# Simplifier les espaces de nom ?
+
+Afin de simplifier les déclarations, partager les espaces de nom.
+
+Import module ou declare namespace
