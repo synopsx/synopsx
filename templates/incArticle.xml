@@ -1,5 +1,5 @@
 <article>
-  <h2>Left-aligned header</h2>
+  <h2>{message}</h2>
   <p>Left-aligned paragraph</p>
   <aside>
     <p>Article callout</p>

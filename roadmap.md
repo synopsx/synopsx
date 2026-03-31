@@ -42,3 +42,6 @@ Todo
 Discussion sur le catch des erreurs
 Discussion sur l’autodocumentation projets ODD
 Discussion sur l’intégration XForms
+
+Convention de nommage des templates
+- utilisation _ comme séparateur pour distinguer les noms de fichier ? On pourrait laisser les utilisateurs libres comme le nom est déclaré littéralement

@@ -63,12 +63,38 @@ function home() {
   }
   let $outputParams := map {
     "lang" : "fr",
-    "layout" : "layout.xhtml",
-    "pattern" : "incArticle.xhtml",
+    "layout" : "layout.xml",
+    "pattern" : "incArticle.xml",
     "xquery" : "tei2html"
     }
   let $function := xs:QName(synopsx.models.synopsx:getModelFunction($queryParams))
   (: let $data := fn:function-lookup($function, 1)($queryParams) :)
   let $data := synopsx.models.synopsx:getHome($queryParams)
-  return synopsx.mappings.templating:render($queryParams, $outputParams, $data)
+  return synopsx.mappings.templating:wrapper($queryParams, $data, $outputParams)
+};
+
+(:~
+ : This resource function is the SynopsX’ home
+ : @todo give contents
+ :)
+declare
+  %rest:path("/synopsx-beta/test-xslt")
+  %output:method("html")
+  %output:html-version("5.0")
+function test-xslt() {
+  let $queryParams := map {
+    "project" : 'synopsx',
+    "model" : 'synopsx',
+    "function" : "getHome"
+  }
+  let $outputParams := map {
+    "lang" : "fr",
+    "layout" : "layout.xml",
+    "pattern" : "incArticle.xml",
+    "xsl" : "default.xsl"
+    }
+  let $function := xs:QName(synopsx.models.synopsx:getModelFunction($queryParams))
+  (: let $data := fn:function-lookup($function, 1)($queryParams) :)
+  let $data := synopsx.models.synopsx:getHome($queryParams)
+  return synopsx.mappings.templating:wrapper($queryParams, $data, $outputParams)
 };

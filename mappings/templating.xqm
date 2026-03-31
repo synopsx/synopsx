@@ -40,7 +40,7 @@ declare function wrapper($queryParams as map(*), $data as map(*), $outputParams 
   let $regex := '\{(.+?)\}'
   return
     $wrap/* update {
-      for $node in .//*[fn:matches(text(), $regex)] | .//@*[fn:matches(., $regex)]
+      for $node in .//*[text()[fn:matches(., $regex)]] | .//@*[fn:matches(., $regex)]
       let $key := fn:analyze-string($node, $regex)//fn:group/text()
       return if ($key = 'content')
         then replace node $node with pattern($queryParams, $data, $outputParams)
@@ -65,7 +65,7 @@ declare function pattern($queryParams as map(*), $data as map(*), $outputParams 
   for $content in $contents
   return
     $pattern/* update {
-      for $node in .//*[fn:matches(text(), $regex)] | .//@*[fn:matches(., $regex)]
+      for $node in .//*[text()[fn:matches(., $regex)]] | .//@*[fn:matches(., $regex)]
       return associate($queryParams, $content, $outputParams, $node)
       }
   };
@@ -122,7 +122,7 @@ declare %updating function associate($queryParams as map(*), $data as map(*), $o
    : @param $outputParams the serialization params
    : @return an html serialization
    :
-   : @todo check the xslt with an xslt 1.0
+   : @todo check the xsl with an xsl 1.0
    :)
   declare function render($queryParams as map(*), $outputParams as map(*), $value as node()* ) as item()* {
     let $xquery := map:get($outputParams, 'xquery')

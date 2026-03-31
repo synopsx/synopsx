@@ -33,7 +33,7 @@ declare default function namespace 'synopsx.mappings.synopsx2json' ;
  : @param $outputParams the serialization params
  : @return an updated HTML document and instantiate pattern
  : @todo treat in the same loop @* and text() ?
- @todo add handling of outputParams (for example {class} attribute or call to an xslt)
+ @todo add handling of outputParams (for example {class} attribute or call to an xsl)
  :)
 declare function jsoner($queryParams as map(*), $data as map(*), $outputParams as map(*)) {
   let $contents := map:get($data, 'content')
@@ -107,7 +107,7 @@ declare function recurse($queryParams, $map as map(*), $outputParams) {
  : @param $outputParams the serialization params
  : @return an html serialization
  :
- : @todo check the xslt with an xslt 1.0
+ : @todo check the xsl with an xsl 1.0
  : @todo select the xquery transformation from xqm
  :)
 declare function render($queryParams as map(*), $outputParams as map(*), $value as item()* ) as item()* {
@@ -125,8 +125,8 @@ declare function render($queryParams as map(*), $outputParams as map(*), $value 
            return
                (:
                if (fn:empty($params) )
-                 then xslt:transform($node, synopsx.models.synopsx:getXsltPath($queryParams, $xsl))
-                 else xslt:transform($node, synopsx.models.synopsx:getXsltPath($queryParams, $xsl), $params)
+                 then xsl:transform($node, synopsx.models.synopsx:getXsltPath($queryParams, $xsl))
+                 else xsl:transform($node, synopsx.models.synopsx:getXsltPath($queryParams, $xsl), $params)
                :) ""
       else $value
 };

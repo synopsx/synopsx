@@ -15,7 +15,9 @@ module namespace synopsx.models.synopsx = "synopsx.models.synopsx" ;
  :)
 
 declare namespace db = "http://basex.org/modules/db" ;
+declare namespace file = "http://expath.org/ns/file" ;
 declare namespace inspect = "http://basex.org/modules/inspect" ;
+declare namespace fn = "http://www.w3.org/2005/xpath-functions" ;
 declare namespace map = "http://www.w3.org/2005/xpath-functions/map" ;
 
 import module namespace G = "synopsx.globals" at "../globals.xqm" ;
@@ -124,10 +126,73 @@ declare function getHome($queryParams) {
     "meta" : "test"
   }
   let $content := map{
-    "test" : <p>contenu test</p>
+    "message" : <p>message</p>
   }
   return map{
     "meta"    : $meta,
     "content" : $content
   }
+};
+
+(:~
+ : This function builds the data for an XQuery error page.
+ :)
+declare function getXQueryError($queryParams as map(*)) as map(*) {
+  let $description := map:get($queryParams, 'description')
+  return map {
+    "meta" : map {
+      "title" : "Erreur BaseX"
+    },
+    "content" : map {
+      "heading" : "Erreur interne",
+      "message" :
+        if ($description)
+        then $description
+        else "Une erreur XQuery est survenue.",
+      "details" : details((
+        detail("Code", map:get($queryParams, 'code')),
+        detail("Message", $description),
+        detail("Module", map:get($queryParams, 'module')),
+        detail("Ligne", map:get($queryParams, 'line-number')),
+        detail("Colonne", map:get($queryParams, 'column-number')),
+        detail("Valeur", map:get($queryParams, 'value'))
+      ))
+    }
+  }
+};
+
+(:~
+ : This function builds the data for an HTTP error page.
+ :)
+declare function getHttpError($queryParams as map(*)) as map(*) {
+  let $status := map:get($queryParams, 'status')
+  let $message := map:get($queryParams, 'message')
+  return map {
+    "meta" : map {
+      "title" : "Erreur HTTP " || $status
+    },
+    "content" : map {
+      "heading" : "Erreur HTTP " || $status,
+      "message" :
+        if ($message)
+        then $message
+        else "Une erreur HTTP est survenue.",
+      "details" : details((
+        detail("URL", map:get($queryParams, 'request-uri')),
+        detail("Statut", $status),
+        detail("Exception", map:get($queryParams, 'exception'))
+      ))
+    }
+  }
+};
+
+declare function detail($label as xs:string, $value as xs:string?) as element()* {
+  if ($value and fn:normalize-space($value) != '') then (
+    <dt>{ $label }</dt>,
+    <dd>{ $value }</dd>
+  ) else ()
+};
+
+declare function details($items as element()*) as element(div) {
+  <div>{ if ($items) then <dl>{ $items }</dl> else () }</div>
 };

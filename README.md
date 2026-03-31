@@ -38,3 +38,37 @@ Les fichiers sont organisés
 Afin de simplifier les déclarations, partager les espaces de nom.
 
 Import module ou declare namespace
+
+---
+
+brancher tes routes SynopsX pour lever des erreurs propres avec web:error
+ajouter un template HTML d’erreur plus propre dans le style du projet
+
+
+Gestion des erreurs
+
+- les erreurs Jetty/BaseX HTTP globales demandent une configuration dans le web.xml du webapp BaseX, qui n’est pas dans ce dépôt
+- en développement, garder l’option RESTXQERRORS active
+en production, désactive-la pour éviter d’exposer les traces complètes au client
+
+```xml
+<error-page>
+  <error-code>400</error-code>
+  <location>/synopsx-beta/error/http/400</location>
+</error-page>
+
+<error-page>
+  <error-code>404</error-code>
+  <location>/synopsx-beta/error/http/404</location>
+</error-page>
+
+<error-page>
+  <error-code>500</error-code>
+  <location>/synopsx-beta/error/http/500</location>
+</error-page>
+
+<error-page>
+  <exception-type>java.lang.Throwable</exception-type>
+  <location>/synopsx-beta/error/http/500</location>
+</error-page>
+```
