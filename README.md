@@ -72,3 +72,23 @@ en production, désactive-la pour éviter d’exposer les traces complètes au c
   <location>/synopsx-beta/error/http/500</location>
 </error-page>
 ```
+
+---
+
+# 7 avril 2026
+
+XForms
+
+Que mettre dans les queryParams ?
+
+- models : peut avoir des valeurs multiples
+- trigger n’a pas sa place
+
+Par défaut, modifiait la première instance.
+
+Charger une instance avec trois informations : le modèle à laquelle elle appartient, l’identifiant de l’instance que doit modifier, et son chemin.
+
+Injecter les jsfunction, instance et espaces de nom
+
+
+
