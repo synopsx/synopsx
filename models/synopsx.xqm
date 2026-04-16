@@ -134,6 +134,25 @@ declare function getHome($queryParams) {
   }
 };
 
+(:
+This function lists basex users
+:)
+declare function getUsers($content as map(*)){
+  let $meta := map{
+    "title" : "Liste des utilisateurs"
+  }
+  let $content := map{
+    "instance" :
+      <xf:instance>
+        <users>{user:list-details()}</users>
+      </xf:instance>
+  }
+  return map{
+    "meta"    : $meta,
+    "content" : $content
+  }
+};
+
 (:~
  : This function builds the data for an XQuery error page.
  :)
