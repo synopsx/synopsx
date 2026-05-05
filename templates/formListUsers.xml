@@ -1,13 +1,17 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:xf="http://www.w3.org/2002/xforms" lang="fr">
+  
   <head>
-    <xf:model>
-        {instance}
-    </xf:model>
+    <link type="text/css" href="static/xsltforms/xsltforms.css" rel="stylesheet"/>
+    <script src="static/xsltforms/xsltforms.js"></script>
   </head>
   <body>
+    <h1>Exemple de XForms avec pseudo-élément</h1>
+    <xforms-model>
+      {instance}
+    </xforms-model>
     <form>
-      <xf:output value="serialize(.)"/>
+      <xforms-output xf-value="serialize(.)"/>
     </form>
   </body>
 </html>

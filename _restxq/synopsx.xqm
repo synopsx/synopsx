@@ -27,7 +27,6 @@ declare namespace http = "http://expath.org/ns/http-client" ;
 declare namespace map = "http://www.w3.org/2005/xpath-functions/map" ;
 
 
-
 import module namespace G = "synopsx.globals" at "../globals.xqm" ;
 import module namespace synopsx.models.synopsx = "synopsx.models.synopsx" at "../models/synopsx.xqm" ;
 import module namespace synopsx.mappings.templating = "synopsx.mappings.templating" at "../mappings/templating.xqm" ;
@@ -97,4 +96,57 @@ function test-xslt() {
   (: let $data := fn:function-lookup($function, 1)($queryParams) :)
   let $data := synopsx.models.synopsx:getHome($queryParams)
   return synopsx.mappings.templating:wrapper($queryParams, $data, $outputParams)
+};
+
+(:~
+ : This resource function is a test for the xforms integration
+ :)
+declare
+  %rest:path("/synopsx-beta/xforms")
+  %output:method("xml")
+function test-xforms() {
+  let $queryParams := map {
+    "project" : 'synopsx',
+    "model" : 'synopsx',
+    "function" : "getUsersXforms"
+  }
+  let $outputParams := map {
+    "lang" : "fr",
+    "layout" : "formListUsersXf.xml",
+    (: "pattern" : "incArticle.xml", :)
+    "xforms-lib" : "xsltforms",
+    "xforms-prefix" : fn:true(),
+    "xforms" : fn:true()
+    }
+  let $function := xs:QName(synopsx.models.synopsx:getModelFunction($queryParams))
+  (: let $data := fn:function-lookup($function, 1)($queryParams) :)
+  let $data := synopsx.models.synopsx:getUsers($queryParams)
+  return synopsx.mappings.templating:wrapper($queryParams, $data, $outputParams)
+};
+
+(:~
+ : This resource function is a test for the xforms integration with pseudo-element
+ :)
+declare
+  %rest:path("/synopsx-beta/xforms-pseudo")
+  %output:method("html")
+  %output:html-version("5.0")
+function test-xforms-pseudo() {
+  let $queryParams := map {
+    "project" : 'synopsx',
+    "model" : 'synopsx',
+    "function" : "getUsers"
+  }
+  let $outputParams := map {
+    "lang" : "fr",
+    "layout" : "formListUsers.xml",
+    (: "pattern" : "incArticle.xml", :)
+    "xforms-lib" : "xsltforms",
+    "xforms" : fn:true()
+    }
+  let $function := xs:QName(synopsx.models.synopsx:getModelFunction($queryParams))
+  (: let $data := fn:function-lookup($function, 1)($queryParams) :)
+  let $data := synopsx.models.synopsx:getUsers($queryParams)
+  return 
+  synopsx.mappings.templating:wrapper($queryParams, $data, $outputParams)
 };

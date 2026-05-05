@@ -52,7 +52,9 @@ Nota : `files/` --> `static/`
 
 SynopsX intègre l’utilisation de [XForms](https://www.w3.org/TR/xforms11/).
 
-Par défaut, on propose l’utilisation du client libre et open source [XSLTForms](https://github.com/AlainCouthures/declarative4all) qui est proposé comme sous-module Git dans le répertoire `static/`.
+Par défaut, on propose l’utilisation du client libre et open source [XSLTForms](https://github.com/AlainCouthures/declarative4all) à installer dans le répertoire `static/`. 
+@rmq actuellement le logiciel est distribué sous forme de release 
+@todo prendre contact avec Couthures pour voir comment l’installer sous la forme d’un sous-module
 
 Les instances, models et formulaires XForms sont placés dans le répertoire `template/`. Le nommage des fichiers est libre ce qui permet d’intégrer directement des XForms dans les templates. 
 
@@ -72,13 +74,13 @@ Dans l’hypothèse où l’utilisateur fait des déclarations directes dans les
 - param pour le choix de la syntaxe
 
 outputParams
-- xforms-lib : optionnel avec valeur par défaut xsltforms pour l’avenir
-- xforms-syntax : optionnel avec valeur par défaut xf | xforms
-- xforms: optionnel true() | false()
+- xforms-lib : optionnel avec valeur par défaut `xsltforms` pour l’avenir
+- xforms-prefix : optionnel si true() utilise la syntaxe préfixée
+- xforms: optionnel `true() | false()` @rmq ???
 
 Il peut y avoir plusieurs instances. Il peut avoir un modèle, deux modèles, etc. et à l’intérieur de chaque modèle plusieurs instances. Il y a deux méthodes pour déclarer les instances, soit directement dans le modèle, soit en les appelant avec des resources externes avec `@src` s’il y en a plusieurs, celles-ci doivent avoir un identifiant.
 
-Lors de la mise à jour d’un contenu avec la bdd, besoin de pouvoir identifier l’instance. Afin de simplifier, il serait sans doute utile que l’on ait le même mécanisme pour servir les instances vierges et les instances devant être mises à jour. Alors servir avec SynopsX
+Lors de la mise à jour d’un contenu avec la bdd, besoin de pouvoir identifier l’instance. Afin de simplifier, il serait sans doute utile que l’on ait le même mécanisme pour servir les instances vierges et les instances devant être mises à jour. Les deux pourraient être servies avec SynopsX
 
 ```xml
 <model>
@@ -103,3 +105,8 @@ En utilisant les mécanismes du templating par défaut. Peut être même pas bes
 
 
 
+## Templating
+
+- Supprimer l’élément quand il y a une valeur vide ?
+
+Trouve cela chouette gros problème rencontré usage conditionnel si qqch dans la séquence ou pas.

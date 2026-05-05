@@ -27,6 +27,8 @@ declare variable $G:MODELS :=  $G:HOME || "models/" ;
 declare variable $G:TEMPLATES :=  $G:HOME || "templates/" ;
 declare variable $G:WORKSPACE :=  $G:HOME || "workspace/" ;
 
+declare variable $G:XFORMS := "static/xsltforms/xsltforms.xsl" ;
+
 (:~ Status: everything ok. :)
 declare variable $G:OK := "1" ;
 (:~ Status: something failed. :)

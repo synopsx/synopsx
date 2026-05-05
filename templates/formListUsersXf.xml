@@ -1,0 +1,17 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:xf="http://www.w3.org/2002/xforms"
+      xf:bogus="/fix/ff"
+      lang="fr">
+  
+  <head>
+    <xf:model>
+      {instance}
+    </xf:model>
+  </head>
+  <body>
+    <h1>XForms avec la syntaxe préfixée</h1>
+    <form>
+      <xf:output value="serialize(.)"/>
+    </form>
+  </body>
+</html>

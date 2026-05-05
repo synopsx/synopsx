@@ -19,6 +19,7 @@ declare namespace file = "http://expath.org/ns/file" ;
 declare namespace inspect = "http://basex.org/modules/inspect" ;
 declare namespace fn = "http://www.w3.org/2005/xpath-functions" ;
 declare namespace map = "http://www.w3.org/2005/xpath-functions/map" ;
+declare namespace xf = "http://www.w3.org/2002/xforms" ;
 
 import module namespace G = "synopsx.globals" at "../globals.xqm" ;
 
@@ -96,14 +97,14 @@ declare function getLayoutPath($queryParams as map(*), $template as xs:string?) 
  : @return a path
  :)
 declare function getMappingsFunction($queryParams as map(*), $outputParams) as xs:QName {
-   let $uri := $queryParams?project || '.models.' || $queryParams?model
-    let $context := inspect:context()
-    let $function := $context/function[@name = $outputParams?xquery]
-    return
-      if ($function/@uri = $uri) then fn:QName($uri, $outputParams?xquery)
-      else if ($function/@uri = 'synopsx.models.' || $outputParams?xquery)
-        then fn:QName('synopsx.models.' || $queryParams?model, $outputParams?xquery)
-        else   fn:QName('synopsx.models.synopsx', 'notFound') (: give default or error :)
+  let $uri := $queryParams?project || '.models.' || $queryParams?model
+  let $context := inspect:context()
+  let $function := $context/function[@name = $outputParams?xquery]
+  return
+    if ($function/@uri = $uri) then fn:QName($uri, $outputParams?xquery)
+    else if ($function/@uri = 'synopsx.models.' || $outputParams?xquery)
+      then fn:QName('synopsx.models.' || $queryParams?model, $outputParams?xquery)
+      else   fn:QName('synopsx.models.synopsx', 'notFound') (: give default or error :)
   };
 
 (:~
@@ -135,16 +136,49 @@ declare function getHome($queryParams) {
 };
 
 (:
-This function lists basex users
-:)
-declare function getUsers($content as map(*)){
+ : This function lists basex users
+ : @rmq this function uses xforms
+ :)
+declare function getUsers($queryParams as map(*)){
   let $meta := map{
-    "title" : "Liste des utilisateurs"
+    "title" : "Liste des utilisateurs",
+    "instance" :
+      <xforms-instance>
+        <script type = "application/xml">
+          <users xmlns="">{user:list-details()}</users>
+        </script>
+      </xforms-instance>
+  }
+  let $content := map{
+    "instance" :
+      <xforms-instance>
+        <users xmlns="">{user:list-details()}</users>
+      </xforms-instance>
+  }
+  return map{
+    "meta"    : $meta,
+    "content" : $content
+  }
+};
+
+(:
+ : This function lists basex users
+ : @rmq this function uses xforms
+ :)
+declare function getUsersXforms($queryParams as map(*)){
+  let $meta := map{
+    "title" : "Liste des utilisateurs",
+    "instance" :
+      <xf:instance>
+        <script type = "application/xml">
+          <users xmlns="">{user:list-details()}</users>
+        </script>
+      </xf:instance>
   }
   let $content := map{
     "instance" :
       <xf:instance>
-        <users>{user:list-details()}</users>
+        <users xmlns="">{user:list-details()}</users>
       </xf:instance>
   }
   return map{
