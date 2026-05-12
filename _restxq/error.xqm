@@ -59,16 +59,16 @@ function xquery-error(
 			then fn:serialize($value, map { "method": "adaptive" })
 			else (),
 		"module" : $module,
-		"line-number" : if (fn:exists($line-number)) then fn:string($line-number) else (),
-		"column-number" : if (fn:exists($column-number)) then fn:string($column-number) else ()
+		"line-number" : fn:string($line-number),
+		"column-number" : fn:string($column-number)
 	}
-	let $function := synopsx.models.synopsx:getModelFunction($queryParams)
-	let $data := fn:function-lookup($function, 1)($queryParams)
 	let $outputParams := map {
 		"lang" : "fr",
 		"layout" : "layout.xml",
 		"pattern" : "incError.xml"
 	}
+	let $function := synopsx.models.synopsx:getModelFunction($queryParams)
+	let $data := fn:function-lookup($function, 1)($queryParams)
 	return (
 		<rest:response>
 			<http:response status="500">
@@ -96,14 +96,14 @@ function http-error($status as xs:string) as item()+ {
 		"message" : string-attribute("javax.servlet.error.message"),
 		"exception" : string-attribute("javax.servlet.error.exception")
 	}
-	let $function := synopsx.models.synopsx:getModelFunction($queryParams)
-	let $data := fn:function-lookup($function, 1)($queryParams)
 	let $statusCode := if ($status castable as xs:integer) then xs:integer($status) else 500
 	let $outputParams := map {
 		"lang" : "fr",
 		"layout" : "layout.xml",
 		"pattern" : "incError.xml"
 	}
+	let $function := synopsx.models.synopsx:getModelFunction($queryParams)
+	let $data := fn:function-lookup($function, 1)($queryParams)
 	return (
 		<rest:response>
 			<http:response status="{$statusCode}">
