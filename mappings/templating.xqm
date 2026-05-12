@@ -75,7 +75,7 @@ declare function pattern($queryParams as map(*), $data as map(*), $outputParams 
   return
     $pattern/* update {
       for $node in .//*[text()[fn:matches(., $regex)]] | .//@*[fn:matches(., $regex)]
-      return associate($queryParams, $data?content, $outputParams, $node)
+      return associate($queryParams, $content, $outputParams, $node)
       }
   };
 
