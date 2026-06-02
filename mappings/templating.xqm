@@ -25,6 +25,8 @@ import module namespace synopsx.mappings.tei2html = 'synopsx.mappings.tei2html' 
 
 declare default function namespace "synopsx.mappings.templating" ;
 
+declare variable $synopsx.mappings.templating:regex := "\s*\{(.+?)\}\s*";
+
 (:~
  : this function wrap the content in an HTML layout
  :
@@ -40,7 +42,6 @@ declare default function namespace "synopsx.mappings.templating" ;
  :)
 declare function wrapper($queryParams as map(*), $data as map(*), $outputParams as map(*)) as node()* {
   let $wrap := fn:doc(synopsx.models.synopsx:getLayoutPath($queryParams, $outputParams?layout))
-  let $regex := '\s*\{(.+?)\}\s*'
   let $pi :=
     if ($outputParams?xforms-prefix)
     then processing-instruction xml-stylesheet {
@@ -50,8 +51,8 @@ declare function wrapper($queryParams as map(*), $data as map(*), $outputParams 
     (
       $pi,
       $wrap/* update {
-      for $node in .//*[text()[fn:matches(., $regex)]] | .//@*[fn:matches(., $regex)]
-      let $key := fn:analyze-string($node, $regex)//fn:group/text()
+      for $node in .//*[text()[fn:matches(., $synopsx.mappings.templating:regex )]] | .//@*[fn:matches(., $synopsx.mappings.templating:regex )]
+      let $key := fn:analyze-string($node, $synopsx.mappings.templating:regex )//fn:group/text()
       return if ($key = 'content')
         then replace node $node with pattern($queryParams, $data, $outputParams)
         else associate($queryParams, $data?meta, $outputParams, $node)
@@ -70,11 +71,10 @@ declare function wrapper($queryParams as map(*), $data as map(*), $outputParams 
  :)
 declare function pattern($queryParams as map(*), $data as map(*), $outputParams as map(*)) as node()* {
   let $pattern := fn:doc(synopsx.models.synopsx:getLayoutPath($queryParams, $outputParams?pattern))
-  let $regex := '\s*\{(.+?)\}\s*'
   for $content in $data?content
   return
     $pattern/* update {
-      for $node in .//*[text()[fn:matches(., $regex)]] | .//@*[fn:matches(., $regex)]
+      for $node in descendant-or-self::*[text()[fn:matches(., $synopsx.mappings.templating:regex )]] | .//@*[fn:matches(., $synopsx.mappings.templating:regex )]
       return associate($queryParams, $content, $outputParams, $node)
       }
   };
@@ -91,9 +91,8 @@ declare function pattern($queryParams as map(*), $data as map(*), $outputParams 
  : @bug doesn't copy other attribute when updating attribute with a sequence
  :)
 declare %updating function associate($queryParams as map(*), $data as map(*), $outputParams as map(*), $node as node()) {
-  let $regex := '\s*\{(.+?)\}\s*'
   let $data := $data
-  let $keys := fn:analyze-string($node, $regex)//fn:group/text()
+  let $keys := fn:analyze-string($node, $synopsx.mappings.templating:regex)//fn:group/text()
   let $values := map:get($data, $keys)
     return typeswitch ($values)
     case empty-sequence() return ()
