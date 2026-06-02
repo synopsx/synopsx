@@ -2,15 +2,18 @@
       xmlns:xf="http://www.w3.org/2002/xforms"
       xf:bogus="/fix/ff"
       lang="fr">
-  
   <head>
+    <title>{title}</title>
     <xf:model>
-      {instance}
+        <xf:instance id="users">{users}</xf:instance>
     </xf:model>
   </head>
   <body>
     <h1>XForms avec la syntaxe préfixée</h1>
     <form>
+      <xf:repeat nodeset="user">
+        <xf:input ref="@name"/>
+      </xf:repeat>
       <xf:output value="serialize(.)"/>
     </form>
   </body>

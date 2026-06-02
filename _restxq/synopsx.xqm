@@ -108,19 +108,20 @@ function test-xforms() {
   let $queryParams := map {
     "project" : 'synopsx',
     "model" : 'synopsx',
-    "function" : "getUsersXforms"
+    "function" : "getUsers"
   }
   let $outputParams := map {
     "lang" : "fr",
     "layout" : "formListUsersXf.xml",
-    (: "pattern" : "incArticle.xml", :)
+    (:"pattern": "incInstance.xml",:)
     "xforms-lib" : "xsltforms",
     "xforms-prefix" : fn:true(),
     "xforms" : fn:true()
-    }
+  }
+
   let $function := xs:QName(synopsx.models.synopsx:getModelFunction($queryParams))
-  (: let $data := fn:function-lookup($function, 1)($queryParams) :)
-  let $data := synopsx.models.synopsx:getUsers($queryParams)
+  let $data := fn:function-lookup($function, 1)($queryParams)
+  (:let $data := synopsx.models.synopsx:getUsersXforms($queryParams):)
   return synopsx.mappings.templating:wrapper($queryParams, $data, $outputParams)
 };
 
@@ -143,10 +144,9 @@ function test-xforms-pseudo() {
     (: "pattern" : "incArticle.xml", :)
     "xforms-lib" : "xsltforms",
     "xforms" : fn:true()
-    }
+  }
   let $function := xs:QName(synopsx.models.synopsx:getModelFunction($queryParams))
-  (: let $data := fn:function-lookup($function, 1)($queryParams) :)
-  let $data := synopsx.models.synopsx:getUsers($queryParams)
-  return 
-  synopsx.mappings.templating:wrapper($queryParams, $data, $outputParams)
+  (: let $data := synopsx.models.synopsx:getUsers($queryParams) :)
+  let $data := fn:function-lookup($function, 1)($queryParams)
+  return synopsx.mappings.templating:wrapper($queryParams, $data, $outputParams)
 };

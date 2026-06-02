@@ -8,7 +8,9 @@
   <body>
     <h1>Exemple de XForms avec pseudo-élément</h1>
     <xforms-model>
-      {instance}
+      <xforms-instance>
+        <script type = "application/xml">{users}</script>
+      </xforms-instance
     </xforms-model>
     <form>
       <xforms-output xf-value="serialize(.)"/>

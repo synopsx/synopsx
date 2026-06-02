@@ -142,19 +142,12 @@ declare function getHome($queryParams) {
 declare function getUsers($queryParams as map(*)){
   let $meta := map{
     "title" : "Liste des utilisateurs",
-    "instance" :
-      <xforms-instance>
-        <script type = "application/xml">
-          <users xmlns="">{user:list-details()}</users>
-        </script>
-      </xforms-instance>
+    "users" : <users xmlns="">{ user:list-details()}</users>
   }
   let $content := map{
-    "instance" :
-      <xforms-instance>
-        <users xmlns="">{user:list-details()}</users>
-      </xforms-instance>
+    "test" : ""
   }
+  
   return map{
     "meta"    : $meta,
     "content" : $content
@@ -164,28 +157,16 @@ declare function getUsers($queryParams as map(*)){
 (:
  : This function lists basex users
  : @rmq this function uses xforms
- :)
-declare function getUsersXforms($queryParams as map(*)){
-  let $meta := map{
-    "title" : "Liste des utilisateurs",
-    "instance" :
-      <xf:instance>
-        <script type = "application/xml">
-          <users xmlns="">{user:list-details()}</users>
-        </script>
-      </xf:instance>
+ ::)
+declare function gettest($queryParams as map (*)) { 
+  let $meta := map { 
+    "a" : "a"
   }
-  let $content := map{
-    "instance" :
-      <xf:instance>
-        <users xmlns="">{user:list-details()}</users>
-      </xf:instance>
+  let $content := map {
+     "test" : "TEST"
   }
-  return map{
-    "meta"    : $meta,
-    "content" : $content
-  }
-};
+return
+    map { "meta" : $meta, "content" : $content } };
 
 (:~
  : This function builds the data for an XQuery error page.
