@@ -123,8 +123,9 @@ function logout() {
  : This resource function is a test for the xforms integration
  ::)
 declare
-  %rest:path("/synopsx-beta/u")
+  %rest:path("/synopsx-beta/users/new")
   %output:method("xml")
+  %perm:allow("admin", "write")
 function newUser() { 
   let $queryParams := map { 
     "project" : 'synopsx',

@@ -29,7 +29,7 @@ declare variable $G:WORKSPACE := if(file:exists($G:WEBAPP || "workspace/"))
   then $G:WEBAPP || "workspace/" 
   else $G:HOME || "workspace/";
 
-declare variable $G:XFORMS := "static/xsltforms/xsltforms.xsl" ;
+declare variable $G:XFORMS := "/synopsx-beta/static/xsltforms/xsltforms.xsl" ;
 
 (:~ Status: everything ok. :)
 declare variable $G:OK := "1" ;

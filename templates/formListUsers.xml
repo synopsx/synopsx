@@ -2,8 +2,8 @@
       xmlns:xf="http://www.w3.org/2002/xforms" lang="fr">
   
   <head>
-    <link type="text/css" href="static/xsltforms/xsltforms.css" rel="stylesheet"/>
-    <script src="static/xsltforms/xsltforms.js"></script>
+    <link type="text/css" href="/synopsx-beta/static/xsltforms/xsltforms.css" rel="stylesheet"/>
+    <script src="/synopsx-beta/static/xsltforms/xsltforms.js"></script>
   </head>
   <body>
     <h1>Exemple de XForms avec pseudo-élément</h1>
