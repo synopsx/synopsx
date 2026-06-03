@@ -125,7 +125,7 @@ function logout() {
 declare
   %rest:path("/synopsx-beta/users/new")
   %output:method("xml")
-  %perm:allow("admin", "write")
+  %perm:allow("admin")
 function newUser() { 
   let $queryParams := map { 
     "project" : 'synopsx',
@@ -150,7 +150,7 @@ declare
   %rest:path("/synopsx-beta/users/put")
   %output:method("xml")
   %rest:header-param("Referer", "{$referer}", "none") %rest:PUT("{$param}")
-  %perm:allow("admin", "write") 
+  %perm:allow("admin") 
   %updating 
 function putUser($param as document-node(), $referer as xs:string) {
   let $user := $param
@@ -163,4 +163,20 @@ function putUser($param as document-node(), $referer as xs:string) {
           return <grant type="{ $right/@type}">{ fn:normalize-space($right)}</grant>
         }</info>
   return user:create($userName, $userPwd, $userPermission, 'xpr', $userInfo)
+};
+
+(:~
+ : Permissions: synopsx-beta/users
+ : Checks if the current user is granted; if not, redirects to the login page.
+ : @param $perm map with permission data
+ :)
+declare
+    %perm:check('/synopsx-beta/users', '{$perm}')
+function usersPermission($perm) {
+  let $user := session:get('id')
+  return
+      if((fn:empty($user) or fn:not(user:list-details($user)[@permission = $perm?allow])) and fn:ends-with($perm?path, 'new'))
+        then web:redirect('/synopsx-beta/login')
+      else if((fn:empty($user) or fn:not(user:list-details($user)[@permission = $perm?allow])) and fn:ends-with($perm?path, 'put'))
+        then web:redirect('/synopsx-beta/login')
 };
