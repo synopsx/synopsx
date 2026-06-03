@@ -10,10 +10,13 @@
     <xforms-model>
       <xforms-instance>
         <script type = "application/xml">{users}</script>
-      </xforms-instance
+      </xforms-instance>
     </xforms-model>
     <form>
-      <xforms-output xf-value="serialize(.)"/>
+        <!-- @xf-nodeset doesn't work with pseudo-xforms-element -->
+        <xforms-repeat xf-ref="user">
+            <xforms-output xf-ref="@name"/>
+        </xforms-repeat>
     </form>
   </body>
 </html>

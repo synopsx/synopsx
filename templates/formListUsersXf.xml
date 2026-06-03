@@ -12,9 +12,8 @@
     <h1>XForms avec la syntaxe préfixée</h1>
     <form>
       <xf:repeat nodeset="user">
-        <xf:input ref="@name"/>
+        <xf:output ref="@name"/>
       </xf:repeat>
-      <xf:output value="serialize(.)"/>
     </form>
   </body>
 </html>

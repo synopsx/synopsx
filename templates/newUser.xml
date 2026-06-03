@@ -1,0 +1,96 @@
+<html
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:xf="http://www.w3.org/2002/xforms"
+    xmlns:ev="http://www.w3.org/2001/xml-events"
+    xmlns:session="session"
+    xf:bogus="/fix/ff"
+    ev:bogus="/fix/ff"
+    session:bogus="/fix/ff"
+    lang="fr">
+    <head>
+        <title>{title}</title>
+        <xf:model id="user">
+            <xf:instance id="sessionUser">
+                <user xmlns="session">
+                    <name/>
+                    <password/>
+                    <permission/>
+                    <info/>
+                </user>
+            </xf:instance>
+            <xf:instance id="sessionPermissions">
+                <permissions xmlns="session">
+                    <permission label="Aucune" value="none"/>
+                    <permission label="Lecture" value="read"/>
+                    <permission label="Écriture" value="write"/>
+                </permissions>
+            </xf:instance>
+
+            <xf:instance id="sessionGrant">
+                <grants xmlns="session">
+                    <grant type="expertises">Expertises</grant>
+                    <grant type="prosopography">Prosopographie</grant>
+                    <grant type="posthumusInventory">Inventaire après décès</grant>
+                </grants>
+            </xf:instance>
+
+            <xf:bind nodeset="instance('sessionUser')/session:name" required="true()"/>
+            <xf:bind nodeset="instance('sessionUser')/session:password" required="true()"/>
+            <xf:bind nodeset="instance('sessionUser')/session:permission" required="true()"/>
+
+            <xf:submission id="submitUser" mode="synchronous" resource="/synopsx-beta/users/put" method="put" replace="none">
+                <xf:action ev:event="xforms-submit-done">
+                    <xf:message level="modal">
+                        La ressource a été enregistrée !
+                        Status : <xf:output value="event('response-status-code')"/>;
+                        URI : <xf:output value="event('resource-uri')"/>;
+                        Headers : <xf:output value="event('response-headers')"/>;
+                        Reason : <xf:output value="event('response-reason-phrase')"/>;
+                        Body : <xf:output value="event('response-body')"/>.
+                    </xf:message>
+                </xf:action>
+                <xf:action ev:event="xforms-submit-error">
+                    <xf:message level="modal">
+                        Une erreur est apparue : <xf:output value="event('error-type')"/>;
+                        Status : <xf:output value="event('response-status-code')"/>;
+                        URI : <xf:output value="event('resource-uri')"/>;
+                        Headers : <xf:output value="event('response-headers')"/>;
+                        Reason : <xf:output value="event('response-reason-phrase')"/>
+                        Body : <xf:output value="event('response-body')"/>.
+                    </xf:message>
+                </xf:action>
+            </xf:submission>
+        </xf:model>
+    </head>
+    <body>
+        <form xmlns:xf="http://www.w3.org/2002/xforms"
+            xmlns:ev="http://www.w3.org/2001/xml-events">
+            <xf:group ref="instance('sessionUser')">
+                <xf:label>Nouveau compte utilisateur</xf:label>
+                <xf:input ref="session:name">
+                    <xf:label>Nom</xf:label>
+                </xf:input>
+                <xf:secret ref="session:password">
+                    <xf:label>Mot de passe</xf:label>
+                </xf:secret>
+                <xf:select1 ref="session:permission">
+                    <xf:label>Permission</xf:label>
+                    <xf:itemset nodeset="instance('sessionPermissions')/session:permission">
+                        <xf:label ref="@label"/>
+                        <xf:value ref="@value"/>
+                    </xf:itemset>
+                </xf:select1>
+                <xf:select ref="session:info" appearance="full">
+                    <xf:label>Autorisations</xf:label>
+                    <xf:itemset nodeset="instance('sessionGrant')/session:grant">
+                        <xf:label ref="."/>
+                        <xf:copy ref="."/>
+                    </xf:itemset>
+                </xf:select>
+            </xf:group>
+            <xf:submit submission="submitUser">
+                <xf:label>Créer</xf:label>
+            </xf:submit>
+        </form>
+    </body>
+</html>
