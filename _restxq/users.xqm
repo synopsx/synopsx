@@ -130,7 +130,7 @@ function newUser() {
   let $queryParams := map { 
     "project" : 'synopsx',
     "model" : 'synopsx',
-    "function" : "getUsers"
+    "function" : "getDatabases"
   }
   let $outputParams := map {
     "lang" : "fr",
@@ -149,20 +149,23 @@ function newUser() {
 declare
   %rest:path("/synopsx-beta/users/put")
   %output:method("xml")
-  %rest:header-param("Referer", "{$referer}", "none") %rest:PUT("{$param}")
+  %rest:header-param("Referer", "{$referer}", "none")
+  %rest:PUT("{$param}")
   %perm:allow("admin") 
   %updating 
 function putUser($param as document-node(), $referer as xs:string) {
   let $user := $param
-  let $userName := fn:normalize-space($user/*:user/*:name)
-  let $userPwd := fn:normalize-space($user/*:user/*:password)
-  let $userPermission := fn:normalize-space($user/*:user/*:permission)
-  let $userInfo :=
-        <info xmlns="">{
-          for $right in $user/*:user/*:info/*:grant
-          return <grant type="{ $right/@type}">{ fn:normalize-space($right)}</grant>
-        }</info>
-  return user:create($userName, $userPwd, $userPermission, 'xpr', $userInfo)
+  let $name := fn:normalize-space($user/*:user/@name)
+  let $pwd := fn:normalize-space($user/*:user/*:password)
+  let $globalPermission := fn:normalize-space($user/*:user/@permission)
+  let $patterns := $user//*:database
+  let $patternPermissions := for $perm in $patterns//@permission
+    return fn:normalize-space($perm)
+  let $patternNames :=  for $pattern in $patterns/@pattern
+    return fn:normalize-space($pattern)
+  let $permissions := ($patternPermissions, $globalPermission)
+  let $info  := $user/*:user/*:info
+  return user:create($name, $pwd, $permissions, $patternNames, $info)
 };
 
 (:~

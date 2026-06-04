@@ -155,6 +155,25 @@ declare function getUsers($queryParams as map(*)){
 };
 
 (:
+ : This function lists basex databases
+ : @rmq this function uses xforms
+ :)
+declare function getDatabases($queryParams as map(*)){
+  let $meta := map{
+    "title" : "Liste des bases de données",
+    "databases" : <databases xmlns="">{ db:list-details()}</databases>
+  }
+  let $content := map{
+    "test" : ""
+  }
+
+  return map{
+    "meta"    : $meta,
+    "content" : $content
+  }
+};
+
+(:
  : This function lists basex users
  : @rmq this function uses xforms
  ::)

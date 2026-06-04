@@ -11,32 +11,35 @@
         <title>{title}</title>
         <xf:model id="user">
             <xf:instance id="sessionUser">
-                <user xmlns="session">
-                    <name/>
+                <user xmlns="" name="" permission="none">
                     <password/>
-                    <permission/>
                     <info/>
                 </user>
             </xf:instance>
+
             <xf:instance id="sessionPermissions">
-                <permissions xmlns="session">
+                <permissions xmlns="">
                     <permission label="Aucune" value="none"/>
                     <permission label="Lecture" value="read"/>
                     <permission label="Écriture" value="write"/>
+                    <permission label="Création" value="create"/>
+                    <permission label="Admin" value="admin"/>
                 </permissions>
             </xf:instance>
 
-            <xf:instance id="sessionGrant">
-                <grants xmlns="session">
-                    <grant type="expertises">Expertises</grant>
-                    <grant type="prosopography">Prosopographie</grant>
-                    <grant type="posthumusInventory">Inventaire après décès</grant>
-                </grants>
+            <xf:instance id="pattern">
+                <database pattern="" permission="" xmlns=""/>
             </xf:instance>
 
-            <xf:bind nodeset="instance('sessionUser')/session:name" required="true()"/>
-            <xf:bind nodeset="instance('sessionUser')/session:password" required="true()"/>
-            <xf:bind nodeset="instance('sessionUser')/session:permission" required="true()"/>
+            <xf:instance id="listDatabase">{databases}</xf:instance>
+
+            <xf:instance id="grant">
+                <grant xmlns=""/>
+            </xf:instance>
+
+            <xf:bind nodeset="instance('sessionUser')/name" required="true()"/>
+            <xf:bind nodeset="instance('sessionUser')/password" required="true()"/>
+            <xf:bind nodeset="instance('sessionUser')/permission" required="true()"/>
 
             <xf:submission id="submitUser" mode="synchronous" resource="/synopsx-beta/users/put" method="put" replace="none">
                 <xf:action ev:event="xforms-submit-done">
@@ -67,26 +70,58 @@
             xmlns:ev="http://www.w3.org/2001/xml-events">
             <xf:group ref="instance('sessionUser')">
                 <xf:label>Nouveau compte utilisateur</xf:label>
-                <xf:input ref="session:name">
+                <xf:input ref="@name">
                     <xf:label>Nom</xf:label>
                 </xf:input>
-                <xf:secret ref="session:password">
+                <br/>
+                <xf:secret ref="password">
                     <xf:label>Mot de passe</xf:label>
                 </xf:secret>
-                <xf:select1 ref="session:permission">
-                    <xf:label>Permission</xf:label>
-                    <xf:itemset nodeset="instance('sessionPermissions')/session:permission">
+                <br/>
+                <xf:select1 ref="@permission">
+                    <xf:label>Permission (globale)</xf:label>
+                    <xf:itemset nodeset="instance('sessionPermissions')/permission">
                         <xf:label ref="@label"/>
                         <xf:value ref="@value"/>
                     </xf:itemset>
                 </xf:select1>
-                <xf:select ref="session:info" appearance="full">
-                    <xf:label>Autorisations</xf:label>
-                    <xf:itemset nodeset="instance('sessionGrant')/session:grant">
-                        <xf:label ref="."/>
-                        <xf:copy ref="."/>
-                    </xf:itemset>
-                </xf:select>
+                <br/>
+                <xf:repeat nodeset="database">
+                    <xf:label>Pattern</xf:label>
+                    <xf:select1 ref="@pattern">
+                        <xf:label>Base de donnée</xf:label>
+                        <xf:itemset nodeset="instance('listDatabase')/database">
+                            <xf:label ref="."/>
+                            <xf:value ref="."/>
+                        </xf:itemset>
+                    </xf:select1>
+                    <xf:select1 ref="@permission">
+                        <xf:label>Permission</xf:label>
+                        <xf:itemset nodeset="instance('sessionPermissions')/permission[@value != 'admin' and @value != 'create']">
+                            <xf:label ref="@label"/>
+                            <xf:value ref="@value"/>
+                        </xf:itemset>
+                    </xf:select1>
+                </xf:repeat>
+                <xf:trigger>
+                    <xf:label>Ajouter un pattern</xf:label>
+                    <xf:action ev:event="DOMActivate">
+                        <xf:insert origin="instance('pattern')" nodeset="info" position="before"/>
+                    </xf:action>
+                </xf:trigger>
+                <xf:group ref="info">
+                    <xf:repeat nodeset="grant">
+                        <xf:label>grant</xf:label>
+                        <xf:input ref="."/>
+                    </xf:repeat>
+                    <xf:trigger>
+                        <xf:label>Ajouter une info</xf:label>
+                        <xf:action ev:event="DOMActivate">
+                            <xf:insert origin="instance('grant')" at="last()" position="after"/>
+                        </xf:action>
+                    </xf:trigger>
+                </xf:group>
+                <xf:output value="serialize(.)"/>
             </xf:group>
             <xf:submit submission="submitUser">
                 <xf:label>Créer</xf:label>
