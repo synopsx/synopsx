@@ -130,12 +130,41 @@ function newUser() {
   let $queryParams := map { 
     "project" : 'synopsx',
     "model" : 'synopsx',
-    "function" : "getDatabases"
+    (:"function" : "getDatabases":)
+    "function" : "getUserDetails",
+    "status" : "creation"
   }
   let $outputParams := map {
     "lang" : "fr",
-    "layout" : "newUser.xml",
-    (: "pattern": "incInstance.xml", :)
+    "layout" : "formUser.xml",
+    "xforms-lib" : "xsltforms",
+    "xforms-prefix" : fn:true(),
+    "xforms" : fn:true()
+  }
+  let $function := xs:QName(synopsx.models.synopsx:getModelFunction($queryParams))
+  let $data := fn:function-lookup($function, 1)($queryParams)
+  (: let $data := synopsx.models.synopsx:getUsersXforms($queryParams) :)
+  return synopsx.mappings.templating:wrapper($queryParams, $data, $outputParams)
+};
+
+(:~
+ : This resource function is a test for the xforms integration
+ ::)
+declare
+  %rest:path("/synopsx-beta/users/{$name}/modify")
+  %output:method("xml")
+  %perm:allow("admin")
+function user($name) {
+  let $queryParams := map {
+    "project" : 'synopsx',
+    "model" : 'synopsx',
+    "function" : "getUserDetails",
+    "status" : "update",
+    "name" : $name
+  }
+  let $outputParams := map {
+    "lang" : "fr",
+    "layout" : "formUser.xml",
     "xforms-lib" : "xsltforms",
     "xforms-prefix" : fn:true(),
     "xforms" : fn:true()
@@ -147,13 +176,13 @@ function newUser() {
 };
 
 declare
-  %rest:path("/synopsx-beta/users/put")
+  %rest:path("/synopsx-beta/users/create")
   %output:method("xml")
   %rest:header-param("Referer", "{$referer}", "none")
   %rest:PUT("{$param}")
   %perm:allow("admin") 
   %updating 
-function putUser($param as document-node(), $referer as xs:string) {
+function createUser($param as document-node(), $referer as xs:string) {
   let $user := $param
   let $name := fn:normalize-space($user/*:user/@name)
   let $pwd := fn:normalize-space($user/*:user/*:password)
@@ -180,6 +209,6 @@ function usersPermission($perm) {
   return
       if((fn:empty($user) or fn:not(user:list-details($user)[@permission = $perm?allow])) and fn:ends-with($perm?path, 'new'))
         then web:redirect('/synopsx-beta/login')
-      else if((fn:empty($user) or fn:not(user:list-details($user)[@permission = $perm?allow])) and fn:ends-with($perm?path, 'put'))
+      else if((fn:empty($user) or fn:not(user:list-details($user)[@permission = $perm?allow])) and fn:ends-with($perm?path, 'create'))
         then web:redirect('/synopsx-beta/login')
 };

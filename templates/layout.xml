@@ -13,7 +13,7 @@
         <a href="/"><img alt="Logo" src="https://via.placeholder.com/200x70?text=Logo" height="70"/></a>
         <ul>
           <li>Menu Item 1</li>
-          <li><a href="#section-1">Menu Item 2</a></li>
+          <li><a href="/synopsx-beta/users">Users</a></li>
           <li>
             <a href="#">Dropdown Menu Item</a>
             <ul>

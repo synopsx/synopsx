@@ -155,13 +155,26 @@ declare function getUsers($queryParams as map(*)){
 };
 
 (:
- : This function lists basex databases
+ : This function returns a user details
  : @rmq this function uses xforms
  :)
-declare function getDatabases($queryParams as map(*)){
+declare function getUserDetails($queryParams as map(*)){
+  let $status := $queryParams("status")
+  let $userName := $queryParams("name")
+  let $userDetails := if($userName and user:exists($userName)) then user:list-details($queryParams?name)
+  let $userInstance := if($userName and user:exists($userName)) then
+    <user xmlns="" name="{$userDetails/@name}" permission="{$userDetails/@permission}">
+        <password/>
+        {$userDetails/database}
+        {$userDetails/*:info}
+    </user>
+    else <user xmlns="" name="" permission="none"><password/><info/></user>
+
   let $meta := map{
-    "title" : "Liste des bases de données",
-    "databases" : <databases xmlns="">{ db:list-details()}</databases>
+    "title" : "Compte utilisateur",
+    "user" : $userInstance,
+    "databases" : <databases xmlns="">{ db:list-details() }</databases>,
+    "status" : <status xmlns="">{ $status }</status>
   }
   let $content := map{
     "test" : ""
@@ -172,6 +185,26 @@ declare function getDatabases($queryParams as map(*)){
     "content" : $content
   }
 };
+
+(:
+ : 
+ : @rmq this function uses xforms
+ :)(:
+declare function getDatabases($queryParams as map(*)){
+  let $meta := map{
+    "title" : "Liste des bases de données",
+    "user": <user xmlns="" name="" permission="none"><password/><info/></user>,
+    "databases" : <databases xmlns="">{ db:list-details()}</databases>
+  }
+  let $content := map{
+    "test" : ""
+  }
+
+  return map{
+    "meta"    : $meta,
+    "content" : $content
+  }
+};:)
 
 (:
  : This function lists basex users
