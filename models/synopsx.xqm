@@ -282,3 +282,4 @@ declare function detail($label as xs:string, $value as xs:string?) as element()*
 declare function details($items as element()*) as element(div) {
   <div>{ if ($items) then <dl>{ $items }</dl> else () }</div>
 };
+
