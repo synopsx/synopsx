@@ -65,7 +65,8 @@ declare function getModelFunction($queryParams as map(*)) as xs:QName {
     then fn:QName($uri, $functionName)
     else if ($function/@uri = 'synopsx.models.' || $modelName)
       then fn:QName('synopsx.models.' || $modelName, $functionName)
-      else   fn:QName('synopsx.models.synopsx', 'notFound') (: give default or error :)
+      else   fn:QName('synopsx.models.synopsx', 'notFound') 
+      (: give default or error :)
 };
 
 (:~
@@ -160,9 +161,9 @@ declare function getUsers($queryParams as map(*)){
  :)
 declare function getUserDetails($queryParams as map(*)){
   let $status := $queryParams("status")
-  let $userName := $queryParams("name")
-  let $userDetails := if($userName and user:exists($userName)) then user:list-details($queryParams?name)
-  let $userInstance := if($userName and user:exists($userName)) then
+  let $username := $queryParams("username")
+  let $userDetails := if($username and user:exists($username)) then user:list-details($username)
+  let $userInstance := if($username and user:exists($username)) then
     <user xmlns="" name="{$userDetails/@name}" permission="{$userDetails/@permission}">
         <password/>
         {$userDetails/database}

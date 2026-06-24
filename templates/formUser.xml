@@ -38,7 +38,9 @@
             <xf:bind nodeset="instance('user')/password" required="true()"/>
             <xf:bind nodeset="instance('user')/@permission" required="true()"/>
 
-            <xf:submission id="submitUser" mode="synchronous" resource="/synopsx-beta/users/create" method="put" replace="none">
+            <!-- /synopsx-beta/users/{$username}/put -->
+
+            <xf:submission id="submitUserCreation" mode="synchronous" resource="/synopsx-beta/users/create" method="put" replace="none">
                 <xf:action ev:event="xforms-submit-done">
                     <xf:message level="modal">
                         La ressource a été enregistrée !
@@ -48,6 +50,9 @@
                         Reason : <xf:output value="event('response-reason-phrase')"/>;
                         Body : <xf:output value="event('response-body')"/>.
                     </xf:message>
+                    <xf:load show="replace" replace="instance">
+                        <xf:resource value="event('response-body')//*:url"/>
+                    </xf:load>
                 </xf:action>
                 <xf:action ev:event="xforms-submit-error">
                     <xf:message level="modal">
@@ -120,9 +125,11 @@
                 </xf:group>
                 <xf:output value="serialize(.)"/>
             </xf:group>
-            <xf:submit submission="submitUser">
+
+            <xf:submit submission="submitUserCreation">
                 <xf:label>Créer</xf:label>
             </xf:submit>
+            
         </form>
     </body>
 </html>

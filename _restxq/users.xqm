@@ -3,7 +3,6 @@ xquery version "3.1";
 
 module namespace synopsx.restxq.users = "synopsx.restxq.users";
 
-
 (:~
  : This module deals with users
  :
@@ -15,7 +14,9 @@ module namespace synopsx.restxq.users = "synopsx.restxq.users";
  : XML corpora publication and exposure.
  :
  : GNU General Public License (GPL) v. 3
- ::)
+ : 
+ : @todo add a i18 parameter
+ :)
 
 declare namespace rest = "http://exquery.org/ns/restxq";
 declare namespace file = "http://expath.org/ns/file";
@@ -36,10 +37,9 @@ import module namespace synopsx.mappings.templating = "synopsx.mappings.templati
 declare default function namespace "synopsx.restxq.users";
 
 (:~
- : This resource function is the SynopsX’ home
- : @todo give contents
- ::)
-
+ : This resource function lists the users
+ : @return a list of users
+ :)
 declare
   %rest:path("/synopsx-beta/users")
   %output:method("html")
@@ -50,7 +50,6 @@ function getUsers() {
     "model" : 'synopsx',
     "function" : "getUsers"
   }
-  (: user:list-details() :)
   let $outputParams := map { 
     "lang" : "fr",
     "layout" : "formListUsers.xml",
@@ -79,36 +78,6 @@ function login() {
   </html>
 };
 
-(:
- : this function checks if the user is registered
- : @param $name usernema
- : @param $pass user password
- :
- ::)
-declare 
-  %rest:path("/synopsx-beta/login/check") 
-  %rest:form-param("name", "{$name}")
-  %rest:form-param("pass", "{$pass}")
-function login($name as xs:string, $pass as xs:string) {
-  try { 
-    user:check($name, $pass),
-    session:set('id', $name),
-    web:redirect("/synopsx-beta/home")
-  } 
-  catch user:* {
-    web:redirect("/synopsx-beta/home")
-  }
-};
-
-(:
- : this function logs out current user
- ::)
-declare
-  %rest:path("/synopsx-beta/logout") 
-function logout() {
-  session:delete('id'),
-  web:redirect("/synopsx-beta/home")
-};
 
 (:~
  : This function creates new user in dba.
@@ -121,7 +90,7 @@ function logout() {
 
 (:~
  : This resource function is a test for the xforms integration
- ::)
+ :)
 declare
   %rest:path("/synopsx-beta/users/new")
   %output:method("xml")
@@ -132,7 +101,36 @@ function newUser() {
     "model" : 'synopsx',
     (:"function" : "getDatabases":)
     "function" : "getUserDetails",
-    "status" : "creation"
+    "mode" : "creation"
+  }
+  let $outputParams := map {
+    "lang" : "fr",
+    "layout" : "formUser.xml",
+    "xforms-lib" : "xsltforms",
+    "xforms-prefix" : fn:true(),
+    "xforms" : fn:true()
+  }
+  let $function := xs:QName(synopsx.models.synopsx:getModelFunction($queryParams))
+  let $data := fn:function-lookup($function, 1)($queryParams)
+  return synopsx.mappings.templating:wrapper($queryParams, $data, $outputParams)
+};
+
+(:~
+ : This resource function modify an user
+ : @param $username the username
+ : @return 
+ :)
+declare
+  %rest:path("/synopsx-beta/users/{$username}/modify")
+  %output:method("xml")
+  %perm:allow("admin")
+function user($username) {
+  let $queryParams := map {
+    "project" : 'synopsx',
+    "model" : 'synopsx',
+    "function" : "getUserDetails",
+    "mode" : "update",
+    "username" : $username
   }
   let $outputParams := map {
     "lang" : "fr",
@@ -148,33 +146,11 @@ function newUser() {
 };
 
 (:~
- : This resource function is a test for the xforms integration
- ::)
-declare
-  %rest:path("/synopsx-beta/users/{$name}/modify")
-  %output:method("xml")
-  %perm:allow("admin")
-function user($name) {
-  let $queryParams := map {
-    "project" : 'synopsx',
-    "model" : 'synopsx',
-    "function" : "getUserDetails",
-    "status" : "update",
-    "name" : $name
-  }
-  let $outputParams := map {
-    "lang" : "fr",
-    "layout" : "formUser.xml",
-    "xforms-lib" : "xsltforms",
-    "xforms-prefix" : fn:true(),
-    "xforms" : fn:true()
-  }
-  let $function := xs:QName(synopsx.models.synopsx:getModelFunction($queryParams))
-  let $data := fn:function-lookup($function, 1)($queryParams)
-  (: let $data := synopsx.models.synopsx:getUsersXforms($queryParams) :)
-  return synopsx.mappings.templating:wrapper($queryParams, $data, $outputParams)
-};
-
+ : This resource function creates an user
+ : @param $referer the url from
+ : @param $param the username
+ : @return 
+ :)
 declare
   %rest:path("/synopsx-beta/users/create")
   %output:method("xml")
@@ -194,7 +170,61 @@ function createUser($param as document-node(), $referer as xs:string) {
     return fn:normalize-space($pattern)
   let $permissions := ($patternPermissions, $globalPermission)
   let $info  := $user/*:user/*:info
-  return user:create($name, $pwd, $permissions, $patternNames, $info)
+  return (
+    user:create($name, $pwd, $permissions, $patternNames, $info),
+    update:output((
+      <rest:response>
+        <http:response status="201" message="Created">
+          <http:header name="Content-Language" value="fr"/>
+          <http:header name="Content-Type" value="text/plain; charset=utf-8"/>
+          <http:header name="Content-Location" value="{'/synopsx-beta/users/' || $name}"/>
+        </http:response>
+      </rest:response>,
+      <result>
+        <message>Le nouvel utilisateur a été créé.</message>
+        <user>
+          <username>{$name}</username>
+          <!-- add other infos if needed -->
+        </user>
+        <url>{'/synopsx-beta/users/' || $name}</url>
+      </result>
+    ))
+  )
+};
+
+(:~
+ : Helpers
+ :)
+
+(:
+ : this function checks if the user is registered
+ : @param $name usernema
+ : @param $pass user password
+ :
+ :)
+declare 
+  %rest:path("/synopsx-beta/login/check") 
+  %rest:form-param("name", "{$name}")
+  %rest:form-param("pass", "{$pass}")
+function login($name as xs:string, $pass as xs:string) {
+  try { 
+    user:check($name, $pass),
+    session:set('id', $name),
+    web:redirect("/synopsx-beta/home")
+  } 
+  catch user:* {
+    web:redirect("/synopsx-beta/home")
+  }
+};
+
+(:
+ : This function logs out current user
+ :)
+declare
+  %rest:path("/synopsx-beta/logout") 
+function logout() {
+  session:delete('id'),
+  web:redirect("/synopsx-beta/home")
 };
 
 (:~
