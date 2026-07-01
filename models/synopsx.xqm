@@ -76,7 +76,7 @@ declare function getModelFunction($queryParams as map(*)) as xs:QName {
  : @param $template the template name.extension
  : @return a path
  :)
-declare function getLayoutPath($queryParams as map(*), $template as xs:string?) as xs:string {
+declare function getTemplatePath($queryParams as map(*), $template as xs:string?) as xs:string {
   let $path := $G:WORKSPACE || map:get($queryParams, 'project') || '/templates/' || $template
   return
     if (file:exists($path))
@@ -140,7 +140,7 @@ declare function getHome($queryParams) {
  : This function lists basex users
  : @rmq this function uses xforms
  :)
-declare function getUsers($queryParams as map(*)){
+declare function getUsersXFormsPseudo($queryParams as map(*)){
   let $meta := map{
     "title" : "Liste des utilisateurs",
     "users" : <users xmlns="">{ user:list-details()}</users>

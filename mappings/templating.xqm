@@ -71,6 +71,7 @@ declare function wrapper($queryParams as map(*), $data as map(*), $outputParams 
  :)
 declare function pattern($queryParams as map(*), $data as map(*), $outputParams as map(*)) as node()* {
   let $pattern := fn:doc(synopsx.models.synopsx:getLayoutPath($queryParams, $outputParams?pattern))
+
   for $content in $data?content
   return
     $pattern/* update {

@@ -1,0 +1,7 @@
+<article xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:xf="http://www.w3.org/2002/xforms"
+      xf:bogus="/fix/ff"
+      lang="fr">
+  <h2>{message}</h2>
+  <xf:input ref="/users/user[1]/@name"/>
+</article>

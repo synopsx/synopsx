@@ -21,6 +21,7 @@ declare namespace http = "http://expath.org/ns/http-client" ;
 declare namespace fn = "http://www.w3.org/2005/xpath-functions" ;
 declare namespace map = "http://www.w3.org/2005/xpath-functions/map" ;
 
+import module namespace G = "synopsx.globals" at "../globals.xqm" ;
 import module namespace synopsx.models.synopsx = "synopsx.models.synopsx" at "../models/synopsx.xqm" ;
 import module namespace synopsx.mappings.templating = "synopsx.mappings.templating" at "../mappings/templating.xqm" ;
 

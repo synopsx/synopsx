@@ -67,8 +67,7 @@ function home() {
     "xquery" : "tei2html"
     }
   let $function := xs:QName(synopsx.models.synopsx:getModelFunction($queryParams))
-  (: let $data := fn:function-lookup($function, 1)($queryParams) :)
-  let $data := synopsx.models.synopsx:getHome($queryParams)
+  let $data := fn:function-lookup($function, 1)($queryParams)
   return synopsx.mappings.templating:wrapper($queryParams, $data, $outputParams)
 };
 
@@ -77,7 +76,7 @@ function home() {
  : @todo give contents
  :)
 declare
-  %rest:path("/synopsx-beta/test-xslt")
+  %rest:path("/synopsx-beta/test/xslt")
   %output:method("html")
   %output:html-version("5.0")
 function test-xslt() {
@@ -93,8 +92,7 @@ function test-xslt() {
     "xsl" : "default.xsl"
     }
   let $function := xs:QName(synopsx.models.synopsx:getModelFunction($queryParams))
-  (: let $data := fn:function-lookup($function, 1)($queryParams) :)
-  let $data := synopsx.models.synopsx:getHome($queryParams)
+  let $data := fn:function-lookup($function, 1)($queryParams)
   return synopsx.mappings.templating:wrapper($queryParams, $data, $outputParams)
 };
 
@@ -136,7 +134,7 @@ function test-xforms-pseudo() {
   let $queryParams := map {
     "project" : 'synopsx',
     "model" : 'synopsx',
-    "function" : "getUsers"
+    "function" : "getUsersXFormsPseudo"
   }
   let $outputParams := map {
     "lang" : "fr",
