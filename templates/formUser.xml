@@ -47,11 +47,12 @@
                         Status : <xf:output value="event('response-status-code')"/>;
                         URI : <xf:output value="event('resource-uri')"/>;
                         Headers : <xf:output value="event('response-headers')"/>;
+                        Location : <xf:output value="event('response-headers')/self::*[name='content-location']/value" />;
                         Reason : <xf:output value="event('response-reason-phrase')"/>;
                         Body : <xf:output value="event('response-body')"/>.
                     </xf:message>
                     <xf:load show="replace" replace="instance">
-                        <xf:resource value="event('response-body')//*:url"/>
+                        <xf:resource value="event('response-headers')/self::*[name='content-location']/value" />
                     </xf:load>
                 </xf:action>
                 <xf:action ev:event="xforms-submit-error">

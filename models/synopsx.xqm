@@ -76,7 +76,7 @@ declare function getModelFunction($queryParams as map(*)) as xs:QName {
  : @param $template the template name.extension
  : @return a path
  :)
-declare function getTemplatePath($queryParams as map(*), $template as xs:string?) as xs:string {
+declare function getLayoutPath($queryParams as map(*), $template as xs:string?) as xs:string {
   let $path := $G:WORKSPACE || map:get($queryParams, 'project') || '/templates/' || $template
   return
     if (file:exists($path))
@@ -114,6 +114,8 @@ declare function getMappingsFunction($queryParams as map(*), $outputParams) as x
  : @param $queryParams the query params
  : @param $template the template name.extension
  : @return a path
+ :
+ : @todo 
  :)
 declare function synopsx.models.synopsx:getXsltPath($queryParams as map(*), $outputParams) as xs:QName {
    "todo"
@@ -135,91 +137,6 @@ declare function getHome($queryParams) {
     "content" : $content
   }
 };
-
-(:
- : This function lists basex users
- : @rmq this function uses xforms
- :)
-declare function getUsersXFormsPseudo($queryParams as map(*)){
-  let $meta := map{
-    "title" : "Liste des utilisateurs",
-    "users" : <users xmlns="">{ user:list-details()}</users>
-  }
-  let $content := map{
-    "test" : ""
-  }
-  
-  return map{
-    "meta"    : $meta,
-    "content" : $content
-  }
-};
-
-(:
- : This function returns a user details
- : @rmq this function uses xforms
- :)
-declare function getUserDetails($queryParams as map(*)){
-  let $status := $queryParams("status")
-  let $username := $queryParams("username")
-  let $userDetails := if($username and user:exists($username)) then user:list-details($username)
-  let $userInstance := if($username and user:exists($username)) then
-    <user xmlns="" name="{$userDetails/@name}" permission="{$userDetails/@permission}">
-        <password/>
-        {$userDetails/database}
-        {$userDetails/*:info}
-    </user>
-    else <user xmlns="" name="" permission="none"><password/><info/></user>
-
-  let $meta := map{
-    "title" : "Compte utilisateur",
-    "user" : $userInstance,
-    "databases" : <databases xmlns="">{ db:list-details() }</databases>,
-    "status" : <status xmlns="">{ $status }</status>
-  }
-  let $content := map{
-    "test" : ""
-  }
-
-  return map{
-    "meta"    : $meta,
-    "content" : $content
-  }
-};
-
-(:
- : 
- : @rmq this function uses xforms
- :)(:
-declare function getDatabases($queryParams as map(*)){
-  let $meta := map{
-    "title" : "Liste des bases de données",
-    "user": <user xmlns="" name="" permission="none"><password/><info/></user>,
-    "databases" : <databases xmlns="">{ db:list-details()}</databases>
-  }
-  let $content := map{
-    "test" : ""
-  }
-
-  return map{
-    "meta"    : $meta,
-    "content" : $content
-  }
-};:)
-
-(:
- : This function lists basex users
- : @rmq this function uses xforms
- ::)
-declare function gettest($queryParams as map (*)) { 
-  let $meta := map { 
-    "a" : "a"
-  }
-  let $content := map {
-     "test" : "TEST"
-  }
-return
-    map { "meta" : $meta, "content" : $content } };
 
 (:~
  : This function builds the data for an XQuery error page.
@@ -283,4 +200,3 @@ declare function detail($label as xs:string, $value as xs:string?) as element()*
 declare function details($items as element()*) as element(div) {
   <div>{ if ($items) then <dl>{ $items }</dl> else () }</div>
 };
-

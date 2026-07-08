@@ -1,6 +1,4 @@
 xquery version "3.1";
-
-
 module namespace synopsx.restxq.users = "synopsx.restxq.users";
 
 (:~
@@ -32,6 +30,7 @@ declare namespace map = "http://www.w3.org/2005/xpath-functions/map";
 
 import module namespace G = "synopsx.globals" at "../globals.xqm";
 import module namespace synopsx.models.synopsx = "synopsx.models.synopsx" at "../models/synopsx.xqm";
+import module namespace synopsx.models.users = "synopsx.models.users" at "../models/users.xqm";
 import module namespace synopsx.mappings.templating = "synopsx.mappings.templating" at "../mappings/templating.xqm";
 
 declare default function namespace "synopsx.restxq.users";
@@ -77,7 +76,6 @@ function login() {
     </form>
   </html>
 };
-
 
 (:~
  : This function creates new user in dba.
@@ -186,7 +184,6 @@ function createUser($param as document-node(), $referer as xs:string) {
           <username>{$name}</username>
           <!-- add other infos if needed -->
         </user>
-        <url>{'/synopsx-beta/users/' || $name}</url>
       </result>
     ))
   )

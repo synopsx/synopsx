@@ -15,6 +15,13 @@ Prerequisites :
 - Start [BaseX in HTTP](https://docs.basex.org/12/Web_Application)
 - Go to [http://localhost:8080/synopsx]
 
+Pour utiliser la gestions des utilisateurs de SynopsX, vous devez avoir créé votre compte admin sur BaseX. cf. https://docs.basex.org/main/Commands#alter_password Le comportement de BaseX pour la création du compte admin varie selon les versions (cf. https://docs.basex.org/main/Database_Server#startup, https://docs.basex.org/main/Web_Application#startup)
+
+Par exemple, en invite de commande BaseX : 
+```
+ALTER PASSWORD admin (password)
+```
+
 ## Changes
 
 - Suppression des fonctionnalités bloquantes lors de l’installation (création db synopsx, user)

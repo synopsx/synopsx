@@ -1,21 +1,41 @@
 # SynopsX’s Roadmap
 
-- review
-  - mise à jour Basex10
-  - simplification
-  - intégration du moteur de recherche
-  - intégration des sorties TEI par défaut
-  - amélioration de la documentation
-- documentation
-- users module
-- errors module
-- DTS
-- statify
-- openapi documentation
-- oaipmh module
+## Révision du code et améliorations de base
+
+- [x] mise à jour vers Basex10
+- [x] révision de la structure d’ensemble du code
+- [x] supression des freins au démarrage
+- [ ] simplifications
+
+## Nouvelles fonctionnalités
+- [x] personnalisation du workspace
+- [x] ajout d’un module d’erreur
+- [x] amélioration des regex dans les templates
+- [x] intégration de XForms
+- [~] users module (en cours)
+- [~] amélioration de la documentation
+- [ ] intégration du moteur de recherche
+- [ ] intégration des sorties TEI par défaut
+- [ ] DTS (peut-être pas, utilisation de DOTS possible)
+- [ ] module de statification
+- [ ] création automatique d’une documentation de l’API
+- [ ] création automatique d’une page OpenAPI
+- [ ] module OAIPMH
 
 
-Discussion sur le nommage 
+## Roadmap du module utlisateurs
+
+- [x] implémentation des formulaires xforms
+- [x] création des fonctions users
+- [ ] modularisation du code pour suivre la structure rest/models/templates
+- [ ] implémentation des users patterns 
+- [ ] sessions ?
+
+### Améliorations du templating
+
+- Supprimer l’élément quand il y a une valeur vide ? Trouve cela chouette gros problème rencontré usage conditionnel si qqch dans la séquence ou pas.
+
+## Discussions sur le nommage 
 - pb templating
 - render, spécifique au template
 - faire une sortie json
@@ -48,7 +68,7 @@ Convention de nommage des templates
 
 Nota : `files/` --> `static/`
 
-## Utilisation d’XForms
+## Utilisation de XForms
 
 SynopsX intègre l’utilisation de [XForms](https://www.w3.org/TR/xforms11/).
 
@@ -74,9 +94,9 @@ Dans l’hypothèse où l’utilisateur fait des déclarations directes dans les
 - param pour le choix de la syntaxe
 
 outputParams
-- xforms-lib : optionnel avec valeur par défaut `xsltforms` pour l’avenir
-- xforms-prefix : optionnel si true() utilise la syntaxe préfixée
-- xforms: optionnel `true() | false()` @rmq ???
+- `xforms-lib` : optionnel avec valeur par défaut `xsltforms` pour l’avenir
+- `xforms-prefix` : optionnel si true() utilise la syntaxe préfixée
+- `xforms`: optionnel `true() | false()` @rmq ???
 
 Il peut y avoir plusieurs instances. Il peut avoir un modèle, deux modèles, etc. et à l’intérieur de chaque modèle plusieurs instances. Il y a deux méthodes pour déclarer les instances, soit directement dans le modèle, soit en les appelant avec des resources externes avec `@src` s’il y en a plusieurs, celles-ci doivent avoir un identifiant.
 
@@ -102,11 +122,3 @@ Veut-on systématiquement un point d’accès XML ?
 Il serait possible de dire que le modèle est tjrs le même et que la ressource ont vient la chercher par le formulaire. Pourrait avoir une valeur mise à jour par le templating.
 
 En utilisant les mécanismes du templating par défaut. Peut être même pas besoin de déclarer les paramètres dans les queryParams, etc.
-
-
-
-## Templating
-
-- Supprimer l’élément quand il y a une valeur vide ?
-
-Trouve cela chouette gros problème rencontré usage conditionnel si qqch dans la séquence ou pas.
