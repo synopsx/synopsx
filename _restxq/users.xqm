@@ -212,12 +212,14 @@ function createUser($param as document-node(), $referer as xs:string) {
  :)
 declare 
   %rest:path("/synopsx-beta/login/check")
-  %rest:POST("{$credentials}")
+  %rest:POST
+  %rest:form-param("name", "{$name}")
+  %rest:form-param("pass", "{$pass}")
   %updating
-function login($credentials) {
+function login($name as xs:string, $pass as xs:string) {
   try { 
-    user:check($credentials/credentials/*:name, $credentials/credentials/*:pass),
-    session:set('id', $credentials/credentials/*:name),
+    user:check($name, $pass),
+    session:set('id', $name),
     (: web:redirect("/synopsx-beta/home") :)
     update:output((
       <rest:response>
@@ -230,7 +232,7 @@ function login($credentials) {
       <result>
         <message></message>
         <user>
-          Vous êtes connecté comme {$credentials/credentials/*:name}
+          Vous êtes connecté comme {$name}
           <!-- add other infos if needed -->
         </user>
       </result>
