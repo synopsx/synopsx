@@ -223,8 +223,8 @@ function login($credentials) {
       <rest:response>
         <http:response status="200" message="OK">
           <http:header name="Content-Language" value="fr"/>
-          <http:header name="Content-Type" value="text/plain; charset=utf-8"/>
-          <http:header name="Content-Location" value="{'/synopsx-beta/home'}"/>
+          <http:header name="Content-Type" value="application/xml; charset=utf-8"/>
+          <http:header name="Content-Location" value="/synopsx-beta/home"/>
         </http:response>
       </rest:response>,
       <result>

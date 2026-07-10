@@ -9,7 +9,7 @@
             </script>
         </xforms-instance>
 
-    <xforms-submission xf-resource="/synopsx-beta/login/check" xf-method="post">
+    <xforms-submission xf-resource="/synopsx-beta/login/check" xf-method="post" xf-replace="none">
       <xforms-action ev-event="xforms-submit-done">
         <xforms-message xf-level="modal">
           Status : <xforms-output xf-value="event('response-status-code')" />;
