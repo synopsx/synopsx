@@ -1,4 +1,4 @@
-<html lang="en">
+<html lang="fr">
   <head>
     <title>{title}</title>
     <link rel="icon" href="https://via.placeholder.com/70x70"/>
@@ -6,11 +6,16 @@
     <meta charset="utf-8"/>
     <meta name="description" content="My description"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <style>
+      xforms-body > form { all: unset; }
+    </style>
+    <link type="text/css" href="/synopsx-beta/static/xsltforms/xsltforms.css" rel="stylesheet"/>
+    <script src="/synopsx-beta/static/xsltforms/xsltforms.js"></script>
   </head>
   <body>
     <header>
       <nav>
-        <a href="/"><img alt="Logo" src="https://via.placeholder.com/200x70?text=Logo" height="70"/></a>
+        <a href="/"><img alt="Logo" src="" height="70"/></a>
         <ul>
           <li>Menu Item 1</li>
           <li><a href="/synopsx-beta/users">Users</a></li>
@@ -23,32 +28,8 @@
           </li>
         </ul>
       </nav>
-      <h1>Page Heading with <i>Italics</i> and <u>Underline</u></h1>
-      <p>Page Subheading with <mark>highlighting</mark></p>
-      <br/>
-      <p><a href="#"><i>Italic Link Button</i></a><a href="#"><b>Bold Link Button →</b></a></p>
     </header>
     <main>
-      <section id="section-1">
-        <header>
-          <h2>Section Heading</h2>
-          <p>Section Subheading</p>
-        </header>
-        <aside>
-          <h3>Card heading</h3>
-          <p>Card content*</p>
-          <p><small>*with small content</small></p>
-        </aside>
-        <aside>
-          <h3>Card heading</h3>
-          <p>Card content <sup>with notification</sup></p>
-        </aside>
-        <aside>
-          <h3>Card heading</h3>
-          <p>Card content</p>
-        </aside>
-      </section>
-      <hr/>
       {content}
     </main>
     <footer>

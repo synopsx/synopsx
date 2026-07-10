@@ -1,35 +1,23 @@
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:xf="http://www.w3.org/2002/xforms"
-      xmlns:ev="http://www.w3.org/2001/xml-events"
-      xf:bogus="/fix/ff"
-      ev:bogus="/fix/ff"
-      lang="fr">
-    <head>
-        <link type="text/css" href="/synopsx-beta/static/xsltforms/xsltforms.css" rel="stylesheet"/>
-        <script src="/synopsx-beta/static/xsltforms/xsltforms.js"></script>
-    </head>
-    <body>
-        <h1>Exemple de XForms avec pseudo-élément</h1>
-        <xforms-model>
-            <xforms-instance>
-                <script type="application/xml">{users}</script>
-            </xforms-instance>
-        </xforms-model>
-        <form>
-            <xforms-trigger xf-appearance="minimal">
-                <xforms-label>Créer un utilisateur</xforms-label>
-                <xforms-load ev-event="DOMActivate" xf-resource="/synopsx-beta/users/new"/>
-            </xforms-trigger>
-            <!-- @xf-nodeset doesn't work with pseudo-xforms-element -->
-            <xforms-repeat xf-ref="user">
-                <xforms-output xf-value="concat(@name, ' ')"/>
-                <xforms-trigger xf-appearance="minimal">
-                    <xforms-label>modify</xforms-label>
-                    <xforms-load ev-event="DOMActivate">
-                        <xforms-resource xf-value="concat('/synopsx-beta/users/', @name, '/modify')"/>
-                    </xforms-load>
-                </xforms-trigger>
-            </xforms-repeat>
-        </form>
-    </body>
-</html>
+<section>
+    <xforms-model>
+        <xforms-instance>
+            <script type="application/xml">{users}</script>
+        </xforms-instance>
+    </xforms-model>
+    <!-- @xf-nodeset doesn't work with pseudo-xforms-element -->
+    <h1>Liste des utilisateurs</h1>
+    <xforms-repeat xf-ref="user">
+        <xforms-output xf-value="concat(@name, ' ')" />
+        <xforms-trigger xf-appearance="minimal">
+            <xforms-label>modify</xforms-label>
+            <xforms-load ev-event="DOMActivate">
+                <xforms-resource xf-value="concat('/synopsx-beta/users/', @name, '/modify')" />
+            </xforms-load>
+        </xforms-trigger>
+    </xforms-repeat>
+    
+    <xforms-trigger>
+        <xforms-label>Créer un utilisateur</xforms-label>
+        <xforms-load ev-event="DOMActivate" xf-resource="/synopsx-beta/users/new" />
+    </xforms-trigger>
+</section>

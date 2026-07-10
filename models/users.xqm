@@ -40,7 +40,8 @@ declare function getUsers($queryParams as map(*)){
     "users" : <users xmlns="">{ user:list-details()}</users>
   }
   let $content := map{
-    "test" : ""
+    "title" : "Liste des utilisateurs",
+    "users" : <users xmlns="">{ user:list-details()}</users>
   }
   
   return map{
@@ -77,7 +78,10 @@ declare function getUserDetails($queryParams as map(*)){
     "status" : <status xmlns="">{ $status }</status>
   }
   let $content := map{
-    "test" : ""
+    "title" : "Compte utilisateur",
+    "user" : $userInstance,
+    "databases" : <databases xmlns="">{ db:list-details() }</databases>,
+    "status" : <status xmlns="">{ $status }</status>
   }
 
   return map{

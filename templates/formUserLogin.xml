@@ -1,0 +1,51 @@
+<section>
+  <xforms-model>
+        <xforms-instance id="credentials">
+            <script type="application/xml">
+              <credentials xmlns="">
+                <name/>
+                <pass/>
+              </credentials>
+            </script>
+        </xforms-instance>
+
+    <xforms-submission xf-resource="/synopsx-beta/login/check" xf-method="post">
+      <xforms-action ev-event="xforms-submit-done">
+        <xforms-message xf-level="modal">
+          Status : <xforms-output xf-value="event('response-status-code')" />;
+          URI : <xforms-output xf-value="event('resource-uri')" />;
+          Headers : <xforms-output xf-value="event('response-headers')" />; 
+          Location : <xforms-output xf-value="event('response-headers')/self::*[name='content-location']/value" />;
+          Reason : <xforms-output xf-value="event('response-reason-phrase')" />;
+          Body : <xforms-output xf-value="event('response-body')" />.
+        </xforms-message>
+        <xforms-load xf-show="replace" xf-replace="instance">
+          <xforms-resource
+            xf-value="event('response-headers')/self::*[name='content-location']/value" />
+        </xforms-load>
+      </xforms-action>
+      <xforms-action ev-event="xforms-submit-error">
+        <xforms-message xf-level="modal"> Une erreur est apparue : <xforms-output
+            xf-value="event('error-type')" />; Status : <xforms-output
+            xf-value="event('response-status-code')" />; URI : <xforms-output
+            xf-value="event('resource-uri')" />; Headers : <xforms-output
+            xf-value="event('response-headers')" />; Reason : <xforms-output
+            xf-value="event('response-reason-phrase')" /> Body : <xforms-output
+            xf-value="event('response-body')" />. </xforms-message>
+      </xforms-action>
+        </xforms-submission>
+  </xforms-model>
+  <h1>Please log in:</h1>
+  <xforms-input xf-ref="name">
+    <xforms-label>Username</xforms-label>
+  </xforms-input>
+  <br/>
+  <xforms-input xf-ref="pass">
+    <xforms-label>Password</xforms-label>
+  </xforms-input>
+  <br/>
+  <!-- <input type="submit"/> -->
+  <xforms-submit>
+    <xforms-label>se connecter</xforms-label>
+  </xforms-submit>
+</section>

@@ -1,0 +1,136 @@
+<html
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:xf="http://www.w3.org/2002/xforms"
+    xmlns:ev="http://www.w3.org/2001/xml-events"
+    xmlns:session="session"
+    xf:bogus="/fix/ff"
+    ev:bogus="/fix/ff"
+    session:bogus="/fix/ff"
+    lang="fr">
+    <head>
+        <title>{title}</title>
+        <xf:model>
+            <xf:instance id="user">{user}</xf:instance>
+
+            <xf:instance id="permissions">
+                <permissions xmlns="">
+                    <permission label="Aucune" value="none"/>
+                    <permission label="Lecture" value="read"/>
+                    <permission label="Écriture" value="write"/>
+                    <permission label="Création" value="create"/>
+                    <permission label="Admin" value="admin"/>
+                </permissions>
+            </xf:instance>
+
+            <xf:instance id="pattern">
+                <database pattern="" permission="" xmlns=""/>
+            </xf:instance>
+
+            <xf:instance id="listDatabase">{databases}</xf:instance>
+
+            <xf:instance id="status">{status}</xf:instance>
+
+            <xf:instance id="grant">
+                <grant xmlns=""/>
+            </xf:instance>
+
+            <xf:bind nodeset="instance('user')/@name" required="true()"/>
+            <xf:bind nodeset="instance('user')/password" required="true()"/>
+            <xf:bind nodeset="instance('user')/@permission" required="true()"/>
+
+            <!-- /synopsx-beta/users/{$username}/put -->
+
+            <xf:submission id="submitUserCreation" mode="synchronous" resource="/synopsx-beta/users/create" method="put" replace="none">
+                <xf:action ev:event="xforms-submit-done">
+                    <xf:message level="modal">
+                        La ressource a été enregistrée !
+                        Status : <xf:output value="event('response-status-code')"/>;
+                        URI : <xf:output value="event('resource-uri')"/>;
+                        Headers : <xf:output value="event('response-headers')"/>;
+                        Location : <xf:output value="event('response-headers')/self::*[name='content-location']/value" />;
+                        Reason : <xf:output value="event('response-reason-phrase')"/>;
+                        Body : <xf:output value="event('response-body')"/>.
+                    </xf:message>
+                    <xf:load show="replace" replace="instance">
+                        <xf:resource value="event('response-headers')/self::*[name='content-location']/value" />
+                    </xf:load>
+                </xf:action>
+                <xf:action ev:event="xforms-submit-error">
+                    <xf:message level="modal">
+                        Une erreur est apparue : <xf:output value="event('error-type')"/>;
+                        Status : <xf:output value="event('response-status-code')"/>;
+                        URI : <xf:output value="event('resource-uri')"/>;
+                        Headers : <xf:output value="event('response-headers')"/>;
+                        Reason : <xf:output value="event('response-reason-phrase')"/>
+                        Body : <xf:output value="event('response-body')"/>.
+                    </xf:message>
+                </xf:action>
+            </xf:submission>
+        </xf:model>
+    </head>
+    <body>
+        <form xmlns:xf="http://www.w3.org/2002/xforms"
+            xmlns:ev="http://www.w3.org/2001/xml-events">
+            <xf:group ref="instance('user')">
+                <xf:label>Nouveau compte utilisateur</xf:label>
+                <xf:input ref="@name">
+                    <xf:label>Nom</xf:label>
+                </xf:input>
+                <br/>
+                <xf:secret ref="password">
+                    <xf:label>Mot de passe</xf:label>
+                </xf:secret>
+                <br/>
+                <xf:select1 ref="@permission">
+                    <xf:label>Permission (globale)</xf:label>
+                    <xf:itemset nodeset="instance('permissions')/permission">
+                        <xf:label ref="@label"/>
+                        <xf:value ref="@value"/>
+                    </xf:itemset>
+                </xf:select1>
+                <br/>
+                <xf:repeat nodeset="database">
+                    <xf:label>Pattern</xf:label>
+                    <xf:select1 ref="@pattern">
+                        <xf:label>Base de donnée</xf:label>
+                        <xf:itemset nodeset="instance('listDatabase')/database">
+                            <xf:label ref="."/>
+                            <xf:value ref="."/>
+                        </xf:itemset>
+                    </xf:select1>
+                    <xf:select1 ref="@permission">
+                        <xf:label>Permission</xf:label>
+                        <xf:itemset nodeset="instance('permissions')/permission[@value != 'admin' and @value != 'create']">
+                            <xf:label ref="@label"/>
+                            <xf:value ref="@value"/>
+                        </xf:itemset>
+                    </xf:select1>
+                </xf:repeat>
+                <xf:trigger>
+                    <xf:label>Ajouter un pattern</xf:label>
+                    <xf:action ev:event="DOMActivate">
+                        <xf:insert origin="instance('pattern')" nodeset="info" position="before"/>
+                    </xf:action>
+                </xf:trigger>
+                <xf:group ref="info">
+                    <xf:repeat nodeset="grant">
+                        <xf:label>grant</xf:label>
+                        <xf:input ref="."/>
+                    </xf:repeat>
+                    <xf:trigger>
+                        <xf:label>Ajouter une info</xf:label>
+                        <xf:action ev:event="DOMActivate">
+                            <xf:insert origin="instance('grant')" at="last()" position="after"/>
+                        </xf:action>
+                    </xf:trigger>
+                </xf:group>
+                <xf:output value="serialize(.)"/>
+            </xf:group>
+
+            <xf:submit submission="submitUserCreation">
+                <xf:label>Créer</xf:label>
+            </xf:submit>
+            
+        </form>
+    </body>
+</html>

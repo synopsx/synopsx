@@ -51,9 +51,9 @@ function getUsers() {
   }
   let $outputParams := map { 
     "lang" : "fr",
-    "layout" : "formListUsers.xml",
+    "layout" : "layoutForms.xml",
+    "pattern": "formListUsers.xml",
     "xforms-lib" : "xsltforms",
-    "xforms-prefix" : fn:true(),
     "xforms" : fn:true()
   }
   let $function := xs:QName(synopsx.models.synopsx:getModelFunction($queryParams))
@@ -61,19 +61,30 @@ function getUsers() {
   return synopsx.mappings.templating:wrapper($queryParams, $data, $outputParams)
 };
 
-(:~ Login page (visible to everyone). :)
+(:~
+ : This resource function is a login page
+ : @return a list of users
+ :)
 declare
   %rest:path("/synopsx-beta/login")
   %output:method("html")
+  %output:html-version("5.0")
 function login() {
-  <html>
-    Please log in:
-    <form action="/synopsx-beta/login/check" method="post">
-      <input name="name"/>
-      <input type="password" name="pass"/>
-      <input type="submit"/>
-    </form>
-  </html>
+  let $queryParams := map { 
+    "project" : 'synopsx',
+    "model" : 'users',
+    "function" : "getUsers"
+  }
+  let $outputParams := map { 
+    "lang" : "fr",
+    "layout" : "layoutForms.xml",
+    "pattern": "formUserLogin.xml",
+    "xforms-lib" : "xsltforms",
+    "xforms" : fn:true()
+  }
+  let $function := xs:QName(synopsx.models.synopsx:getModelFunction($queryParams))
+  let $data := fn:function-lookup($function, 1)($queryParams)
+  return synopsx.mappings.templating:wrapper($queryParams, $data, $outputParams)
 };
 
 (:~
@@ -90,7 +101,8 @@ function login() {
  :)
 declare
   %rest:path("/synopsx-beta/users/new")
-  %output:method("xml")
+  %output:method("html")
+  %output:html-version("5.0")
   %perm:allow("admin")
 function newUser() { 
   let $queryParams := map { 
@@ -102,9 +114,9 @@ function newUser() {
   }
   let $outputParams := map {
     "lang" : "fr",
-    "layout" : "formUser.xml",
+    "layout" : "layoutForms.xml",
+    "pattern": "formUser.xml",
     "xforms-lib" : "xsltforms",
-    "xforms-prefix" : fn:true(),
     "xforms" : fn:true()
   }
   let $function := xs:QName(synopsx.models.synopsx:getModelFunction($queryParams))
@@ -199,17 +211,47 @@ function createUser($param as document-node(), $referer as xs:string) {
  :
  :)
 declare 
-  %rest:path("/synopsx-beta/login/check") 
-  %rest:form-param("name", "{$name}")
-  %rest:form-param("pass", "{$pass}")
-function login($name as xs:string, $pass as xs:string) {
+  %rest:path("/synopsx-beta/login/check")
+  %rest:POST("{$credentials}")
+  %updating
+function login($credentials) {
   try { 
-    user:check($name, $pass),
-    session:set('id', $name),
-    web:redirect("/synopsx-beta/home")
+    user:check($credentials/credentials/*:name, $credentials/credentials/*:pass),
+    session:set('id', $credentials/credentials/*:name),
+    (: web:redirect("/synopsx-beta/home") :)
+    update:output((
+      <rest:response>
+        <http:response status="200" message="OK">
+          <http:header name="Content-Language" value="fr"/>
+          <http:header name="Content-Type" value="text/plain; charset=utf-8"/>
+          <http:header name="Content-Location" value="{'/synopsx-beta/home'}"/>
+        </http:response>
+      </rest:response>,
+      <result>
+        <message></message>
+        <user>
+          Vous êtes connecté comme {$credentials/credentials/*:name}
+          <!-- add other infos if needed -->
+        </user>
+      </result>
+    ))
   } 
   catch user:* {
-    web:redirect("/synopsx-beta/home")
+    update:output((
+      <rest:response>
+        <http:response status="401" message="Unauthorized">
+          <http:header name="Content-Language" value="fr"/>
+          <http:header name="Content-Type" value="text/plain; charset=utf-8"/>
+          <http:header name="Content-Location" value="{'/synopsx-beta/login'}"/>
+        </http:response>
+      </rest:response>,
+      <result>
+        <message>Vous n’êtes pas connecté</message>
+        <user>
+          <!-- add other infos if needed -->
+        </user>
+      </result>
+    ))
   }
 };
 
@@ -228,7 +270,7 @@ function logout() {
  : Checks if the current user is granted; if not, redirects to the login page.
  : @param $perm map with permission data
  :)
-declare
+(: declare
     %perm:check('/synopsx-beta/users', '{$perm}')
 function usersPermission($perm) {
   let $user := session:get('id')
@@ -237,4 +279,4 @@ function usersPermission($perm) {
         then web:redirect('/synopsx-beta/login')
       else if((fn:empty($user) or fn:not(user:list-details($user)[@permission = $perm?allow])) and fn:ends-with($perm?path, 'create'))
         then web:redirect('/synopsx-beta/login')
-};
+}; :)
