@@ -46,7 +46,7 @@ declare
 function getUsers() {
   let $queryParams := map { 
     "project" : 'synopsx',
-    "model" : 'synopsx',
+    "model" : 'users',
     "function" : "getUsers"
   }
   let $outputParams := map { 
@@ -57,8 +57,7 @@ function getUsers() {
     "xforms" : fn:true()
   }
   let $function := xs:QName(synopsx.models.synopsx:getModelFunction($queryParams))
-  (: let $data := fn:function-lookup($function, 1)($queryParams) :)
-  let $data := synopsx.models.synopsx:getUsers($queryParams)
+  let $data := fn:function-lookup($function, 1)($queryParams)
   return synopsx.mappings.templating:wrapper($queryParams, $data, $outputParams)
 };
 
@@ -96,7 +95,7 @@ declare
 function newUser() { 
   let $queryParams := map { 
     "project" : 'synopsx',
-    "model" : 'synopsx',
+    "model" : 'users',
     (:"function" : "getDatabases":)
     "function" : "getUserDetails",
     "mode" : "creation"
@@ -125,7 +124,7 @@ declare
 function user($username) {
   let $queryParams := map {
     "project" : 'synopsx',
-    "model" : 'synopsx',
+    "model" : 'users',
     "function" : "getUserDetails",
     "mode" : "update",
     "username" : $username
