@@ -38,12 +38,12 @@ declare default function namespace "synopsx.restxq.synopsx" ;
  :)
 declare
   %rest:path("/synopsx")
+  %updating
 function index() {
-  web:redirect(
-    if (db:exists("synopsx"))
-      then "/synopsx/home"
-      else "/synopsx/install"
-    )
+  (if(fn:not(db:exists("synopsx")))
+    then db:create("synopsx", $G:FILES || 'xml/synopsx.xml'),
+    update:output(web:redirect("/synopsx/home"))
+  )
 };
 
 
