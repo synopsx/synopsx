@@ -143,7 +143,8 @@ function user($username) {
   }
   let $outputParams := map {
     "lang" : "fr",
-    "layout" : "formUser.xml",
+    "layout" : "layoutForms.xml",
+    "pattern": "formUser.xml",
     "xforms-lib" : "xsltforms",
     "xforms-prefix" : fn:true(),
     "xforms" : fn:true()
@@ -178,7 +179,15 @@ function createUser($param as document-node(), $referer as xs:string) {
   let $patternNames :=  for $pattern in $patterns/@pattern
     return fn:normalize-space($pattern)
   let $permissions := ($patternPermissions, $globalPermission)
-  let $info  := $user/*:user/*:info
+  let $token := random:uuid()
+  let $info  := if(fn:normalize-space($pwd) ='') then
+    <info>{
+        <token date="{fn:current-dateTime()}">{$token}</token>,
+        $user/*:user/*:info/*
+    }</info>
+  else
+   $user/*:user/*:info
+  
   return (
     user:create($name, $pwd, $permissions, $patternNames, $info),
     update:output((
@@ -187,6 +196,10 @@ function createUser($param as document-node(), $referer as xs:string) {
           <http:header name="Content-Language" value="fr"/>
           <http:header name="Content-Type" value="text/plain; charset=utf-8"/>
           <http:header name="Content-Location" value="{'/synopsx/users/' || $name}"/>
+          {
+            if(fn:normalize-space($pwd) ='') then
+              <http:header name="Content-token" value="{$token}"/>
+          }
         </http:response>
       </rest:response>,
       <result>
@@ -199,6 +212,46 @@ function createUser($param as document-node(), $referer as xs:string) {
     ))
   )
 };
+
+(:~
+ : This resource function modify an user
+ : @param $username the username
+ : @return 
+ :)
+declare
+  %rest:path("/synopsx/users/{$username}/confirm")
+  %rest:query-param("token", "{$token}", "no-token")
+  %output:method("xml")
+function confirmUser($username as xs:string, $token as xs:string) {
+  switch (user:info($username)/token = $token)
+  case fn:true()
+    return (
+      let $queryParams := map {
+      "project" : 'synopsx',
+      "model" : 'users',
+      "function" : "getUserDetails",
+      "mode" : "confirm",
+      "username" : $username
+    }
+    let $outputParams := map {
+      "lang" : "fr",
+      "layout" : "layoutForms.xml",
+      "pattern": "formUser.xml",
+      "xforms-lib" : "xsltforms",
+      "xforms-prefix" : fn:true(),
+      "xforms" : fn:true()
+    }
+    let $function := xs:QName(synopsx.models.synopsx:getModelFunction($queryParams))
+    let $data := fn:function-lookup($function, 1)($queryParams)
+    (: let $data := synopsx.models.synopsx:getUsersXforms($queryParams) :)
+    return   synopsx.mappings.templating:wrapper($queryParams, $data, $outputParams)
+    )
+    
+
+    default return web:redirect("/")
+  
+};
+
 
 (:~
  : Helpers

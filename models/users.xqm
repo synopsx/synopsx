@@ -60,7 +60,7 @@ declare function getUsers($queryParams as map(*)){
  : @todo content
  :)
 declare function getUserDetails($queryParams as map(*)){
-  let $status := $queryParams("status")
+  let $mode := $queryParams("mode")
   let $username := $queryParams("username")
   let $userDetails := if($username and user:exists($username)) then user:list-details($username)
   let $userInstance := if($username and user:exists($username)) then
@@ -75,13 +75,13 @@ declare function getUserDetails($queryParams as map(*)){
     "title" : "Compte utilisateur",
     "user" : $userInstance,
     "databases" : <databases xmlns="">{ db:list-details() }</databases>,
-    "status" : <status xmlns="">{ $status }</status>
+    "mode" : <mode xmlns="">{ $mode }</mode>
   }
   let $content := map{
     "title" : "Compte utilisateur",
     "user" : $userInstance,
     "databases" : <databases xmlns="">{ db:list-details() }</databases>,
-    "status" : <status xmlns="">{ $status }</status>
+    "mode" : <mode xmlns="">{ $mode }</mode>
   }
 
   return map{

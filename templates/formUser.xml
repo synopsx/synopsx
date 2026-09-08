@@ -26,8 +26,8 @@
             <script type="application/xml">{databases}</script>
         </xforms-instance>
 
-        <xforms-instance id="status">
-            <script type="application/xml">{status}</script>
+        <xforms-instance id="mode">
+            <script type="application/xml">{mode}</script>
         </xforms-instance>
 
         <xforms-instance id="grant">
@@ -36,9 +36,10 @@
             </script>
         </xforms-instance>
 
-        <xforms-bind xf-ref="instance('user')/@name" xf-required="true()" />
-        <xforms-bind xf-ref="instance('user')/password" xf-required="true()" />
-        <xforms-bind xf-ref="instance('user')/@permission" xf-required="true()" />
+        <xforms-bind xf-ref="instance('user')/@name" xf-required="true()" xf-relevant="instance('mode') != 'confirm'"/>
+        <!-- <xforms-bind xf-ref="instance('user')/password" xf-required="true()" /> -->
+        <xforms-bind xf-ref="instance('user')/@permission" xf-required="true()" xf-relevant="instance('mode') != 'confirm'"/>
+        <xforms-bind xf-ref="instance('user')/info"  xf-relevant="instance('mode') != 'confirm'"/>
 
         <!-- /synopsx/users/{$username}/put -->
 
@@ -50,6 +51,7 @@
                     URI : <xforms-output xf-value="event('resource-uri')" />; 
                     Headers : <xforms-output xf-value="event('response-headers')" />;
                     Location : <xforms-output xf-value="event('response-headers')/self::*[name='content-location']/value" />;
+                    Token : <xforms-output xf-value="event('response-headers')/self::*[name='content-token']/value" />;
                     Reason : <xforms-output xf-value="event('response-reason-phrase')" />;
                     Body : <xforms-output xf-value="event('response-body')" />.
                 </xforms-message>
@@ -106,7 +108,7 @@
                 </xforms-itemset>
             </xforms-select1>
         </xforms-repeat>
-        <xforms-trigger>
+        <xforms-trigger xf-ref="instance('mode')/self::*[normalize-space(.) != 'confirm']">
             <xforms-label>Ajouter un pattern</xforms-label>
             <xforms-action ev-event="DOMActivate">
                 <xforms-insert xf-origin="instance('pattern')" xf-nodeset="info" xf-position="before" />

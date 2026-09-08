@@ -35,12 +35,12 @@
             </xf:instance>
 
             <xf:bind nodeset="instance('user')/@name" required="true()"/>
-            <xf:bind nodeset="instance('user')/password" required="true()"/>
+            <!-- <xf:bind nodeset="instance('user')/password" required="true()"/> -->
             <xf:bind nodeset="instance('user')/@permission" required="true()"/>
 
-            <!-- /synopsx-beta/users/{$username}/put -->
+            <!-- /synopsx/users/{$username}/put -->
 
-            <xf:submission id="submitUserCreation" mode="synchronous" resource="/synopsx-beta/users/create" method="put" replace="none">
+            <xf:submission id="submitUserCreation" mode="synchronous" resource="/synopsx/users/create" method="put" replace="none">
                 <xf:action ev:event="xforms-submit-done">
                     <xf:message level="modal">
                         La ressource a été enregistrée !
@@ -48,6 +48,7 @@
                         URI : <xf:output value="event('resource-uri')"/>;
                         Headers : <xf:output value="event('response-headers')"/>;
                         Location : <xf:output value="event('response-headers')/self::*[name='content-location']/value" />;
+                        Token : <xf:output value="event('response-headers')/self::*[name='content-token']/value" />;
                         Reason : <xf:output value="event('response-reason-phrase')"/>;
                         Body : <xf:output value="event('response-body')"/>.
                     </xf:message>

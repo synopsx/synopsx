@@ -2,15 +2,15 @@
   <head>
     <title>{title}</title>
     <link rel="icon" href="https://via.placeholder.com/70x70"/>
-    <link rel="stylesheet" href="/synopsx-beta/static/css/mvp.css"/>
+    <link rel="stylesheet" href="/synopsx/static/css/mvp.css"/>
     <meta charset="utf-8"/>
     <meta name="description" content="My description"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <style>
       xforms-body > form { all: unset; }
     </style>
-    <link type="text/css" href="/synopsx-beta/static/xsltforms/xsltforms.css" rel="stylesheet"/>
-    <script src="/synopsx-beta/static/xsltforms/xsltforms.js"></script>
+    <link type="text/css" href="/synopsx/static/xsltforms/xsltforms.css" rel="stylesheet"/>
+    <script src="/synopsx/static/xsltforms/xsltforms.js"></script>
   </head>
   <body>
     <header>
@@ -18,7 +18,7 @@
         <a href="/"><img alt="Logo" src="" height="70"/></a>
         <ul>
           <li>Menu Item 1</li>
-          <li><a href="/synopsx-beta/users">Users</a></li>
+          <li><a href="/synopsx/users">Users</a></li>
           <li>
             <a href="#">Dropdown Menu Item</a>
             <ul>

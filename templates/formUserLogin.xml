@@ -9,7 +9,7 @@
             </script>
         </xforms-instance>
 
-    <xforms-submission xf-resource="/synopsx-beta/login/check" xf-method="urlencoded-post" xf-replace="none">
+    <xforms-submission xf-resource="/synopsx/login/check" xf-method="urlencoded-post" xf-replace="none">
       <xforms-action ev-event="xforms-submit-done">
         <xforms-message xf-level="modal">
           Status : <xforms-output xf-value="event('response-status-code')" />;
@@ -21,7 +21,7 @@
         </xforms-message>
         <xforms-load xf-show="replace" xf-replace="instance">
           <xforms-resource
-            xf-value="event('response-headers')/self::*[name='content-location']/value" />
+            xf-value="event('response-headerbetas')/self::*[name='content-location']/value" />
         </xforms-load>
       </xforms-action>
       <xforms-action ev-event="xforms-submit-error">
