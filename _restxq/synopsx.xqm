@@ -37,21 +37,22 @@ declare default function namespace "synopsx.restxq.synopsx" ;
  : This resource function redirects to the SynopsX’ home or the configuration page
  :)
 declare
-  %rest:path("/synopsx-beta")
+  %rest:path("/synopsx")
 function index() {
   web:redirect(
     if (db:exists("synopsx"))
-      then "/synopsx-beta/home"
-      else "/synopsx-beta/install"
+      then "/synopsx/home"
+      else "/synopsx/install"
     )
 };
+
 
 (:~
  : This resource function is the SynopsX’ home
  : @todo give contents
  :)
 declare
-  %rest:path("/synopsx-beta/home")
+  %rest:path("/synopsx/home")
   %output:method("html")
   %output:html-version("5.0")
 function home() {
@@ -76,7 +77,7 @@ function home() {
  : @todo give contents
  :)
 declare
-  %rest:path("/synopsx-beta/test/xslt")
+  %rest:path("/synopsx/test/xslt")
   %output:method("html")
   %output:html-version("5.0")
 function test-xslt() {
@@ -100,7 +101,7 @@ function test-xslt() {
  : This resource function is a test for the xforms integration
  :)
 declare
-  %rest:path("/synopsx-beta/xforms")
+  %rest:path("/synopsx/xforms")
   %output:method("xml")
 function test-xforms() {
   let $queryParams := map {
@@ -127,7 +128,7 @@ function test-xforms() {
  : This resource function is a test for the xforms integration with pseudo-element
  :)
 declare
-  %rest:path("/synopsx-beta/xforms-pseudo")
+  %rest:path("/synopsx/xforms-pseudo")
   %output:method("html")
   %output:html-version("5.0")
 function test-xforms-pseudo() {

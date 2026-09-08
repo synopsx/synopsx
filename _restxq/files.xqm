@@ -29,7 +29,7 @@ declare default function namespace "synopsx.restxq.files" ;
  : @return rest response and binary file
  :)
 declare
-  %rest:path("/synopsx-beta/static/{$file=.+}")
+  %rest:path("/synopsx/static/{$file=.+}")
 function file($file as xs:string) as item()+ {
   let $path := $G:FILES || $file
   return (

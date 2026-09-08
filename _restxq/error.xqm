@@ -83,7 +83,7 @@ function xquery-error(
  : This resource function catches servlet-level HTTP errors routed from web.xml.
  :)
 declare
-	%rest:path("/synopsx-beta/error/http/{$status}")
+	%rest:path("/synopsx/error/http/{$status}")
 	%output:method("html")
 	%output:html-version("5.0")
 function http-error($status as xs:string) as item()+ {

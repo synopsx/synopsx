@@ -40,10 +40,10 @@
         <xforms-bind xf-ref="instance('user')/password" xf-required="true()" />
         <xforms-bind xf-ref="instance('user')/@permission" xf-required="true()" />
 
-        <!-- /synopsx-beta/users/{$username}/put -->
+        <!-- /synopsx/users/{$username}/put -->
 
         <xforms-submission id="submitUserCreation" xf-mode="synchronous"
-            xf-resource="/synopsx-beta/users/create" xf-method="put" xf-replace="none">
+            xf-resource="/synopsx/users/create" xf-method="put" xf-replace="none">
             <xforms-action ev-event="xforms-submit-done">
                 <xforms-message xf-level="modal"> La ressource a été enregistrée ! 
                     Status : <xforms-output xf-value="event('response-status-code')" />;

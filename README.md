@@ -1,4 +1,4 @@
-# synopsx-beta
+# synopsx
 
 SynopsX is a lightweight framework for seamless XML corpora publication and exposure — effortless as a breath!
 
@@ -10,7 +10,7 @@ Prerequisites :
 - SynopsX requires [BaseX](http://basex.org) > 10 (you would need Java on your computer)
 - using XSLT transformer needs the [Saxon HE](https://www.saxonica.com/products/products.xml) processor (install the .jar file into `basex/lib/`)
 
-- Clone [Synopsx repository](https://github.com/synopsx/synopsx-beta)
+- Clone [Synopsx repository](https://github.com/synopsx/synopsx)
 - Symlink or put this repository into `basex/webapp/`
 - Start [BaseX in HTTP](https://docs.basex.org/12/Web_Application)
 - Go to [http://localhost:8080/synopsx]
@@ -61,22 +61,22 @@ en production, désactive-la pour éviter d’exposer les traces complètes au c
 ```xml
 <error-page>
   <error-code>400</error-code>
-  <location>/synopsx-beta/error/http/400</location>
+  <location>/synopsx/error/http/400</location>
 </error-page>
 
 <error-page>
   <error-code>404</error-code>
-  <location>/synopsx-beta/error/http/404</location>
+  <location>/synopsx/error/http/404</location>
 </error-page>
 
 <error-page>
   <error-code>500</error-code>
-  <location>/synopsx-beta/error/http/500</location>
+  <location>/synopsx/error/http/500</location>
 </error-page>
 
 <error-page>
   <exception-type>java.lang.Throwable</exception-type>
-  <location>/synopsx-beta/error/http/500</location>
+  <location>/synopsx/error/http/500</location>
 </error-page>
 ```
 

@@ -11,13 +11,13 @@
         <xforms-trigger xf-appearance="minimal">
             <xforms-label>modify</xforms-label>
             <xforms-load ev-event="DOMActivate">
-                <xforms-resource xf-value="concat('/synopsx-beta/users/', @name, '/modify')" />
+                <xforms-resource xf-value="concat('/synopsx/users/', @name, '/modify')" />
             </xforms-load>
         </xforms-trigger>
     </xforms-repeat>
     
     <xforms-trigger>
         <xforms-label>Créer un utilisateur</xforms-label>
-        <xforms-load ev-event="DOMActivate" xf-resource="/synopsx-beta/users/new" />
+        <xforms-load ev-event="DOMActivate" xf-resource="/synopsx/users/new" />
     </xforms-trigger>
 </section>

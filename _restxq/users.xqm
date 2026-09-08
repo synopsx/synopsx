@@ -40,7 +40,7 @@ declare default function namespace "synopsx.restxq.users";
  : @return a list of users
  :)
 declare
-  %rest:path("/synopsx-beta/users")
+  %rest:path("/synopsx/users")
   %output:method("html")
   %output:html-version("5.0")
 function getUsers() {
@@ -66,7 +66,7 @@ function getUsers() {
  : @return a list of users
  :)
 declare
-  %rest:path("/synopsx-beta/login")
+  %rest:path("/synopsx/login")
   %output:method("html")
   %output:html-version("5.0")
 function login() {
@@ -100,7 +100,7 @@ function login() {
  : This resource function is a test for the xforms integration
  :)
 declare
-  %rest:path("/synopsx-beta/users/new")
+  %rest:path("/synopsx/users/new")
   %output:method("html")
   %output:html-version("5.0")
   %perm:allow("admin")
@@ -130,7 +130,7 @@ function newUser() {
  : @return 
  :)
 declare
-  %rest:path("/synopsx-beta/users/{$username}/modify")
+  %rest:path("/synopsx/users/{$username}/modify")
   %output:method("xml")
   %perm:allow("admin")
 function user($username) {
@@ -161,7 +161,7 @@ function user($username) {
  : @return 
  :)
 declare
-  %rest:path("/synopsx-beta/users/create")
+  %rest:path("/synopsx/users/create")
   %output:method("xml")
   %rest:header-param("Referer", "{$referer}", "none")
   %rest:PUT("{$param}")
@@ -186,7 +186,7 @@ function createUser($param as document-node(), $referer as xs:string) {
         <http:response status="201" message="Created">
           <http:header name="Content-Language" value="fr"/>
           <http:header name="Content-Type" value="text/plain; charset=utf-8"/>
-          <http:header name="Content-Location" value="{'/synopsx-beta/users/' || $name}"/>
+          <http:header name="Content-Location" value="{'/synopsx/users/' || $name}"/>
         </http:response>
       </rest:response>,
       <result>
@@ -211,7 +211,7 @@ function createUser($param as document-node(), $referer as xs:string) {
  :
  :)
 declare 
-  %rest:path("/synopsx-beta/login/check")
+  %rest:path("/synopsx/login/check")
   %rest:POST
   %rest:form-param("name", "{$name}")
   %rest:form-param("pass", "{$pass}")
@@ -220,13 +220,13 @@ function login($name as xs:string, $pass as xs:string) {
   try { 
     user:check($name, $pass),
     session:set('id', $name),
-    (: web:redirect("/synopsx-beta/home") :)
+    (: web:redirect("/synopsx/home") :)
     update:output((
       <rest:response>
         <http:response status="200" message="OK">
           <http:header name="Content-Language" value="fr"/>
           <http:header name="Content-Type" value="application/xml; charset=utf-8"/>
-          <http:header name="Content-Location" value="/synopsx-beta/home"/>
+          <http:header name="Content-Location" value="/synopsx/home"/>
         </http:response>
       </rest:response>,
       <result>
@@ -244,7 +244,7 @@ function login($name as xs:string, $pass as xs:string) {
         <http:response status="401" message="Unauthorized">
           <http:header name="Content-Language" value="fr"/>
           <http:header name="Content-Type" value="text/plain; charset=utf-8"/>
-          <http:header name="Content-Location" value="{'/synopsx-beta/login'}"/>
+          <http:header name="Content-Location" value="{'/synopsx/login'}"/>
         </http:response>
       </rest:response>,
       <result>
@@ -261,24 +261,24 @@ function login($name as xs:string, $pass as xs:string) {
  : This function logs out current user
  :)
 declare
-  %rest:path("/synopsx-beta/logout") 
+  %rest:path("/synopsx/logout") 
 function logout() {
   session:delete('id'),
-  web:redirect("/synopsx-beta/home")
+  web:redirect("/synopsx/home")
 };
 
 (:~
- : Permissions: synopsx-beta/users
+ : Permissions: synopsx/users
  : Checks if the current user is granted; if not, redirects to the login page.
  : @param $perm map with permission data
  :)
 (: declare
-    %perm:check('/synopsx-beta/users', '{$perm}')
+    %perm:check('/synopsx/users', '{$perm}')
 function usersPermission($perm) {
   let $user := session:get('id')
   return
       if((fn:empty($user) or fn:not(user:list-details($user)[@permission = $perm?allow])) and fn:ends-with($perm?path, 'new'))
-        then web:redirect('/synopsx-beta/login')
+        then web:redirect('/synopsx/login')
       else if((fn:empty($user) or fn:not(user:list-details($user)[@permission = $perm?allow])) and fn:ends-with($perm?path, 'create'))
-        then web:redirect('/synopsx-beta/login')
+        then web:redirect('/synopsx/login')
 }; :)
