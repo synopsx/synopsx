@@ -109,8 +109,8 @@ function putUser($queryParams as map(*))  {
   let $patternNames :=  for $pattern in $patterns/@pattern
     return fn:normalize-space($pattern)
   let $permissions := ($patternPermissions, $globalPermission)
-  let $name := fn:normalize-space($queryParams/*:user/@name)
-  let $pwd := fn:normalize-space($queryParams/*:user/*:password)
+  let $name := fn:normalize-space($queryParams?param/*:user/@name)
+  let $pwd := fn:normalize-space($queryParams?param/*:user/*:password)
   let $token := random:uuid()
   let $info  := if(fn:normalize-space($pwd) = '') 
     then
