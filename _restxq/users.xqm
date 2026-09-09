@@ -157,37 +157,37 @@ function user($username) {
 
 (:~
  : This resource function creates an user
- : @param $referer the url from
- : @param $param the username
- : @return 
+ : @param $param the http response
+ : @param $referer the referer url
+ : @return an http redirection
+ : @todo refine the naming of $param
+ : @bug  need Mixupdate =true
  :)
+ (::)
 declare
   %rest:path("/synopsx/users/create")
   %output:method("xml")
   %rest:header-param("Referer", "{$referer}", "none")
   %rest:PUT("{$param}")
-  %perm:allow("admin") 
-  %updating 
+  %perm:allow("admin")
+  %updating
 function createUser($param as document-node(), $referer as xs:string) {
-  let $user := $param
-  let $name := fn:normalize-space($user/*:user/@name)
-  let $pwd := fn:normalize-space($user/*:user/*:password)
-  let $globalPermission := fn:normalize-space($user/*:user/@permission)
-  let $patterns := $user//*:database
-  let $patternPermissions := for $perm in $patterns//@permission
-    return fn:normalize-space($perm)
-  let $patternNames :=  for $pattern in $patterns/@pattern
-    return fn:normalize-space($pattern)
-  let $permissions := ($patternPermissions, $globalPermission)
-  let $token := random:uuid()
-  let $info  := if(fn:normalize-space($pwd) ='') then
-    <info>{
-        <token date="{fn:current-dateTime()}">{$token}</token>,
-        $user/*:user/*:info/*
-    }</info>
-  else
-   $user/*:user/*:info
-  
+  let $queryParams := map{
+    "project" : "synopsx",
+    "model" : "users",
+    "function" : "putUser",
+    "mode" : "update",
+    "param" : $param,
+    "referer" : $referer 
+  }
+  let $outputParams := map{}
+  let $function := xs:QName(synopsx.models.synopsx:getModelFunction($queryParams))
+  let $response := synopsx.models.users:putUser($queryParams)
+  return $response
+};
+
+(:~
+ :
   return (
     user:create($name, $pwd, $permissions, $patternNames, $info),
     update:output((
@@ -212,6 +212,8 @@ function createUser($param as document-node(), $referer as xs:string) {
     ))
   )
 };
+
+:)
 
 (:~
  : This resource function modify an user
@@ -246,7 +248,6 @@ function confirmUser($username as xs:string, $token as xs:string) {
     (: let $data := synopsx.models.synopsx:getUsersXforms($queryParams) :)
     return   synopsx.mappings.templating:wrapper($queryParams, $data, $outputParams)
     )
-    
 
     default return web:redirect("/")
   
