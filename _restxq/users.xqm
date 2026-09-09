@@ -100,6 +100,7 @@ function login() {
  : This resource function is a test for the xforms integration
  :)
 declare
+  %rest:GET
   %rest:path("/synopsx/users/new")
   %output:method("html")
   %output:html-version("5.0")
@@ -176,15 +177,41 @@ function createUser($param as document-node(), $referer as xs:string) {
     "project" : "synopsx",
     "model" : "users",
     "function" : "putUser",
-    "mode" : "update",
+    "mode" : "create",
     "param" : $param,
-    "referer" : $referer 
+    "referer" : $referer
   }
   let $outputParams := map{}
   let $function := xs:QName(synopsx.models.synopsx:getModelFunction($queryParams))
   let $response := synopsx.models.users:putUser($queryParams)
   return $response
 };
+
+declare
+  %rest:path("/synopsx/users/{$username}/confirm")
+  %output:method("xml")
+  %rest:header-param("Referer", "{$referer}", "none")
+  %rest:PUT("{$param}")
+  %perm:allow("admin")
+  %updating
+function setPwd($param as document-node(),$username as xs:string, $referer as xs:string) {
+  let $queryParams := map{
+    "project" : "synopsx",
+    "model" : "users",
+    "function" : "putUser",
+    "mode" : "comfirm",
+    "param" : $param,
+    "referer" : $referer,
+    "username" : $username
+  }
+  let $outputParams := map{}
+  let $function := xs:QName(synopsx.models.synopsx:getModelFunction($queryParams))
+  let $response := synopsx.models.users:putUser($queryParams)
+  return $response
+};
+
+
+
 
 (:~
  :
@@ -221,6 +248,7 @@ function createUser($param as document-node(), $referer as xs:string) {
  : @return 
  :)
 declare
+  %rest:GET
   %rest:path("/synopsx/users/{$username}/confirm")
   %rest:query-param("token", "{$token}", "no-token")
   %output:method("xml")

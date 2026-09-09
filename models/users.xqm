@@ -109,24 +109,47 @@ function putUser($queryParams as map(*))  {
   let $patternNames :=  for $pattern in $patterns/@pattern
     return fn:normalize-space($pattern)
   let $permissions := ($patternPermissions, $globalPermission)
+
   let $name := fn:normalize-space($queryParams?param/*:user/@name)
   let $pwd := fn:normalize-space($queryParams?param/*:user/*:password)
   let $token := random:uuid()
-  let $info  := if(fn:normalize-space($pwd) = '') 
-    then
-      <info>{
-          <token date="{fn:current-dateTime()}">{$token}</token>,
-          $queryParams?param/*:user/*:info/*
-      }</info>
-    else $queryParams?param/*:user/*:info
-  return let $meta := map{
-  }
-  let $content := map{
-    "message" : <p>message</p>
-  }
- 
-  return ( 
-    user:create($name, $pwd, $permissions, $patternNames, $info)
-    ) 
+
+  return (
+    switch ($queryParams?mode)
+      case 'create'
+        return (
+          let $info := if (fn:normalize-space($pwd) = '')
+            then
+              <info>{
+                  <token date="{fn:current-dateTime()}">{$token}</token>,
+                  $queryParams?param/*:user/*:info/*
+              }</info>
+            else $queryParams?param/*:user/*:info
+          return (
+            user:create($name, $pwd, $permissions, $patternNames, $info)
+          )
+        )
+      case 'confirm'
+        return
+          let $info :=
+            copy $i := $queryParams?param/*:user/*:info
+            modify delete node $i/*:token
+            return $i
+          return (
+            user:password($queryParams?username, $pwd),
+            user:update-info($info, $queryParams?username)
+          )
+      case 'modify'
+        return (
+          user:password($name, $pwd),
+          user:update-info($queryParams?param/*:user/*:info, $name),
+          user:alter($queryParams?username, $name) (: Recupérer le OldName :)
+        )
+      case 'delete'
+        return (
+          user:drop($queryParams?username)
+        )
+      default return 'error mode non suporter'
+  )
 };
 
