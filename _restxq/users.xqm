@@ -372,16 +372,14 @@ function logout() {
 
 (:~
  : Permissions: synopsx/users
- : Checks if the current user is granted; if not, redirects to the login page.
+ : Redirects to the login page when no session is open, except for the
+ : account-confirmation flow which is deliberately anonymous (token-gated).
  : @param $perm map with permission data
  :)
-(: declare
+(:declare
     %perm:check('/synopsx/users', '{$perm}')
 function usersPermission($perm) {
-  let $user := session:get('id')
-  return
-      if((fn:empty($user) or fn:not(user:list-details($user)[@permission = $perm?allow])) and fn:ends-with($perm?path, 'new'))
-        then web:redirect('/synopsx/login')
-      else if((fn:empty($user) or fn:not(user:list-details($user)[@permission = $perm?allow])) and fn:ends-with($perm?path, 'create'))
-        then web:redirect('/synopsx/login')
-}; :)
+  if (fn:not(fn:ends-with($perm?path, '/confirm')) and fn:empty(session:get('id')))
+  then web:redirect('/synopsx/login')
+  else ()
+};:)

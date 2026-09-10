@@ -22,13 +22,23 @@ declare namespace map = "http://www.w3.org/2005/xpath-functions/map" ;
 declare namespace xf = "http://www.w3.org/2002/xforms" ;
 declare namespace update = "http://basex.org/modules/update" ;
 declare namespace user = "http://basex.org/modules/user" ;
+declare namespace session = "http://basex.org/modules/session" ;
+declare namespace sessions = "http://basex.org/modules/sessions" ;
 declare namespace synopsx-error = "synopsx.models.users.error" ;
 
 declare default function namespace "synopsx.models.users" ;
 
+(:~
+ : this function tells whether the current caller is logged in
+ : @return true() if a session user id is set
+ :)
+declare function isLoggedIn() as xs:boolean {
+  fn:exists(session:get('id'))
+};
+
 (:
  : This function lists basex’s users
- : 
+ :
  : @param $queryParams the query params
  : @return a meta with users details
  :
@@ -36,15 +46,27 @@ declare default function namespace "synopsx.models.users" ;
  : @todo content
  :)
 declare function getUsers($queryParams as map(*)) {
+  let $connectedUsers := for $sid in sessions:ids()
+    let $name := sessions:get($sid, 'id')
+    where fn:exists($name)
+    return $name
+  let $usersList := <users xmlns="">{
+      for $u in user:list-details()
+      return element user {
+        $u/@*,
+        attribute connected { if ($u/@name = $connectedUsers) then '🟢' else '⚪' },
+        $u/node()
+      }
+    }</users>
   let $meta := map{
     "title" : "Liste des utilisateurs",
-    "users" : <users xmlns="">{ user:list-details()}</users>
+    "users" : $usersList
   }
   let $content := map{
     "title" : "Liste des utilisateurs",
-    "users" : <users xmlns="">{ user:list-details()}</users>
+    "users" : $usersList
   }
-  
+
   return map{
     "meta"    : $meta,
     "content" : $content
@@ -68,10 +90,13 @@ declare function getUserDetails($queryParams as map(*)){
   let $userInstance := if($username and user:exists($username)) then
     <user xmlns="" name="{$userDetails/@name}" permission="{$userDetails/@permission}">
         <password/>
-        {$userDetails/database}
+        {
+          if ($userDetails/database) then $userDetails/database
+          else <database pattern="" permission="" xmlns="" />
+        }
         {$userDetails/*:info}
     </user>
-    else <user xmlns="" name="" permission="none"><password/><info/></user>
+    else <user xmlns="" name="" permission="none"><password/><database pattern="" permission="" xmlns="" /><info/></user>
 
   let $meta := map{
     "title" : "Compte utilisateur",
@@ -127,8 +152,12 @@ function putUser($queryParams as map(*))  {
                   $queryParams?param/*:user/*:info/*
               }</info>
             else $queryParams?param/*:user/*:info
+          let $confirmLink := if (fn:normalize-space($pwd) = '')
+            then '/synopsx/users/' || $name || '/confirm?token=' || $token
+            else ''
           return (
-            user:create($name, $pwd, $permissions, $patternNames, $info)
+            user:create($name, $pwd, $permissions, $patternNames, $info),
+            <result xmlns=""><confirmLink>{$confirmLink}</confirmLink></result>
           )
         )
       case 'confirm'

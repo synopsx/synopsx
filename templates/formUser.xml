@@ -49,17 +49,27 @@
             </script>
         </xforms-instance>
 
+        <xforms-instance id="createResult">
+            <script type="application/xml">
+                <result xmlns="">
+                    <confirmLink />
+                </result>
+            </script>
+        </xforms-instance>
+
         <xforms-bind xf-ref="instance('user')/@name" xf-required="true()" xf-relevant="instance('mode') != 'confirm'"/>
         <!-- <xforms-bind xf-ref="instance('user')/password" xf-required="true()" /> -->
         <xforms-bind xf-ref="instance('user')/@permission" xf-required="true()" xf-relevant="instance('mode') != 'confirm'"/>
         <xforms-bind xf-ref="instance('user')/info"  xf-relevant="instance('mode') != 'confirm'"/>
         <xforms-bind xf-ref="instance('uiState')/createButton" xf-relevant="instance('mode') != 'confirm'"/>
         <xforms-bind xf-ref="instance('uiState')/confirmButton" xf-relevant="instance('mode') = 'confirm'"/>
+        <xforms-bind xf-ref="instance('createResult')/confirmLink" xf-relevant="normalize-space(.) != ''"/>
 
         <!-- /synopsx/users/{$username}/put -->
 
         <xforms-submission id="submitUserCreation" xf-mode="synchronous"
-            xf-resource="/synopsx/users/create" xf-method="put" xf-replace="none">
+            xf-resource="/synopsx/users/create" xf-method="put"
+            xf-replace="instance" xf-instance="createResult">
             <xforms-action ev-event="xforms-submit-done">
                 <xforms-message xf-level="modal"> La ressource a été enregistrée ! 
                     Status : <xforms-output xf-value="event('response-status-code')" />;
@@ -176,6 +186,11 @@
             <xforms-send xf-submission="submitUserCreation" />
         </xforms-action>
     </xforms-trigger>
+    <xforms-group xf-ref="instance('createResult')/confirmLink">
+        <xforms-label>Lien de confirmation à transmettre à l’utilisateur :</xforms-label>
+        <br />
+        <xforms-output xf-ref="instance('createResult')/confirmLink" />
+    </xforms-group>
     <xforms-trigger xf-ref="instance('uiState')/confirmButton">
         <xforms-label>Confirmer</xforms-label>
         <xforms-action ev-event="DOMActivate">

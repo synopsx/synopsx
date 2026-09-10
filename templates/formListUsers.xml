@@ -21,7 +21,8 @@
     <!-- @xf-nodeset doesn't work with pseudo-xforms-element -->
     <h1>Liste des utilisateurs</h1>
     <xforms-repeat id="userRepeat" xf-ref="user">
-        <xforms-output xf-value="concat(@name, ' ')" />
+        <xforms-output xf-value="@connected" />
+        <xforms-output xf-value="concat(' ', @name, ' ')" />
         <xforms-trigger xf-appearance="minimal">
             <xforms-label>modify</xforms-label>
             <xforms-load ev-event="DOMActivate">

@@ -21,7 +21,7 @@
         </xforms-message>
         <xforms-load xf-show="replace" xf-replace="instance">
           <xforms-resource
-            xf-value="event('response-headerbetas')/self::*[name='content-location']/value" />
+            xf-value="event('response-headers')/self::*[name='content-location']/value" />
         </xforms-load>
       </xforms-action>
       <xforms-action ev-event="xforms-submit-error">
