@@ -189,26 +189,46 @@ function createUser($param as document-node(), $referer as xs:string) {
 
 declare
   %rest:path("/synopsx/users/{$username}/confirm")
+  %rest:query-param("token", "{$token}", "no-token")
   %output:method("xml")
   %rest:header-param("Referer", "{$referer}", "none")
   %rest:PUT("{$param}")
-  %perm:allow("admin")
   %updating
-function setPwd($param as document-node(),$username as xs:string, $referer as xs:string) {
+function setPwd($param as document-node(), $username as xs:string, $token as xs:string, $referer as xs:string) {
   let $queryParams := map{
     "project" : "synopsx",
     "model" : "users",
     "function" : "putUser",
-    "mode" : "comfirm",
+    "mode" : "confirm",
     "param" : $param,
     "referer" : $referer,
-    "username" : $username
+    "username" : $username,
+    "token" : $token
   }
   let $outputParams := map{}
   let $function := xs:QName(synopsx.models.synopsx:getModelFunction($queryParams))
   let $response := synopsx.models.users:putUser($queryParams)
   return $response
 };
+
+declare
+  %rest:path("/synopsx/users/{$username}/delete")
+  %output:method("xml")
+  %rest:PUT
+  %perm:allow("admin")
+  %updating
+function deleteUser($username as xs:string) {
+  let $queryParams := map{
+    "project" : "synopsx",
+    "model" : "users",
+    "function" : "putUser",
+    "mode" : "delete",
+    "username" : $username
+  }
+  let $response := synopsx.models.users:putUser($queryParams)
+  return $response
+};
+
 
 
 
@@ -261,7 +281,8 @@ function confirmUser($username as xs:string, $token as xs:string) {
       "model" : 'users',
       "function" : "getUserDetails",
       "mode" : "confirm",
-      "username" : $username
+      "username" : $username,
+      "token" : $token
     }
     let $outputParams := map {
       "lang" : "fr",

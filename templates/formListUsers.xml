@@ -3,10 +3,24 @@
         <xforms-instance>
             <script type="application/xml">{users}</script>
         </xforms-instance>
+
+        <xforms-submission id="submitDeleteUser" xf-mode="synchronous"
+            xf-method="put" xf-replace="none">
+            <xforms-resource
+                xf-value="concat('/synopsx/users/', instance()/user[position() = index('userRepeat')]/@name, '/delete')" />
+            <xforms-action ev-event="xforms-submit-done">
+                <xforms-load xf-resource="/synopsx/users" />
+            </xforms-action>
+            <xforms-action ev-event="xforms-submit-error">
+                <xforms-message xf-level="modal">
+                    Une erreur est apparue lors de la suppression : <xforms-output xf-value="event('response-status-code')" />.
+                </xforms-message>
+            </xforms-action>
+        </xforms-submission>
     </xforms-model>
     <!-- @xf-nodeset doesn't work with pseudo-xforms-element -->
     <h1>Liste des utilisateurs</h1>
-    <xforms-repeat xf-ref="user">
+    <xforms-repeat id="userRepeat" xf-ref="user">
         <xforms-output xf-value="concat(@name, ' ')" />
         <xforms-trigger xf-appearance="minimal">
             <xforms-label>modify</xforms-label>
@@ -14,6 +28,10 @@
                 <xforms-resource xf-value="concat('/synopsx/users/', @name, '/modify')" />
             </xforms-load>
         </xforms-trigger>
+        <xforms-submit xf-submission="submitDeleteUser" xf-appearance="minimal"
+            onclick="if (!confirm('Supprimer cet utilisateur ?')) { event.stopPropagation(); return false; }">
+            <xforms-label>delete</xforms-label>
+        </xforms-submit>
     </xforms-repeat>
     
     <xforms-trigger>

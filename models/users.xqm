@@ -22,8 +22,7 @@ declare namespace map = "http://www.w3.org/2005/xpath-functions/map" ;
 declare namespace xf = "http://www.w3.org/2002/xforms" ;
 declare namespace update = "http://basex.org/modules/update" ;
 declare namespace user = "http://basex.org/modules/user" ;
-
-import module namespace G = "synopsx.globals" at "../globals.xqm" ;
+declare namespace synopsx-error = "synopsx.models.users.error" ;
 
 declare default function namespace "synopsx.models.users" ;
 
@@ -64,6 +63,7 @@ declare function getUsers($queryParams as map(*)) {
 declare function getUserDetails($queryParams as map(*)){
   let $mode := $queryParams("mode")
   let $username := $queryParams("username")
+  let $token := $queryParams("token")
   let $userDetails := if($username and user:exists($username)) then user:list-details($username)
   let $userInstance := if($username and user:exists($username)) then
     <user xmlns="" name="{$userDetails/@name}" permission="{$userDetails/@permission}">
@@ -77,13 +77,15 @@ declare function getUserDetails($queryParams as map(*)){
     "title" : "Compte utilisateur",
     "user" : $userInstance,
     "databases" : <databases xmlns="">{ db:list-details() }</databases>,
-    "mode" : <mode xmlns="">{ $mode }</mode>
+    "mode" : <mode xmlns="">{ $mode }</mode>,
+    "token" : <token xmlns="">{ $token }</token>
   }
   let $content := map{
     "title" : "Compte utilisateur",
     "user" : $userInstance,
     "databases" : <databases xmlns="">{ db:list-details() }</databases>,
-    "mode" : <mode xmlns="">{ $mode }</mode>
+    "mode" : <mode xmlns="">{ $mode }</mode>,
+    "token" : <token xmlns="">{ $token }</token>
   }
 
   return map{
@@ -131,14 +133,24 @@ function putUser($queryParams as map(*))  {
         )
       case 'confirm'
         return
-          let $info :=
-            copy $i := $queryParams?param/*:user/*:info
-            modify delete node $i/*:token
-            return $i
-          return (
-            user:password($queryParams?username, $pwd),
-            user:update-info($info, $queryParams?username)
-          )
+          let $submittedToken := fn:normalize-space($queryParams?token)
+          return
+            if ($submittedToken != '' and user:info($queryParams?username)/token = $submittedToken)
+            then
+              let $info :=
+                copy $i := user:list-details($queryParams?username)/*:info
+                modify delete node $i/*:token
+                return $i
+              return (
+                user:password($queryParams?username, $pwd),
+                user:update-info($info, $queryParams?username)
+              )
+            (: TODO: route through the multi-language error catalog (G:message) once it lands :)
+            else fn:error(
+              xs:QName('synopsx-error:invalid-token'),
+              'Invalid or expired confirmation token for user "' || $queryParams?username || '".',
+              $queryParams?username
+            )
       case 'modify'
         return (
           user:password($name, $pwd),
@@ -149,7 +161,12 @@ function putUser($queryParams as map(*))  {
         return (
           user:drop($queryParams?username)
         )
-      default return 'error mode non suporter'
+      (: TODO: route through the multi-language error catalog (G:message) once it lands :)
+      default return fn:error(
+        xs:QName('synopsx-error:invalid-mode'),
+        'Unknown user mode "' || $queryParams?mode || '". Valid modes: create, confirm, modify, delete.',
+        $queryParams?mode
+      )
   )
 };
 

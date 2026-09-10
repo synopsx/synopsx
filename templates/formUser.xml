@@ -30,9 +30,22 @@
             <script type="application/xml">{mode}</script>
         </xforms-instance>
 
+        <xforms-instance id="confirmToken">
+            <script type="application/xml">{token}</script>
+        </xforms-instance>
+
         <xforms-instance id="grant">
             <script type="application/xml">
                 <grant xmlns="" />
+            </script>
+        </xforms-instance>
+
+        <xforms-instance id="uiState">
+            <script type="application/xml">
+                <ui xmlns="">
+                    <createButton />
+                    <confirmButton />
+                </ui>
             </script>
         </xforms-instance>
 
@@ -40,6 +53,8 @@
         <!-- <xforms-bind xf-ref="instance('user')/password" xf-required="true()" /> -->
         <xforms-bind xf-ref="instance('user')/@permission" xf-required="true()" xf-relevant="instance('mode') != 'confirm'"/>
         <xforms-bind xf-ref="instance('user')/info"  xf-relevant="instance('mode') != 'confirm'"/>
+        <xforms-bind xf-ref="instance('uiState')/createButton" xf-relevant="instance('mode') != 'confirm'"/>
+        <xforms-bind xf-ref="instance('uiState')/confirmButton" xf-relevant="instance('mode') = 'confirm'"/>
 
         <!-- /synopsx/users/{$username}/put -->
 
@@ -68,6 +83,32 @@
                     Headers : <xforms-output xf-value="event('response-headers')" />;
                     Reason : <xforms-output xf-value="event('response-reason-phrase')" />
                     Body : <xforms-output xf-value="event('response-body')" />.
+                </xforms-message>
+            </xforms-action>
+        </xforms-submission>
+
+        <xforms-submission id="submitUserConfirm" xf-mode="synchronous"
+            xf-method="put" xf-replace="none">
+            <xforms-resource
+                xf-value="concat('/synopsx/users/', instance('user')/@name, '/confirm?token=', instance('confirmToken'))" />
+            <xforms-action ev-event="xforms-submit-done">
+                <xforms-message xf-level="modal"> La ressource a été enregistrée !
+                    Status : <xforms-output xf-value="event('response-status-code')" />;
+                    URI : <xforms-output xf-value="event('resource-uri')" />;
+                    Headers : <xforms-output xf-value="event('response-headers')" />;
+                    Reason : <xforms-output xf-value="event('response-reason-phrase')" />;
+                    Body : <xforms-output xf-value="event('response-body')" />.
+                </xforms-message>
+                <xforms-load xf-show="replace" xf-resource="/synopsx/login" />
+            </xforms-action>
+            <xforms-action ev-event="xforms-submit-error">
+                <xforms-message xf-level="modal">
+                    Une erreur est apparue : <xforms-output xf-value="event('error-type')" />;
+                    Status : <xforms-output xf-value="event('response-status-code')" />;
+                    URI : <xforms-output xf-value="event('resource-uri')" />;
+                    Headers : <xforms-output xf-value="event('response-headers')" />;
+                    Reason : <xforms-output xf-value="event('response-reason-phrase')" />
+                    Body : <xforms-output xf-value="event('response-body')" />.
                 </xforms-message>
             </xforms-action>
         </xforms-submission>
@@ -129,7 +170,16 @@
         <xforms-output xf-value="serialize(.)" />
     </xforms-group>
 
-    <xforms-submit xf-submission="submitUserCreation">
+    <xforms-trigger xf-ref="instance('uiState')/createButton">
         <xforms-label>Créer</xforms-label>
-    </xforms-submit>
+        <xforms-action ev-event="DOMActivate">
+            <xforms-send xf-submission="submitUserCreation" />
+        </xforms-action>
+    </xforms-trigger>
+    <xforms-trigger xf-ref="instance('uiState')/confirmButton">
+        <xforms-label>Confirmer</xforms-label>
+        <xforms-action ev-event="DOMActivate">
+            <xforms-send xf-submission="submitUserConfirm" />
+        </xforms-action>
+    </xforms-trigger>
 </section>
