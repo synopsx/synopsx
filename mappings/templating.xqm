@@ -41,24 +41,43 @@ declare variable $synopsx.mappings.templating:regex := "\s*\{(.+?)\}\s*";
  :
  :)
 declare function wrapper($queryParams as map(*), $data as map(*), $outputParams as map(*)) as node()* {
-  let $wrap := fn:doc(synopsx.models.synopsx:getLayoutPath($queryParams, $outputParams?layout))
   let $pi :=
     if ($outputParams?xforms-prefix)
     then processing-instruction xml-stylesheet {
       fn:concat("href='", $G:XFORMS, "' ", "type='text/xsl'")
     }
-  return
-    (
-      $pi,
-      $wrap/* update {
-      for $node in .//*[text()[fn:matches(., $synopsx.mappings.templating:regex )]] | .//@*[fn:matches(., $synopsx.mappings.templating:regex )]
-      let $key := fn:analyze-string($node, $synopsx.mappings.templating:regex )//fn:group/text()
-      return if ($key = 'content')
-        then replace node $node with pattern($queryParams, $data, $outputParams)
-        else associate($queryParams, $data?meta, $outputParams, $node)
-      }
-    )
-  };
+  return ($pi, layout($queryParams, $data, $outputParams, $outputParams?layout))
+};
+
+(:~
+ : Loads $template and resolves its {content}/meta placeholders, recursively
+ : including any descendant carrying a data-url attribute
+ : (e.g. <header data-url="inc_header"/> pulls in inc_header.xhtml the same
+ : way, substituted the same way) — ported from SynopsX v1's original
+ : wrapper(), which supported this same recursive include via data-url
+ : before the v3 rewrite dropped it. Resolved through the same
+ : project/project-chain lookup as the layout itself (getLayoutPath), so a
+ : project can override a partial (e.g. its own inc_header.xhtml) the same
+ : way it overrides a full layout.
+ :
+ : @param $queryParams the query params defined in restxq
+ : @param $data the result of the query
+ : @param $outputParams the serialization params
+ : @param $template the layout or partial's file name
+ : @return an updated HTML document/fragment with pattern and includes instantiated
+ :)
+declare function layout($queryParams as map(*), $data as map(*), $outputParams as map(*), $template as xs:string?) as node()* {
+  let $wrap := fn:doc(synopsx.models.synopsx:getLayoutPath($queryParams, $template))
+  return $wrap/* update {
+    for $inc in .//*[@data-url]
+    return replace node $inc with layout($queryParams, $data, $outputParams, $inc/@data-url || '.xhtml'),
+    for $node in .//*[text()[fn:matches(., $synopsx.mappings.templating:regex )]] | .//@*[fn:matches(., $synopsx.mappings.templating:regex )]
+    let $key := fn:analyze-string($node, $synopsx.mappings.templating:regex )//fn:group/text()
+    return if ($key = 'content')
+      then replace node $node with pattern($queryParams, $data, $outputParams)
+      else associate($queryParams, $data?meta, $outputParams, $node)
+  }
+};
 
 (:~
  : this function iterates the pattern template with contents

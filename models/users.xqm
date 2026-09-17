@@ -129,9 +129,9 @@ declare
   %updating 
 function putUser($queryParams as map(*))  {
   let $globalPermission := fn:normalize-space($queryParams?param/*:user/@permission)
-  let $patterns := $queryParams?param//*:database
+  let $patterns := $queryParams?param//*:database[fn:normalize-space(@pattern) != '' and fn:normalize-space(@permission) != '']
 
-  let $patternPermissions := for $perm in $patterns//@permission
+  let $patternPermissions := for $perm in $patterns/@permission
     return fn:normalize-space($perm)
   let $patternNames :=  for $pattern in $patterns/@pattern
     return fn:normalize-space($pattern)

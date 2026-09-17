@@ -26,7 +26,7 @@ declare default function namespace "synopsx.mappings.tei2html" ;
 (:~
  : This function dispatches the treatment of the XML document
  :)
-declare
+declare 
   %output:indent("no")
 function dispatch($node as node()*, $options as map(*)) as item()* {
   for $i in $node return typeswitch($i)
