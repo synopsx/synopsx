@@ -61,8 +61,11 @@ Merci de bien veiller à ne pas introduire de fichiers systèmes dans vos commit
 
 La présentation de votre commit suit idéalement les directives suivantes.
 
+Nous utilisons [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/)
+
 Utiliser un préfixe pour indiquer la nature du commit
 - `feat:` pour la création d’une nouvelle fonctionnalité
+- `feat(auth):` pour la création d’une nouvelle fonctionnalité concernant l’authentification
 - `fix:` pour la correction d’un bug
 - `docs:` pour la documentation
 - `style:` pour le formatage du code 
