@@ -19,7 +19,9 @@ declare namespace output = "http://www.w3.org/2010/xslt-xquery-serialization" ;
 
 import module namespace G = "synopsx.globals" at '../globals.xqm' ;
 import module namespace synopsx.models.synopsx = 'synopsx.models.synopsx' at '../models/synopsx.xqm' ;
+(:Pas idéal, à charger dynamiquement :)
 import module namespace synopsx.mappings.tei2html = 'synopsx.mappings.tei2html' at './tei2html.xqm' ;
+import module namespace synopsx.mappings.json2html = 'synopsx.mappings.json2html' at './json2html.xqm' ;
 
 declare namespace html = 'http://www.w3.org/1999/xhtml' ;
 
@@ -82,12 +84,17 @@ declare function run-dispatcher(
   $queryParams as map(*),
   $outputParams as map(*)) {
   let $project := $queryParams?project
-  let $mapping := $outputParams?xquery
+  let $mapping :='tei2html'
+  (:$outputParams?xquery:)
   (:Ici est-ce que l'ont doit apppeler dispatch ou render surment render plus tard car plus génrique que dispatch:)
   let $qname := xs:QName($project ||'.mappings.' || $mapping || ':dispatch')
   let $options := map:merge(($queryParams, $outputParams))
   (:Il y a juste options a clarifier:)
-  return fn:function-lookup($qname, 2)($node, $options)
+  let $result := fn:function-lookup($qname, 2)($node, $options)
+  return
+    typeswitch($result)
+      case node()* return fn:serialize($result, map{'method':'html'})
+      default return $result
   (:Il faudrai sur une par default prendre les clé gobale de rendus puis
     permettre de choisir un rendu specifique pour les noeud dans le mapping 
       :)
@@ -142,19 +149,15 @@ declare function render($queryParams as map(*), $outputParams as map(*), $value 
   let $value := synopsx.mappings.synopsx2json:dispatch($value,$queryParams,$outputParams)
 
   return
-    switch($queryParams)
-    case "dev"
-      return $value
-    (:
-    case map:contains($queryParams,'xquery') 
-      return synopsx.mappings.json2html:dispatch($value, $options)
+    if (map:contains($outputParams,'xquery'))
+      then synopsx.mappings.json2html:dispatch($value, $options)
 
-    case map:contains($queryParams,'xsl')
-        return for $node in $value
+    else if (map:contains($outputParams,'xsl'))
+      then for $node in $value
            return
               if (fn:empty($params) )
                   then xslt:transform($node, synopsx.models.synopsx:getXsltPath($queryParams, $outputParams?xsl))
               else xslt:transform($node, synopsx.models.synopsx:getXsltPath($queryParams, $outputParams?xsl), $params)
-    :)
-    default return $value
+
+    else $value
   };

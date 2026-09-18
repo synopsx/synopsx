@@ -40,8 +40,8 @@ declare default function namespace "synopsx.restxq.exemples" ;
  :
  : @return a json representation of the corpus resource
  :)
-declare 
-  %rest:path('/corpus')
+declare
+  %rest:path('/corpus.json')
   %rest:produces('application/json')
   %output:media-type('application/json')
   %output:method('json')
@@ -57,10 +57,49 @@ function corpusJson() {
     'meta' : map{},
     'content' : map{ 'corpus' : <p>Corpus</p>,"name" : "Corpus Name","number" : 1,"keywords" : ("keyword1, keyword2") }
   }
-  
+
   let $outputParams := map {
-    'xquery' : 'tei2html'
+    (:'xquery' : 'tei2html':)
     }
 
   return synopsx.mappings.synopsx2json:render($queryParams, $outputParams, $data)
+};
+
+(:~
+ : resource function for corpus list
+ :
+ : @return an html representation of the corpus resource
+ :)
+declare
+  %rest:path('/corpus.html')
+  %output:method('html')
+
+function corpusHtml() {
+  let $queryParams := map {
+    'project' : 'synopsx',
+    'model' : '',
+    'function' : 'getCorpusList'
+    }
+  let $function := synopsx.models.synopsx:getModelFunction($queryParams)
+  let $data := map{
+    'meta' : map{},
+    'content' : map{ 'corpus' : <p>Corpus</p>,"name" : "Corpus Name","number" : 1,"keywords" : ("keyword1, keyword2") }
+  }
+
+  let $outputParams := map {
+    'xquery' : 'json2html',
+    "lang" : "fr",
+    "layout" : "layout.xml"
+    }
+
+    let $content := synopsx.mappings.synopsx2json:render($queryParams, $outputParams, $data)
+    let $layout := fn:doc(synopsx.models.synopsx:getLayoutPath($queryParams, $outputParams?layout))
+
+    return $layout/* update {
+      for $node in .//*[text()[fn:matches(., $synopsx.mappings.templating:regex)]]
+      let $key := fn:analyze-string($node, $synopsx.mappings.templating:regex)//fn:group/text()
+      where $key = 'content'
+      return replace node $node with $content
+    }
+
 };
