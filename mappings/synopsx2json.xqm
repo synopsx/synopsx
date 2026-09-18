@@ -76,8 +76,26 @@ declare function sequence2ArrayInMap($queryParams, $map as map(*), $outputParams
     )
   ))
 };
+(: A deplacer plus tard dans module utils plus génériques:)
+declare function run-dispatcher(
+  $node,
+  $queryParams as map(*),
+  $outputParams as map(*)) {
+  let $project := $queryParams?project
+  let $mapping := $outputParams?xquery
+  (:Ici est-ce que l'ont doit apppeler dispatch ou render surment render plus tard car plus génrique que dispatch:)
+  let $qname := xs:QName($project ||'.mappings.' || $mapping || ':dispatch')
+  let $options := map:merge(($queryParams, $outputParams))
+  (:Il y a juste options a clarifier:)
+  return fn:function-lookup($qname, 2)($node, $options)
+  (:Il faudrai sur une par default prendre les clé gobale de rendus puis
+    permettre de choisir un rendu specifique pour les noeud dans le mapping 
+      :)
+};
+
 
 declare function dispatch($b as item()*, $queryParams, $outputParams) {
+
   typeswitch($b)
     case empty-sequence() return ()
     case map(*)+ return $b ! sequence2ArrayInMap($queryParams, ., $outputParams)
@@ -92,9 +110,15 @@ declare function dispatch($b as item()*, $queryParams, $outputParams) {
     })
     case attribute() return fn:string($b)
     case text() return fn:string($b)
-    default return render($queryParams, $outputParams, $b)/node()
-      => fn:serialize(map {'method' : 'html'})
-};
+
+    
+    (: Le soucis est il faut capter la bonne transformation :)
+    (:synopsx.mappings.tei2html:dispatch($b, $queryParams, $outputParams):)
+    (:render($queryParams, $outputParams, $b)/node()
+      => fn:serialize(map {'method' : 'html'}):)
+    (:Je pense que c'est la bonne approche:)
+    default return run-dispatcher($b, $queryParams, $outputParams)
+};  
 
 declare function recurse($queryParams, $map as map(*), $outputParams) {
   sequence2ArrayInMap($queryParams, $map, $outputParams)
@@ -111,22 +135,26 @@ declare function recurse($queryParams, $map as map(*), $outputParams) {
  : @todo select the xquery transformation from xqm
  :)
 declare function render($queryParams as map(*), $outputParams as map(*), $value as item()* ) as item()* {
-  let $xquery := map:get($outputParams, 'xquery')
-  let $xsl :=  map:get($outputParams, 'xsl')
   let $options := map{
     'lb' : map:get($outputParams, 'lb')
     }
-  let $params := map:get($outputParams, 'params')
+  let $params := map:get($outputParams, 'params')  
+  let $value := synopsx.mappings.synopsx2json:dispatch($value,$queryParams,$outputParams)
+
   return
-    if ($xquery)
-      then synopsx.mappings.tei2html:dispatch($value, $options)
-    else if ($xsl)
-      then for $node in $value
+    switch($queryParams)
+    case "dev"
+      return $value
+    (:
+    case map:contains($queryParams,'xquery') 
+      return synopsx.mappings.json2html:dispatch($value, $options)
+
+    case map:contains($queryParams,'xsl')
+        return for $node in $value
            return
-               (:
-               if (fn:empty($params) )
-                 then xsl:transform($node, synopsx.models.synopsx:getXsltPath($queryParams, $xsl))
-                 else xsl:transform($node, synopsx.models.synopsx:getXsltPath($queryParams, $xsl), $params)
-               :) ""
-      else $value
-};
+              if (fn:empty($params) )
+                  then xslt:transform($node, synopsx.models.synopsx:getXsltPath($queryParams, $outputParams?xsl))
+              else xslt:transform($node, synopsx.models.synopsx:getXsltPath($queryParams, $outputParams?xsl), $params)
+    :)
+    default return $value
+  };
