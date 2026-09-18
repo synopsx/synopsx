@@ -17,3 +17,5 @@ Thumbs.db
 *~
 .obsidian/
 .vscode/
+
+tests/

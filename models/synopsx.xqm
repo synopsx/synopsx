@@ -20,6 +20,7 @@ declare namespace inspect = "http://basex.org/modules/inspect" ;
 declare namespace fn = "http://www.w3.org/2005/xpath-functions" ;
 declare namespace map = "http://www.w3.org/2005/xpath-functions/map" ;
 declare namespace xf = "http://www.w3.org/2002/xforms" ;
+declare namespace xquery = "http://basex.org/modules/xquery" ;
 
 import module namespace G = "synopsx.globals" at "../globals.xqm" ;
 
@@ -69,6 +70,18 @@ declare function getModelFunction($queryParams as map(*)) as xs:QName {
       (: give default or error :)
 };
 
+declare function getRemoteTemplatesPath($globalsPath as xs:string) as xs:string? {
+  if (file:exists($globalsPath))
+  then
+    try {
+      xquery:eval(
+        'import module namespace G = "synopsx.globals" at "' || $globalsPath || '"; $G:TEMPLATES'
+      )
+    } catch * { () }
+  else ()
+};
+
+
 (:~
  : this function built the layout path based on the project hierarchy
  :
@@ -77,19 +90,41 @@ declare function getModelFunction($queryParams as map(*)) as xs:QName {
  : @return a path
  :)
 declare function getLayoutPath($queryParams as map(*), $template as xs:string?) as xs:string {
-  let $path := $G:WORKSPACE || map:get($queryParams, 'project') || '/templates/' || $template
+  let $currentPath := $G:WORKSPACE || map:get($queryParams, 'project') || '/templates/' || $template
+  let $chainPaths :=
+    for $globalsPath in $G:TEMPLATESCHAIN
+      let $templatesDir := getRemoteTemplatesPath($globalsPath)
+      where $templatesDir
+    return $templatesDir || $template
+  let $path := ($currentPath, $chainPaths)[file:exists(.)][1]
   return
-    if (file:exists($path))
-    then $path
-    else if (file:exists($G:TEMPLATES || $template)) then $G:TEMPLATES || $template
+    if ($path) then $path
     else
-        (: Test if we are looking for a main layout or a 'inc_*' layout:)
-        let $prefix := if (fn:contains($template, '_')) then fn:substring-before($template, '_') || '_' else 'inc_'
-         (: Test if we are looking for a inc_*List layout or a inc_*Item layout:)
-        let $suffix := if (fn:contains($template, 'List')) then 'List' else 'Item'
-        return $G:TEMPLATES || $prefix || 'default' || $suffix || '.xhtml'
+      let $prefix := if (fn:contains($template, '_')) then fn:substring-before($template, '_') || '_' else 'inc_'
+      let $suffix := if (fn:contains($template, 'List')) then 'List' else 'Item'
+      return $G:TEMPLATES || $prefix || 'default' || $suffix || '.xhtml'
 };
 
+
+
+(:
+ let $path := (
+    for $project in ($G:TEMPLATESCHAIN,('synopsx'))
+    let $candidate := $G:WORKSPACE || $project || '/templates/' || $template
+    where file:exists($candidate)
+    return $candidate
+  )[1]
+  return
+    switch ($template)
+      case file:exists($path)
+        return $path
+      case file:exists($G:TEMPLATES || $template)
+        return $G:TEMPLATES || $template
+      default return
+        let $prefix := if (fn:contains($template, '_')) then fn:substring-before($template, '_') || '_' else 'inc_'
+        let $suffix := if (fn:contains($template, 'List')) then 'List' else 'Item'
+        return $G:TEMPLATES || $prefix || 'default' || $suffix || '.xhtml'
+:)
 (:~
  : this function built the layout path based on the project hierarchy
  :

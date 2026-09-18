@@ -47,3 +47,7 @@ declare variable $G:STATUS := map {
   $G:USER-UNKNOWN: "User is unknown.",
   $G:USER-EXISTS : "User exists."
 };
+declare variable $G:TEMPLATESCHAIN := (
+  $G:WEBAPP || 'synopsx/globals.xqm'
+  (: , $G:WEBAPP || 'mon-projet/globals.xqm' :)
+) ;
