@@ -20,16 +20,12 @@ Par exemple, en invite de commande BaseX :
 ALTER PASSWORD admin (password)
 ```
 
-## Changes
-
-- Suppression des fonctionnalités bloquantes lors de l’installation (création db synopsx, user)
-- Mise en avant des processus internes
-- Utilisation de références explicites aux fonctions dans les queryParams pour faciliter la navigation dans le code
-- Harmonisation de la syntaxe et des déclarations, normalisation des nommages de modules
-
 ## Documentation
 
-See the [Project’s Wiki](https://github.com/synopsx/synopsx/wiki)
+- See the [Project’s Wiki](https://github.com/synopsx/synopsx/wiki)
+- [Roadmap](ROADMAP.md)
+- [Changelog](CHANGELOG.md)
+- [How to contribute ?](CONTRIBUTING.md)
 
 ## Licence
 
