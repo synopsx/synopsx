@@ -23,6 +23,7 @@ ALTER PASSWORD admin (password)
 ## Documentation
 
 - See the [Project’s Wiki](https://github.com/synopsx/synopsx/wiki)
+
 - [Roadmap](ROADMAP.md)
 - [Changelog](CHANGELOG.md)
 - [How to contribute ?](CONTRIBUTING.md)
