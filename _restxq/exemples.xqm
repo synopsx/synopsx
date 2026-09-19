@@ -33,6 +33,9 @@ import module namespace synopsx.mappings.templating = "synopsx.mappings.templati
 import module namespace synopsx.mappings.synopsx2json = "synopsx.mappings.synopsx2json" at "../mappings/synopsx2json.xqm" ;
 
 
+declare namespace tei = "http://www.tei-c.org/ns/1.0" ;
+
+
 declare default function namespace "synopsx.restxq.exemples" ;
 
 (:~
@@ -102,4 +105,45 @@ function corpusHtml() {
       return replace node $node with $content
     }
 
+};
+
+
+(:~
+ : this is a test function for jsoner
+ :
+ : @return a json representation
+ : @rmq we may need a namespace
+ :)
+declare
+  %rest:path("/jsoner-alt")
+  %rest:produces("application/json")
+  %output:media-type("application/json")
+  %output:method("json")
+  %output:json("indent=no, escape=yes")
+function getJsonAlt() {
+  let $queryParams := map {
+    "project" : "synopsx",
+    "model" : "",
+    "function" : ""
+    }
+  let $meta := map{
+    "corpus" : <tei:p>Corpus</tei:p>, 
+    "name" : "Corpus Name", 
+    "number" : 1, 
+    "keywords" : ("keyword1", "keyword2") (: to test with a real xml sequence :)
+    }
+  let $content := map{ 
+    "corpus" : <tei:p>Corpus</tei:p>, 
+    "name" : "Corpus Name", 
+    "number" : 1, 
+    "keywords" : ("keyword1", "keyword2") (: to test with a real xml sequence :)
+    }
+  let $data := map{
+    "meta"    : $meta,
+    "content" : $content
+    }
+  let $outputParams := map {
+    'xquery' : 'tei2html' (: user defined serialisation :)
+    }
+  return synopsx.mappings.synopsx2json:jsoner($queryParams, $outputParams, $data)
 };

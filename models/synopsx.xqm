@@ -91,22 +91,25 @@ declare function getLayoutPath($queryParams as map(*), $template as xs:string?) 
 };
 
 (:~
- : this function built the layout path based on the project hierarchy
+ : this function built the mapping path based on the project hierarchy
  :
  : @param $queryParams the query params
  : @param $template the template name.extension
  : @return a path
+ : @todo this would suppose all mappings starts with dispatch or to use public functions
+ : @todo create everywhere an error namespace ?
  :)
-declare function getMappingsFunction($queryParams as map(*), $outputParams) as xs:QName {
-  let $uri := $queryParams?project || '.models.' || $queryParams?model
-  let $context := inspect:context()
-  let $function := $context/function[@name = $outputParams?xquery]
+declare function getMappingsFunction($queryParams as map(*), $outputParams as map(*)) as xs:QName {
+  let $projectNamespace := $queryParams?project || '.mappings.' || $outputParams?xquery
+  let $defaultNamespace := 'synopsx.mappings.' || $outputParams?xquery
+  let $uris := inspect:context()
+    /function[fn:tokenize(@name, ':')[fn:last()] = 'dispatch'][fn:count(argument) = 2]/@uri
   return
-    if ($function/@uri = $uri) then fn:QName($uri, $outputParams?xquery)
-    else if ($function/@uri = 'synopsx.models.' || $outputParams?xquery)
-      then fn:QName('synopsx.models.' || $queryParams?model, $outputParams?xquery)
-      else   fn:QName('synopsx.models.synopsx', 'notFound') (: give default or error :)
-  };
+    if ($uris = $projectNamespace) then fn:QName($projectNamespace, 'dispatch')
+    else if ($uris = $defaultNamespace) then fn:QName($defaultNamespace, 'dispatch')
+    else fn:error(xs:QName('local:NOFUNC'),
+      'QName de la fonction introuvable : ' || $defaultNamespace || ':dispatch')
+};
 
 (:~
  : this function built the layout path based on the project hierarchy
