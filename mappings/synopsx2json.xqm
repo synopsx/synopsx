@@ -23,7 +23,6 @@ import module namespace G = "synopsx.globals" at '../globals.xqm' ;
 import module namespace synopsx.models.synopsx = 'synopsx.models.synopsx' at '../models/synopsx.xqm' ;
 
 declare namespace html = 'http://www.w3.org/1999/xhtml' ;
-declare namespace inspect = "http://basex.org/modules/inspect" ;
 
 declare default function namespace 'synopsx.mappings.synopsx2json' ;
 
@@ -99,8 +98,18 @@ declare function dispatch($b as item()*, $queryParams, $outputParams) {
     })
     case attribute() return fn:string($b)
     case text() return fn:string($b)
-    default return render($queryParams, $outputParams, $b
+    case function(*) return dispatch(
+      map {
+        'name': fn:function-name($b),
+        'arity': fn:function-arity($b),
+        'annotations': fn:function-annotations($b)
+        (: Note: check if your processor supports function-annotations or requires an import/namespace prefix :)
+      }, 
+      $queryParams, 
+      $outputParams
     )
+    case xs:QName return fn:string($b)
+    default return render($queryParams, $outputParams, $b)
   };
 
 (:~
@@ -123,8 +132,7 @@ declare function render($queryParams as map(*), $outputParams as map(*), $value 
   return 
     if ($outputParams?xquery)
     then 
-      let $qname := synopsx.models.synopsx:getMappingsFunction($queryParams, $outputParams)
-      let $f := inspect:functions()[fn:function-name(.) = $qname][fn:function-arity(.) = 2]
+      let $f := synopsx.models.synopsx:getMappingsFunction($queryParams, $outputParams)
       return $f($value, $options)
     else if ($outputParams?xsl)
       then for $node in $value return

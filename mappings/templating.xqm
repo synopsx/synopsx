@@ -21,7 +21,6 @@ declare namespace xf = "http://www.w3.org/2002/xforms" ;
 
 import module namespace G = "synopsx.globals" at "../globals.xqm" ;
 import module namespace synopsx.models.synopsx = 'synopsx.models.synopsx' at '../models/synopsx.xqm' ;
-import module namespace synopsx.mappings.tei2html = 'synopsx.mappings.tei2html' at 'tei2html.xqm' ;
 
 declare default function namespace "synopsx.mappings.templating" ;
 
@@ -54,7 +53,10 @@ declare function wrapper($queryParams as map(*), $data as map(*), $outputParams 
       for $node in .//*[text()[fn:matches(., $synopsx.mappings.templating:regex )]] | .//@*[fn:matches(., $synopsx.mappings.templating:regex )]
       let $key := fn:analyze-string($node, $synopsx.mappings.templating:regex )//fn:group/text()
       return if ($key = 'content')
-        then replace node $node with pattern($queryParams, $data, $outputParams)
+        then replace node $node with
+          if ($outputParams?pattern)
+          then pattern($queryParams, $data, $outputParams)
+          else render($queryParams, $outputParams, $data?content)
         else associate($queryParams, $data?meta, $outputParams, $node)
       }
     )
@@ -134,16 +136,17 @@ declare %updating function associate($queryParams as map(*), $data as map(*), $o
    :
    : @todo check the xsl with an xsl 1.0
    :)
-  declare function render($queryParams as map(*), $outputParams as map(*), $value as node()* ) as item()* {
+  declare function render($queryParams as map(*), $outputParams as map(*), $value ) as item()* {
     let $options := map{
       'lb' : map:get($outputParams, 'lb')
       }
     let $params := map:get($outputParams, 'params')
     return 
       if ($outputParams?xquery)
-        (:then synopsx.mappings.tei2html:dispatch($value, $options):)
-        then synopsx.models.synopsx:getMappingsFunction($queryParams, $outputParams)
-      else if ($outputParams?xsl)
+    then
+      let $f := synopsx.models.synopsx:getMappingsFunction($queryParams, $outputParams)
+      return $f($value, $options)
+    else if ($outputParams?xsl)
         then for $node in $value return
             if (fn:empty($params) )
               then xslt:transform($node, synopsx.models.synopsx:getXsltPath($queryParams, $outputParams?xsl))

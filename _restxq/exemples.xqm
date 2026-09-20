@@ -51,21 +51,20 @@ declare
   %output:json("indent=no, escape=yes")
 function corpusJson() {
   let $queryParams := map {
-    'project' : 'synopsx',
-    'model' : '',
-    'function' : 'getCorpusList'
+    "project" : "synopsx",
+    "model" : "",
+    "function" : ""
     }
-  let $function := synopsx.models.synopsx:getModelFunction($queryParams)
   let $data := map{
     'meta' : map{},
     'content' : map{ 'corpus' : <p>Corpus</p>,"name" : "Corpus Name","number" : 1,"keywords" : ("keyword1, keyword2") }
   }
 
   let $outputParams := map {
-    (:'xquery' : 'tei2html':)
+    'xquery' : 'tei2html'
     }
 
-  return synopsx.mappings.synopsx2json:render($queryParams, $outputParams, $data)
+  return synopsx.mappings.synopsx2json:jsoner($queryParams, $outputParams, $data)
 };
 
 (:~
@@ -81,31 +80,35 @@ function corpusHtml() {
   let $queryParams := map {
     'project' : 'synopsx',
     'model' : '',
-    'function' : 'getCorpusList'
+    'function' : ''
     }
-  let $function := synopsx.models.synopsx:getModelFunction($queryParams)
-  let $data := map{
-    'meta' : map{},
-    'content' : map{ 'corpus' : <p>Corpus</p>,"name" : "Corpus Name","number" : 1,"keywords" : ("keyword1, keyword2") }
+
+    let $data := map{
+    'meta' : map{'title':"Corpus",'dc:title':'Corpus'},
+    'content' : map{ 'corpus' : <p>Corpus</p>,"name" : "Corpus Name","number" : 1,"keywords" : ("keyword1", "keyword2") }
   }
+  let $outputParams := map {
+    'xquery' : 'tei2html'
+  }
+
+  let $data :=synopsx.mappings.synopsx2json:jsoner($queryParams, $outputParams, $data)
 
   let $outputParams := map {
     'xquery' : 'json2html',
     "lang" : "fr",
-    "layout" : "layout.xml"
+    "layout" : "layout.xml",
+    "pattern":""
     }
 
-    let $content := synopsx.mappings.synopsx2json:render($queryParams, $outputParams, $data)
-    let $layout := fn:doc(synopsx.models.synopsx:getLayoutPath($queryParams, $outputParams?layout))
 
-    return $layout/* update {
-      for $node in .//*[text()[fn:matches(., $synopsx.mappings.templating:regex)]]
-      let $key := fn:analyze-string($node, $synopsx.mappings.templating:regex)//fn:group/text()
-      where $key = 'content'
-      return replace node $node with $content
-    }
+
+    return synopsx.mappings.templating:wrapper($queryParams, $data, $outputParams)
+  
+
 
 };
+
+ 
 
 
 (:~
@@ -145,5 +148,39 @@ function getJsonAlt() {
   let $outputParams := map {
     'xquery' : 'tei2html' (: user defined serialisation :)
     }
+  return synopsx.mappings.synopsx2json:jsoner($queryParams, $outputParams, $data)
+};
+
+
+
+declare
+  %rest:path('/api.json')
+  %rest:produces('application/json')
+  %output:media-type('application/json')
+  %output:method('json')
+  %output:json("indent=no, escape=yes")
+function api() {
+  let $queryParams := map {
+    "project" : "synopsx",
+    "model" : "",
+    "function" : ""
+    }
+  
+  let $modelName:='users'
+  let $projectNamespace := $queryParams?project || '.mappings.' || $modelName
+  let $defaultNamespace := 'synopsx.models.' || $modelName
+  let $projectLocation := $G:WORKSPACE || $queryParams?project || '/models/' || $modelName|| '.xqm'
+  let $defaultLocation := $G:HOME || 'models/' || $modelName || '.xqm'
+  let $namespace := if (file:exists($projectLocation)) then $projectNamespace else $defaultNamespace
+  let $location := if (file:exists($projectLocation)) then $projectLocation else $defaultLocation
+  let $module := fn:load-xquery-module($namespace, map { 'location-hints': $location })
+  let $data := map{
+    'meta' : map{},
+    'content' : $module }
+
+  let $outputParams := map {
+    'xquery' : 'json2html'
+    }
+    
   return synopsx.mappings.synopsx2json:jsoner($queryParams, $outputParams, $data)
 };

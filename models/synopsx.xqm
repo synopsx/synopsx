@@ -95,11 +95,32 @@ declare function getLayoutPath($queryParams as map(*), $template as xs:string?) 
  :
  : @param $queryParams the query params
  : @param $template the template name.extension
- : @return a path
- : @todo this would suppose all mappings starts with dispatch or to use public functions
- : @todo create everywhere an error namespace ?
+ : @return the public dispatch function (arity 2) of the selected mapping module
+ :
+ : The project module is preferred when it exists.  Otherwise, the mapping
+ : bundled with SynopsX is loaded.  This requires BaseX 12 or newer.
  :)
-declare function getMappingsFunction($queryParams as map(*), $outputParams as map(*)) as xs:QName {
+declare function getMappingsFunction($queryParams as map(*), $outputParams as map(*)) {
+  let $projectNamespace := $queryParams?project || '.mappings.' || $outputParams?xquery
+  let $defaultNamespace := 'synopsx.mappings.' || $outputParams?xquery
+  let $projectLocation := $G:WORKSPACE || $queryParams?project || '/mappings/' || $outputParams?xquery || '.xqm'
+  let $defaultLocation := $G:HOME || 'mappings/' || $outputParams?xquery || '.xqm'
+  let $namespace := if (file:exists($projectLocation)) then $projectNamespace else $defaultNamespace
+  let $location := if (file:exists($projectLocation)) then $projectLocation else $defaultLocation
+  let $functions := fn:load-xquery-module($namespace, map { 'location-hints': $location })?functions
+  let $overloads := $functions(fn:QName($namespace, 'dispatch'))
+  return
+    if (fn:empty($overloads)) then fn:error(xs:QName('local:NOFUNC'),
+      'Fonction dispatch introuvable dans le module : ' || $namespace)
+    else
+      let $dispatch := $overloads(2)
+      return
+        if (fn:exists($dispatch)) then $dispatch
+        else fn:error(xs:QName('local:NOFUNC'),
+          'Fonction dispatch/2 introuvable dans le module : ' || $namespace)
+};
+
+(:declare function getMappingsFunction($queryParams as map(*), $outputParams as map(*)) as xs:QName {
   let $projectNamespace := $queryParams?project || '.mappings.' || $outputParams?xquery
   let $defaultNamespace := 'synopsx.mappings.' || $outputParams?xquery
   let $uris := inspect:context()
@@ -110,6 +131,7 @@ declare function getMappingsFunction($queryParams as map(*), $outputParams as ma
     else fn:error(xs:QName('local:NOFUNC'),
       'QName de la fonction introuvable : ' || $defaultNamespace || ':dispatch')
 };
+;)
 
 (:~
  : this function built the layout path based on the project hierarchy

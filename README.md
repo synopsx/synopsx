@@ -7,7 +7,7 @@ It is free software freely redistributable and modifiable under the terms of the
 ## Installation
 
 Prerequisites :
-- SynopsX requires [BaseX](http://basex.org) > 10 (you would need Java on your computer)
+- SynopsX requires [BaseX](http://basex.org) >= 12 (you would need Java on your computer)
 - using XSLT transformer needs the [Saxon HE](https://www.saxonica.com/products/products.xml) processor (install the .jar file into `basex/lib/`)
 
 - Clone [Synopsx repository](https://github.com/synopsx/synopsx)
@@ -96,6 +96,5 @@ Par défaut, modifiait la première instance.
 Charger une instance avec trois informations : le modèle à laquelle elle appartient, l’identifiant de l’instance que doit modifier, et son chemin.
 
 Injecter les jsfunction, instance et espaces de nom
-
 
 
