@@ -33,7 +33,7 @@ declare default function namespace "synopsx.models.synopsx" ;
  :
  : @rmq the modules namespaces should be imported in the restxq
  : @todo give a default function or an error
- :)(:
+ :)
 declare function getModelFunction($queryParams as map(*)) as xs:QName {
   let $uri := $queryParams?project || '.models.' || $queryParams?model
   let $context := inspect:context()
@@ -42,8 +42,8 @@ declare function getModelFunction($queryParams as map(*)) as xs:QName {
     if ($function/@uri = $uri) then fn:QName($uri, $queryParams?function)
     else if ($function/@uri = 'synopsx.models.' || $queryParams?model)
       then fn:QName('synopsx.models.' || $queryParams?model, $queryParams?function)
-      else   fn:QName('synopsx.models.synopsx', 'notFound') :)(: give default or error :)(:
-};:)
+      else   fn:QName('synopsx.models.synopsx', 'notFound') (: give default or error :)
+};
 
 (:~
  : this function checks if the function exists in the given module
