@@ -187,6 +187,45 @@ function createUser($param as document-node(), $referer as xs:string) {
   return $response
 };
 
+(:~
+ : This resource function modify an user
+ : @param $username the username
+ : @return 
+ :)
+declare
+  %rest:GET
+  %rest:path("/synopsx/users/{$username}/confirm")
+  %rest:query-param("token", "{$token}", "no-token")
+  %output:method("xml")
+function confirmUser($username as xs:string, $token as xs:string) {
+  switch (user:info($username)/token = $token)
+  case fn:true()
+    return (
+      let $queryParams := map {
+      "project" : 'synopsx',
+      "model" : 'users',
+      "function" : "getUserDetails",
+      "mode" : "confirm",
+      "username" : $username,
+      "token" : $token
+    }
+    let $outputParams := map {
+      "lang" : "fr",
+      "layout" : "layoutForms.xml",
+      "pattern": "formUser.xml",
+      "xforms-lib" : "xsltforms",
+      "xforms-prefix" : fn:true(),
+      "xforms" : fn:true()
+    }
+    let $function := xs:QName(synopsx.models.synopsx:getModelFunction($queryParams))
+    let $data := fn:function-lookup($function, 1)($queryParams)
+    (: let $data := synopsx.models.synopsx:getUsersXforms($queryParams) :)
+    return   synopsx.mappings.templating:wrapper($queryParams, $data, $outputParams)
+    )
+
+    default return web:redirect("/")
+};
+
 declare
   %rest:path("/synopsx/users/{$username}/confirm")
   %rest:query-param("token", "{$token}", "no-token")
@@ -227,79 +266,6 @@ function deleteUser($username as xs:string) {
   }
   let $response := synopsx.models.users:putUser($queryParams)
   return $response
-};
-
-
-
-
-
-(:~
- :
-  return (
-    user:create($name, $pwd, $permissions, $patternNames, $info),
-    update:output((
-      <rest:response>
-        <http:response status="201" message="Created">
-          <http:header name="Content-Language" value="fr"/>
-          <http:header name="Content-Type" value="text/plain; charset=utf-8"/>
-          <http:header name="Content-Location" value="{'/synopsx/users/' || $name}"/>
-          {
-            if(fn:normalize-space($pwd) ='') then
-              <http:header name="Content-token" value="{$token}"/>
-          }
-        </http:response>
-      </rest:response>,
-      <result>
-        <message>Le nouvel utilisateur a été créé.</message>
-        <user>
-          <username>{$name}</username>
-          <!-- add other infos if needed -->
-        </user>
-      </result>
-    ))
-  )
-};
-
-:)
-
-(:~
- : This resource function modify an user
- : @param $username the username
- : @return 
- :)
-declare
-  %rest:GET
-  %rest:path("/synopsx/users/{$username}/confirm")
-  %rest:query-param("token", "{$token}", "no-token")
-  %output:method("xml")
-function confirmUser($username as xs:string, $token as xs:string) {
-  switch (user:info($username)/token = $token)
-  case fn:true()
-    return (
-      let $queryParams := map {
-      "project" : 'synopsx',
-      "model" : 'users',
-      "function" : "getUserDetails",
-      "mode" : "confirm",
-      "username" : $username,
-      "token" : $token
-    }
-    let $outputParams := map {
-      "lang" : "fr",
-      "layout" : "layoutForms.xml",
-      "pattern": "formUser.xml",
-      "xforms-lib" : "xsltforms",
-      "xforms-prefix" : fn:true(),
-      "xforms" : fn:true()
-    }
-    let $function := xs:QName(synopsx.models.synopsx:getModelFunction($queryParams))
-    let $data := fn:function-lookup($function, 1)($queryParams)
-    (: let $data := synopsx.models.synopsx:getUsersXforms($queryParams) :)
-    return   synopsx.mappings.templating:wrapper($queryParams, $data, $outputParams)
-    )
-
-    default return web:redirect("/")
-  
 };
 
 
@@ -376,10 +342,11 @@ function logout() {
  : account-confirmation flow which is deliberately anonymous (token-gated).
  : @param $perm map with permission data
  :)
-(:declare
+declare
     %perm:check('/synopsx/users', '{$perm}')
 function usersPermission($perm) {
+  
   if (fn:not(fn:ends-with($perm?path, '/confirm')) and fn:empty(session:get('id')))
-  then web:redirect('/synopsx/login')
+    then web:redirect('/synopsx/login')
   else ()
-};:)
+};

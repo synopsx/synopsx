@@ -40,14 +40,15 @@
             </script>
         </xforms-instance>
 
-        <xforms-instance id="uiState">
+        <xforms-instance id="submitLabels">
             <script type="application/xml">
-                <ui xmlns="">
-                    <createButton />
-                    <confirmButton />
-                </ui>
+                <labels xmlns="">
+                    <label mode="creation">Créer</label>
+                    <label mode="modify">Modifier</label>
+                    <label mode="confirm">Confirmer</label>
+                </labels>
             </script>
-        </xforms-instance>
+        </xforms-instance> 
 
         <xforms-instance id="createResult">
             <script type="application/xml">
@@ -58,11 +59,10 @@
         </xforms-instance>
 
         <xforms-bind xf-ref="instance('user')/@name" xf-required="true()" xf-relevant="instance('mode') != 'confirm'"/>
-        <!-- <xforms-bind xf-ref="instance('user')/password" xf-required="true()" /> -->
+        <xforms-bind xf-ref="instance('user')/password" xf-required="instance('mode') = 'confirm'" />
         <xforms-bind xf-ref="instance('user')/@permission" xf-required="true()" xf-relevant="instance('mode') != 'confirm'"/>
-        <xforms-bind xf-ref="instance('user')/info"  xf-relevant="instance('mode') != 'confirm'"/>
-        <xforms-bind xf-ref="instance('uiState')/createButton" xf-relevant="instance('mode') != 'confirm'"/>
-        <xforms-bind xf-ref="instance('uiState')/confirmButton" xf-relevant="instance('mode') = 'confirm'"/>
+        <xforms-bind xf-ref="instance('user')/database/@*" xf-required="true()" xf-relevant="instance('mode') != 'confirm'" />
+        <xforms-bind xf-ref="instance('user')/info" xf-relevant="instance('mode') != 'confirm'"/>
         <xforms-bind xf-ref="instance('createResult')/confirmLink" xf-relevant="normalize-space(.) != ''"/>
 
         <!-- /synopsx/users/{$username}/put -->
@@ -159,10 +159,11 @@
                 </xforms-itemset>
             </xforms-select1>
         </xforms-repeat>
-        <xforms-trigger xf-ref="instance('mode')/self::*[normalize-space(.) != 'confirm']">
+        <xforms-trigger xf-ref=".[instance('mode')!= 'confirm']">
             <xforms-label>Ajouter un pattern</xforms-label>
             <xforms-action ev-event="DOMActivate">
-                <xforms-insert xf-origin="instance('pattern')" xf-nodeset="info" xf-position="before" />
+                <xforms-insert xf-origin="instance('pattern')" xf-nodeset="info"
+                    xf-position="before" />
             </xforms-action>
         </xforms-trigger>
         <xforms-group xf-ref="info">
@@ -180,10 +181,15 @@
         <xforms-output xf-value="serialize(.)" />
     </xforms-group>
 
-    <xforms-trigger xf-ref="instance('uiState')/createButton">
-        <xforms-label>Créer</xforms-label>
-        <xforms-action ev-event="DOMActivate">
+    <xforms-trigger>
+        <xforms-label>
+            <xforms-output xf-value="instance('submitLabels')/label[@mode = instance('mode')]"/>
+        </xforms-label>
+        <xforms-action xf-if="instance('mode') = 'creation'" ev-event="DOMActivate">
             <xforms-send xf-submission="submitUserCreation" />
+        </xforms-action>
+        <xforms-action xf-if="instance('mode') = 'confirm'" ev-event="DOMActivate">
+            <xforms-send xf-submission="submitUserConfirm" />
         </xforms-action>
     </xforms-trigger>
     <xforms-group xf-ref="instance('createResult')/confirmLink">
@@ -191,10 +197,4 @@
         <br />
         <xforms-output xf-ref="instance('createResult')/confirmLink" />
     </xforms-group>
-    <xforms-trigger xf-ref="instance('uiState')/confirmButton">
-        <xforms-label>Confirmer</xforms-label>
-        <xforms-action ev-event="DOMActivate">
-            <xforms-send xf-submission="submitUserConfirm" />
-        </xforms-action>
-    </xforms-trigger>
 </section>
