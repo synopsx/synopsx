@@ -232,6 +232,7 @@ declare
   %output:method("xml")
   %rest:header-param("Referer", "{$referer}", "none")
   %rest:PUT("{$param}")
+  %perm:allow("admin")
   %updating
 function setPwd($param as document-node(), $username as xs:string, $token as xs:string, $referer as xs:string) {
   let $queryParams := map{
@@ -345,8 +346,15 @@ function logout() {
 declare
     %perm:check('/synopsx/users', '{$perm}')
 function usersPermission($perm) {
-  
-  if (fn:not(fn:ends-with($perm?path, '/confirm')) and fn:empty(session:get('id')))
-    then web:redirect('/synopsx/login')
-  else ()
+  let $path := $perm?path
+  let $user := session:get('id')
+  return (
+    if(fn:contains($path, '/confirm'))
+      then ()
+    else if(fn:empty($user))
+      then web:redirect('/synopsx/login')
+    else if(user:list-details($user)/@permission != 'admin')
+      then web:redirect('/synopsx/login')
+    else ()
+  )
 };

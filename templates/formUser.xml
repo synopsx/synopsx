@@ -61,7 +61,7 @@
         <xforms-bind xf-ref="instance('user')/@name" xf-required="true()" xf-relevant="instance('mode') != 'confirm'"/>
         <xforms-bind xf-ref="instance('user')/password" xf-required="instance('mode') = 'confirm'" />
         <xforms-bind xf-ref="instance('user')/@permission" xf-required="true()" xf-relevant="instance('mode') != 'confirm'"/>
-        <xforms-bind xf-ref="instance('user')/database/@*" xf-required="true()" xf-relevant="instance('mode') != 'confirm'" />
+        <xforms-bind xf-ref="instance('user')/database/@*" xf-required="normalize-space(instance('listDatabase')) != ''" xf-relevant="instance('mode') != 'confirm'" />
         <xforms-bind xf-ref="instance('user')/info" xf-relevant="instance('mode') != 'confirm'"/>
         <xforms-bind xf-ref="instance('createResult')/confirmLink" xf-relevant="normalize-space(.) != ''"/>
 
