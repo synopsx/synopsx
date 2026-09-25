@@ -41,14 +41,14 @@ declare variable $synopsx.mappings.templating:regex := "\s*\{(.+?)\}\s*";
  :)
 declare function wrapper($queryParams as map(*), $data as map(*), $outputParams as map(*)) as node()* {
   let $wrap := fn:doc(synopsx.models.synopsx:getLayoutPath($queryParams, $outputParams?layout))
-  let $pi :=
+  let $processing-instruction :=
     if ($outputParams?xforms-prefix)
     then processing-instruction xml-stylesheet {
       fn:concat("href='", $G:XFORMS, "' ", "type='text/xsl'")
     }
   return
     (
-      $pi,
+      $processing-instruction ,
       $wrap/* update {
       for $node in .//*[text()[fn:matches(., $synopsx.mappings.templating:regex )]] | .//@*[fn:matches(., $synopsx.mappings.templating:regex )]
       let $key := fn:analyze-string($node, $synopsx.mappings.templating:regex )//fn:group/text()

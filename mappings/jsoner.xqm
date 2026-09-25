@@ -37,7 +37,7 @@ declare default function namespace 'synopsx.mappings.jsoner' ;
  : @todo deal with empty content (actually "vide")
  : @rmq this version use the user defined serialisation from RESTXQ
  :)
-declare function jsoner($queryParams as map(*), $outputParams as map(*), $data as map(*)) {
+declare function jsoner($queryParams as map(*), $data as map(*), $outputParams as map(*)) {
   let $contents := map:get($data, 'content')
   let $meta := map:get($data, 'meta')
   return map{

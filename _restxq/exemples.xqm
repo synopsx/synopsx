@@ -76,7 +76,7 @@ function getJson() {
   let $outputParams := map {
     'xquery' : 'tei2html' (: user defined serialisation :)
     }
-  return synopsx.mappings.jsoner:jsoner($queryParams, $outputParams, $data)
+  return synopsx.mappings.jsoner:jsoner($queryParams, $data, $outputParams)
 };
 
 (:~
@@ -113,6 +113,41 @@ function getTest() {
     }
   let $outputParams := map {
     "xquery" : "tei2html", (: user defined serialisation :)
+    "layout" : "layout.xml",
+    "pattern" : "incArticle.xml"
+    }
+  return synopsx.mappings.templating:wrapper($queryParams, $data, $outputParams)
+};
+
+(:~
+ : this is a test function for xslt serialization
+ :
+ : @return a json representation
+ : @rmq we may need a namespace
+ :)
+declare
+  %rest:path("/synopsx/xslt")
+  %output:method("html")
+  %output:html-version("5.0")
+function getXslt() {
+  let $queryParams := map {
+    "project" : "synopsx",
+    "model" : "",
+    "function" : ""
+    }
+  let $meta := map{
+    "message" : <tei:p>Corpus</tei:p>
+    
+    }
+  let $content := map{ 
+    "message" : <tei:persName>Corpus</tei:persName>
+    }
+  let $data := map{
+    "meta"    : $meta,
+    "content" : $content
+    }
+  let $outputParams := map {
+    "xslt" : "default.xsl", (: user defined serialisation :)
     "layout" : "layout.xml",
     "pattern" : "incArticle.xml"
     }
