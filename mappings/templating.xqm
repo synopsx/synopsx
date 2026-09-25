@@ -21,7 +21,6 @@ declare namespace xf = "http://www.w3.org/2002/xforms" ;
 
 import module namespace G = "synopsx.globals" at "../globals.xqm" ;
 import module namespace synopsx.models.synopsx = 'synopsx.models.synopsx' at '../models/synopsx.xqm' ;
-import module namespace synopsx.mappings.tei2html = 'synopsx.mappings.tei2html' at 'tei2html.xqm' ;
 
 declare default function namespace "synopsx.mappings.templating" ;
 
@@ -125,28 +124,30 @@ declare %updating function associate($queryParams as map(*), $data as map(*), $o
     default return replace value of node $node with 'default'
   };
 
-  (:~
-   : this function dispatch the rendering based on $outpoutParams
-   :
-   : @param $value the content to render
-   : @param $outputParams the serialization params
-   : @return a serialization
-   :
-   : @todo check the xsl with an xsl 1.0
-   :)
-  declare function render($queryParams as map(*), $outputParams as map(*), $value as node()* ) as item()* {
-    let $options := map{
-      'lb' : map:get($outputParams, 'lb')
-      }
-    let $params := map:get($outputParams, 'params')
-    return 
-      if ($outputParams?xquery)
-        (:then synopsx.mappings.tei2html:dispatch($value, $options):)
-        then synopsx.models.synopsx:getMappingsFunction($queryParams, $outputParams)
-      else if ($outputParams?xsl)
-        then for $node in $value return
-            if (fn:empty($params) )
-              then xslt:transform($node, synopsx.models.synopsx:getXsltPath($queryParams, $outputParams?xsl))
-              else xslt:transform($node, synopsx.models.synopsx:getXsltPath($queryParams, $outputParams?xsl), $params)
-      else $value
-  };
+(:~
+ : this function dispatch the rendering based on $outpoutParams
+ :
+ : @param $value the content to render
+ : @param $outputParams the serialization params
+ : @return a serialization
+ :
+ : @todo check the xsl with an xsl 1.0
+ :)
+declare function render($queryParams as map(*), $outputParams as map(*), $value as node()* ) as item()* {
+  let $options := map{
+    'lb' : map:get($outputParams, 'lb')
+    }
+let $params := map:get($outputParams, 'params')
+return 
+  if ($outputParams?xquery)
+  then 
+    let $qname := synopsx.models.synopsx:getMappingsFunction($queryParams, $outputParams)
+    let $serialize := inspect:functions()[fn:function-name(.) = $qname][fn:function-arity(.) = 2]
+    return $serialize($value, $options)
+  else if ($outputParams?xsl)
+    then for $node in $value return
+      if (fn:empty($params) )
+      then xslt:transform($node, synopsx.models.synopsx:getXsltPath($queryParams, $outputParams?xsl))
+      else xslt:transform($node, synopsx.models.synopsx:getXsltPath($queryParams, $outputParams?xsl), $params)
+    else $value
+};

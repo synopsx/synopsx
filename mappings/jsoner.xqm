@@ -1,6 +1,5 @@
 xquery version '3.1' ;
-module namespace synopsx.mappings.synopsx2json = 'synopsx.mappings.synopsx2json' ;
-
+module namespace synopsx.mappings.jsoner = 'synopsx.mappings.jsoner' ;
 (:~
  : This module provides a mapping from SynopsX model to JSON
  :
@@ -25,7 +24,7 @@ import module namespace synopsx.models.synopsx = 'synopsx.models.synopsx' at '..
 declare namespace html = 'http://www.w3.org/1999/xhtml' ;
 declare namespace inspect = "http://basex.org/modules/inspect" ;
 
-declare default function namespace 'synopsx.mappings.synopsx2json' ;
+declare default function namespace 'synopsx.mappings.jsoner' ;
 
 (:~
  : this function wrap the content in an HTML layout
@@ -124,12 +123,12 @@ declare function render($queryParams as map(*), $outputParams as map(*), $value 
     if ($outputParams?xquery)
     then 
       let $qname := synopsx.models.synopsx:getMappingsFunction($queryParams, $outputParams)
-      let $f := inspect:functions()[fn:function-name(.) = $qname][fn:function-arity(.) = 2]
-      return $f($value, $options)
+      let $serialize := inspect:functions()[fn:function-name(.) = $qname][fn:function-arity(.) = 2]
+    return $serialize($value, $options)
     else if ($outputParams?xsl)
       then for $node in $value return
         if (fn:empty($params) )
         then xslt:transform($node, synopsx.models.synopsx:getXsltPath($queryParams, $outputParams?xsl))
         else xslt:transform($node, synopsx.models.synopsx:getXsltPath($queryParams, $outputParams?xsl), $params)
-      else $value
+    else $value
 };

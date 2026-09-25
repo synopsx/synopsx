@@ -95,21 +95,35 @@ declare function getLayoutPath($queryParams as map(*), $template as xs:string?) 
  :
  : @param $queryParams the query params
  : @param $template the template name.extension
- : @return a path
- : @todo this would suppose all mappings starts with dispatch or to use public functions
- : @todo create everywhere an error namespace ?
+ : @return the public dispatch function (arity 2) of the selected mapping module
+ :
+ : The project module is preferred when it exists.  Otherwise, the mapping
+ : bundled with SynopsX is loaded.  This requires BaseX 12 or newer.
+ :
+ : @todo draft with load-xquery-module() doesn’t work but should be the solution
  :)
+(: declare function getMappingsFunction($queryParams as map(*), $outputParams as map(*)) as xs:QName {
+  let $projectNamespace := $queryParams?project || '.mappings.' || $outputParams?xquery 
+  let $defaultNamespace := 'synopsx.mappings.' || $outputParams?xquery
+  let $response := fn:load-xquery-module($projectNamespace) 
+  return 
+    if (map:get($response?functions, $projectNamespace )) then $projectNamespace else fn:error(xs:QName('local:NOFUNC'),
+      'QName de la fonction introuvable : ' || $projectNamespace )
+}; :)
 declare function getMappingsFunction($queryParams as map(*), $outputParams as map(*)) as xs:QName {
   let $projectNamespace := $queryParams?project || '.mappings.' || $outputParams?xquery
   let $defaultNamespace := 'synopsx.mappings.' || $outputParams?xquery
-  let $uris := inspect:context()
-    /function[fn:tokenize(@name, ':')[fn:last()] = 'dispatch'][fn:count(argument) = 2]/@uri
+  (: let $uris := inspect:context()
+    /function[fn:tokenize(@name, ':')[fn:last()] = 'dispatch']/@uri :)
+    let $uris := inspect:context()//function[@name = "dispatch"]/@uri
   return
-    if ($uris = $projectNamespace) then fn:QName($projectNamespace, 'dispatch')
+    if ($uris = $projectNamespace) then fn:QName($projectNamespace , 'dispatch')
     else if ($uris = $defaultNamespace) then fn:QName($defaultNamespace, 'dispatch')
     else fn:error(xs:QName('local:NOFUNC'),
-      'QName de la fonction introuvable : ' || $defaultNamespace || ':dispatch')
+      'QName de la fonction introuvable : dispatch')
+      (:inspect:context()//function[fn:tokenize(@name, ':')[fn:last()]] ):)
 };
+
 
 (:~
  : this function built the layout path based on the project hierarchy

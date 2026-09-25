@@ -30,82 +30,13 @@ declare namespace map = "http://www.w3.org/2005/xpath-functions/map" ;
 import module namespace G = "synopsx.globals" at "../globals.xqm" ;
 import module namespace synopsx.models.synopsx = "synopsx.models.synopsx" at "../models/synopsx.xqm" ;
 import module namespace synopsx.mappings.templating = "synopsx.mappings.templating" at "../mappings/templating.xqm" ;
-import module namespace synopsx.mappings.synopsx2json = "synopsx.mappings.synopsx2json" at "../mappings/synopsx2json.xqm" ;
+import module namespace synopsx.mappings.jsoner = "synopsx.mappings.jsoner" at "../mappings/jsoner.xqm" ;
 
+import module namespace synopsx.mappings.tei2html = "synopsx.mappings.tei2html" at "../mappings/tei2html.xqm" ;
 
 declare namespace tei = "http://www.tei-c.org/ns/1.0" ;
 
-
 declare default function namespace "synopsx.restxq.exemples" ;
-
-(:~
- : resource function for corpus list
- :
- : @return a json representation of the corpus resource
- :)
-declare
-  %rest:path('/corpus.json')
-  %rest:produces('application/json')
-  %output:media-type('application/json')
-  %output:method('json')
-  %output:json("indent=no, escape=yes")
-function corpusJson() {
-  let $queryParams := map {
-    'project' : 'synopsx',
-    'model' : '',
-    'function' : 'getCorpusList'
-    }
-  let $function := synopsx.models.synopsx:getModelFunction($queryParams)
-  let $data := map{
-    'meta' : map{},
-    'content' : map{ 'corpus' : <p>Corpus</p>,"name" : "Corpus Name","number" : 1,"keywords" : ("keyword1, keyword2") }
-  }
-
-  let $outputParams := map {
-    (:'xquery' : 'tei2html':)
-    }
-
-  return synopsx.mappings.synopsx2json:render($queryParams, $outputParams, $data)
-};
-
-(:~
- : resource function for corpus list
- :
- : @return an html representation of the corpus resource
- :)
-declare
-  %rest:path('/corpus.html')
-  %output:method('html')
-
-function corpusHtml() {
-  let $queryParams := map {
-    'project' : 'synopsx',
-    'model' : '',
-    'function' : 'getCorpusList'
-    }
-  let $function := synopsx.models.synopsx:getModelFunction($queryParams)
-  let $data := map{
-    'meta' : map{},
-    'content' : map{ 'corpus' : <p>Corpus</p>,"name" : "Corpus Name","number" : 1,"keywords" : ("keyword1, keyword2") }
-  }
-
-  let $outputParams := map {
-    'xquery' : 'json2html',
-    "lang" : "fr",
-    "layout" : "layout.xml"
-    }
-
-    let $content := synopsx.mappings.synopsx2json:render($queryParams, $outputParams, $data)
-    let $layout := fn:doc(synopsx.models.synopsx:getLayoutPath($queryParams, $outputParams?layout))
-
-    return $layout/* update {
-      for $node in .//*[text()[fn:matches(., $synopsx.mappings.templating:regex)]]
-      let $key := fn:analyze-string($node, $synopsx.mappings.templating:regex)//fn:group/text()
-      where $key = 'content'
-      return replace node $node with $content
-    }
-
-};
 
 
 (:~
@@ -115,12 +46,12 @@ function corpusHtml() {
  : @rmq we may need a namespace
  :)
 declare
-  %rest:path("/jsoner-alt")
+  %rest:path("/synopsx/jsoner")
   %rest:produces("application/json")
   %output:media-type("application/json")
   %output:method("json")
   %output:json("indent=no, escape=yes")
-function getJsonAlt() {
+function getJson() {
   let $queryParams := map {
     "project" : "synopsx",
     "model" : "",
@@ -133,7 +64,7 @@ function getJsonAlt() {
     "keywords" : ("keyword1", "keyword2") (: to test with a real xml sequence :)
     }
   let $content := map{ 
-    "corpus" : <tei:p>Corpus</tei:p>, 
+    "corpus" : <tei:persName>Corpus</tei:persName>, 
     "name" : "Corpus Name", 
     "number" : 1, 
     "keywords" : ("keyword1", "keyword2") (: to test with a real xml sequence :)
@@ -145,5 +76,45 @@ function getJsonAlt() {
   let $outputParams := map {
     'xquery' : 'tei2html' (: user defined serialisation :)
     }
-  return synopsx.mappings.synopsx2json:jsoner($queryParams, $outputParams, $data)
+  return synopsx.mappings.jsoner:jsoner($queryParams, $outputParams, $data)
+};
+
+(:~
+ : this is a test function for jsoner
+ :
+ : @return a json representation
+ : @rmq we may need a namespace
+ :)
+declare
+  %rest:path("/synopsx/test")
+  %output:method("html")
+  %output:html-version("5.0")
+function getTest() {
+  let $queryParams := map {
+    "project" : "synopsx",
+    "model" : "",
+    "function" : ""
+    }
+  let $meta := map{
+    "message" : <tei:p>Corpus</tei:p>, 
+    "name" : "Corpus Name", 
+    "number" : 1, 
+    "keywords" : ("keyword1", "keyword2") (: to test with a real xml sequence :)
+    }
+  let $content := map{ 
+    "message" : <tei:p>Corpus</tei:p>, 
+    "name" : "Corpus Name", 
+    "number" : 1, 
+    "keywords" : ("keyword1", "keyword2") (: to test with a real xml sequence :)
+    }
+  let $data := map{
+    "meta"    : $meta,
+    "content" : $content
+    }
+  let $outputParams := map {
+    "xquery" : "tei2html", (: user defined serialisation :)
+    "layout" : "layout.xml",
+    "pattern" : "incArticle.xml"
+    }
+  return synopsx.mappings.templating:wrapper($queryParams, $data, $outputParams)
 };
