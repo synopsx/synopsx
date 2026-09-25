@@ -96,6 +96,13 @@ N’hésitez pas à fournir des précisions et décrire dans un message de note 
 
 @todo 
 
+## Documentation
+
+Tous les changements notables sont documentés dans le fichier [`CHANGELOG.md`](CHANGELOG.md). Son formatage est basé sur [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), et ce projet adhère à [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+
+
+
 ## Top 10 des contributeurs
 
 <a href="https://github.com/synopsx/synopsx/graphs/contributors">

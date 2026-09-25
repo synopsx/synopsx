@@ -1,10 +1,18 @@
 # SynopsX’s Roadmap
 
+Now (Maintenant)
+
+Next (Prochainement)
+
+Later (Plus tard)
+
+
 ## Révision du code et améliorations de base
 
 - [x] mise à jour vers Basex10
 - [x] révision de la structure d’ensemble du code
 - [x] supression des freins au démarrage
+- [x] renommage de `files` en `static`
 - [ ] simplifications
 
 ## Nouvelles fonctionnalités
@@ -22,18 +30,13 @@
 - [ ] création automatique d’une page OpenAPI
 - [ ] module OAIPMH
 
-
 ## Roadmap du module utlisateurs
 
 - [x] implémentation des formulaires xforms
 - [x] création des fonctions users
-- [ ] modularisation du code pour suivre la structure rest/models/templates
+- [x] modularisation du code pour suivre la structure rest/models/templates
 - [ ] implémentation des users patterns 
 - [ ] sessions ?
-
-### Améliorations du templating
-
-- Supprimer l’élément quand il y a une valeur vide ? Trouve cela chouette gros problème rencontré usage conditionnel si qqch dans la séquence ou pas.
 
 ## Discussions sur le nommage 
 - pb templating
@@ -63,62 +66,5 @@ Discussion sur le catch des erreurs
 Discussion sur l’autodocumentation projets ODD
 Discussion sur l’intégration XForms
 
-Convention de nommage des templates
-- utilisation _ comme séparateur pour distinguer les noms de fichier ? On pourrait laisser les utilisateurs libres comme le nom est déclaré littéralement
 
-Nota : `files/` --> `static/`
 
-## Utilisation de XForms
-
-SynopsX intègre l’utilisation de [XForms](https://www.w3.org/TR/xforms11/).
-
-Par défaut, on propose l’utilisation du client libre et open source [XSLTForms](https://github.com/AlainCouthures/declarative4all) à installer dans le répertoire `static/`. 
-@rmq actuellement le logiciel est distribué sous forme de release 
-@todo prendre contact avec Couthures pour voir comment l’installer sous la forme d’un sous-module
-
-Les instances, models et formulaires XForms sont placés dans le répertoire `template/`. Le nommage des fichiers est libre ce qui permet d’intégrer directement des XForms dans les templates. 
-
-Par commodité, SynopsX utilise la convention de nommage suivante : 
-- le nom des instances débute par `.`
-- le nom des models débute par `model`
-- le nom des formulaires débute par `form`
-
-Dans les RESTXQ la déclaration des instances s’opère dans `queryParams` et les models et les formulaires sont déclarés dans `outputParams`.
-
-On se demande s’il ne serait pas possible de faire directement les déclarations. Modulariser le code des models fait du sens à la condition qu’ils puissent être réutilisables. Avantage de modulariser le code pour alléger le client.
-
-Dans l’hypothèse où l’utilisateur fait des déclarations directes dans les templates, SynopsX n’aurait qu’à faire l’assemblage
-- déclaration espace de nom
-- appel librairie
-- association des templates
-- param pour le choix de la syntaxe
-
-outputParams
-- `xforms-lib` : optionnel avec valeur par défaut `xsltforms` pour l’avenir
-- `xforms-prefix` : optionnel si true() utilise la syntaxe préfixée
-- `xforms`: optionnel `true() | false()` @rmq ???
-
-Il peut y avoir plusieurs instances. Il peut avoir un modèle, deux modèles, etc. et à l’intérieur de chaque modèle plusieurs instances. Il y a deux méthodes pour déclarer les instances, soit directement dans le modèle, soit en les appelant avec des resources externes avec `@src` s’il y en a plusieurs, celles-ci doivent avoir un identifiant.
-
-Lors de la mise à jour d’un contenu avec la bdd, besoin de pouvoir identifier l’instance. Afin de simplifier, il serait sans doute utile que l’on ait le même mécanisme pour servir les instances vierges et les instances devant être mises à jour. Les deux pourraient être servies avec SynopsX
-
-```xml
-<model>
-  <klkj eee="{ine}"></klkj>
-  {instance}
-  
-  <instance xml:id="inst1" src="{}"/>
-  <instance xml:id="instData">
-    <data xmlns="">
-        <q/>
-    </data>
-  </instance>
-  <instance xml:id="inst2" src="{}"/>
-</model>
-```
-
-Veut-on systématiquement un point d’accès XML ?
-
-Il serait possible de dire que le modèle est tjrs le même et que la ressource ont vient la chercher par le formulaire. Pourrait avoir une valeur mise à jour par le templating.
-
-En utilisant les mécanismes du templating par défaut. Peut être même pas besoin de déclarer les paramètres dans les queryParams, etc.
