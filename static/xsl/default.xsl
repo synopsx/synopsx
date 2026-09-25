@@ -8,4 +8,8 @@
   <xsl:template match="p">
     <p><apply-templates/></p>
   </xsl:template>
+
+  <xsl:template match="persName">
+    <p><span  class="persName"><apply-templates/></span></p>
+  </xsl:template>
 </xsl:stylesheet>

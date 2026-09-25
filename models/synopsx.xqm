@@ -33,26 +33,6 @@ declare default function namespace "synopsx.models.synopsx" ;
  :
  : @rmq the modules namespaces should be imported in the restxq
  : @todo give a default function or an error
- :)(:
-declare function getModelFunction($queryParams as map(*)) as xs:QName {
-  let $uri := $queryParams?project || '.models.' || $queryParams?model
-  let $context := inspect:context()
-  let $function := $context/function[@name = $queryParams?function]
-  return
-    if ($function/@uri = $uri) then fn:QName($uri, $queryParams?function)
-    else if ($function/@uri = 'synopsx.models.' || $queryParams?model)
-      then fn:QName('synopsx.models.' || $queryParams?model, $queryParams?function)
-      else   fn:QName('synopsx.models.synopsx', 'notFound') :)(: give default or error :)(:
-};:)
-
-(:~
- : this function checks if the function exists in the given module
- :
- : @param module uri and function name
- : @return a function QName
- :
- : @rmq the modules namespaces should be imported in the restxq
- : @todo give a default function or an error
  :)
 declare function getModelFunction($queryParams as map(*)) as xs:QName {
   let $projectName :=  map:get($queryParams, 'project')
@@ -76,18 +56,14 @@ declare function getModelFunction($queryParams as map(*)) as xs:QName {
  : @param $template the template name.extension
  : @return a path
  :)
-declare function getLayoutPath($queryParams as map(*), $template as xs:string?) as xs:string {
-  let $path := $G:WORKSPACE || map:get($queryParams, 'project') || '/templates/' || $template
-  return
-    if (file:exists($path))
-    then $path
-    else if (file:exists($G:TEMPLATES || $template)) then $G:TEMPLATES || $template
-    else
-        (: Test if we are looking for a main layout or a 'inc_*' layout:)
-        let $prefix := if (fn:contains($template, '_')) then fn:substring-before($template, '_') || '_' else 'inc_'
-         (: Test if we are looking for a inc_*List layout or a inc_*Item layout:)
-        let $suffix := if (fn:contains($template, 'List')) then 'List' else 'Item'
-        return $G:TEMPLATES || $prefix || 'default' || $suffix || '.xhtml'
+declare function getLayoutPath($queryParams as map(*), $template as xs:string) as xs:string {
+  let $projectPath := $G:WORKSPACE || $queryParams?project || '/templates/' 
+  let $defaultPath := $G:TEMPLATES
+  let $candidates := ($projectPath, $defaultPath) ! (. || $template)
+  return (
+    $candidates[file:exists(.)],
+    fn:error(xs:QName('local:NOTEMPLATE'), 'Template : ' || $template || ' not found in ' || fn:string-join($candidates, ' or '))
+  )[1]
 };
 
 (:~
@@ -96,30 +72,40 @@ declare function getLayoutPath($queryParams as map(*), $template as xs:string?) 
  : @param $queryParams the query params
  : @param $template the template name.extension
  : @return a path
+ : 
+ : @rmq static’s paths are rebuilt by _restxq/files.xqm
+ : @todo $G:WEBAPP may be problematic with a project
  :)
-declare function getMappingsFunction($queryParams as map(*), $outputParams) as xs:QName {
-  let $uri := $queryParams?project || '.models.' || $queryParams?model
-  let $context := inspect:context()
-  let $function := $context/function[@name = $outputParams?xquery]
-  return
-    if ($function/@uri = $uri) then fn:QName($uri, $outputParams?xquery)
-    else if ($function/@uri = 'synopsx.models.' || $outputParams?xquery)
-      then fn:QName('synopsx.models.' || $queryParams?model, $outputParams?xquery)
-      else   fn:QName('synopsx.models.synopsx', 'notFound') (: give default or error :)
-  };
+declare function getXsltPath($queryParams as map(*), $xsl as xs:string?) as xs:string { 
+  let $projectPath := $G:WEBAPP || 'static/' ||  $queryParams?project || '/xsl/'
+  let $defaultPath :=  $G:FILES || 'xsl/'
+  let $candidates := ($projectPath, $defaultPath) ! (. || $xsl)
+  return (
+    $candidates[file:exists(.)],
+    fn:error(xs:QName('local:NOXSLT'), 'XSLT : ' || $xsl || ' not found in ' || fn:string-join($candidates, ' or '))
+  )[1]
+};
 
 (:~
- : this function built the layout path based on the project hierarchy
+ : this function built the mapping path based on the project hierarchy
  :
  : @param $queryParams the query params
  : @param $template the template name.extension
- : @return a path
+ : @return the public dispatch function (arity 2) of the selected mapping module
  :
- : @todo 
  :)
-declare function synopsx.models.synopsx:getXsltPath($queryParams as map(*), $outputParams) as xs:QName {
-   "todo"
-  };
+declare function getMappingsFunction($queryParams as map(*), $outputParams as map(*)) as xs:QName {
+  let $projectNamespace := $queryParams?project || '.mappings.' || $outputParams?xquery
+  let $defaultNamespace := 'synopsx.mappings.' || $outputParams?xquery
+  (: let $uris := inspect:context()
+    /function[fn:tokenize(@name, ':')[fn:last()] = 'dispatch']/@uri :)
+    let $uris := inspect:context()//function[@name = "dispatch"]/@uri
+  return
+    if ($uris = $projectNamespace) then fn:QName($projectNamespace , 'dispatch')
+    else if ($uris = $defaultNamespace) then fn:QName($defaultNamespace, 'dispatch')
+    else fn:error(xs:QName('local:NOFUNC'),
+      'QName de la fonction introuvable : dispatch')
+};
 
 (:
  : This function
