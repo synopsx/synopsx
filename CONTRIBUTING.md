@@ -1,11 +1,10 @@
 # Bienvenue sur le guide de contribution à SynopsX
 
-Bienvenue sur cette page dédiée aux contributions. Nous sommes enchantés que vous envisagiez de contribuer à ce projet !
-
-SynopsX est un projet libre publié sous licence GNU GPL et toutes les contributions seront indiquées dans la page de documentation.
-
+Bienvenue sur cette page dédiée aux contributions. Nous sommes enchantés que vous envisagiez de contribuer à ce projet collectif !
 
 ## Nouveaux contributeurs
+
+SynopsX est un projet collaboratif, c’est aussi un logiciel libre publié sous licence GNU GPL. Toutes les contributions sont bienvenues et seront indiquées dans la page de documentation.
 
 ### Types de contributions acceptées et attendues
 
@@ -18,22 +17,23 @@ SynopsX est un projet libre publié sous licence GNU GPL et toutes les contribut
 Contenus non accepté actuellement
 
 - améliorations trop nichées ou liées à des préférences personnelles
-- changement à la structure générale du logiciel et au flux de travail
+- changement à la structure générale du logiciel et au flux de travail sans discussion préalable
 
 ### Pour commencer
 
-Commencez par prendre connaissance de la documentation du projet sur [github.com/synopsx/synopsx/wiki](https://github.com/synopsx/synopsx/wiki)
+Pour commencer, familiarisez-vous avec la documentation du projet sur le [Wiki du projet](https://github.com/synopsx/synopsx/wiki)
 
+SynopsX repose sur l’utilisation extensive de [XQuery](http://www.w3.org/TR/xquery-30/) et de [BaseX](http://basex.org). La documentation de BaseX présente une documentation succincte et facile d’accès sur le langage et ses fonctionnalités. Outre les standards du W3C, de nombreuses ressources pédagogiques sont disponibles pour XQuery et XPath (cf. Awesome XQuery).<!-- @todo give a link -->
 
-## Participer aux discussions ou soulever un problème
+## Demander de l’aide, soulever un problème ou participer aux discussions
 
-Merci d’utiliser les [Discussions](https://github.com/orgs/synopsx/discussions) pour discuter de nouvelles fonctionnalités, poser des questions ou obtenir de l’aide.
+Merci d’utiliser les [Discussions](https://github.com/orgs/synopsx/discussions) pour obtenir de l’aide, discuter de nouvelles fonctionnalités, poser des questions.
 
-Les [Issues](https://github.com/synopsx/synopsx/issues) sont réservées au signalement des bugs et à l’organisation du travail.
+Les [Issues](https://github.com/synopsx/synopsx/issues) sont réservées au signalement des bugs et à l’organisation du travail après discussion des nouvelles fonctionnalités à implémenter.
 
 ### Création de discussions
 
-Les discussions sont organisées en catégories, n’hésitez pas à les utiliser.
+Les discussions sont organisées en catégories. Vous pouvez notamment utiliser la rubrique [Q&A (questions & réponses) des Discussions]([Discussions](https://github.com/orgs/synopsx/discussions)) si vous avez besoin d’aide dans la prise en main du logiciel. Il n’y a pas de questions bête, celles-ci nous aideront à améliorer la documentation du projet. Un canal Dev est dédié aux discussions concernant le développement.
 
 ### Création des issues
 
@@ -41,19 +41,20 @@ Les issues sont rattachées à un projet. Merci de renseigner la catégorie et l
 
 ## Contribuer au code ou à la documentation
 
+Une bonne manière de contribuer au code et de prendre en charge une issue non-traitée figurant dans la colonne `todo` du [Project](https://github.com/orgs/synopsx/projects/1/).
+
 ### Faire des changements
 
 Réaliser vos changement localement ou dans un codespace.
-
 - forker le projet
 - installer le logiciel et la version appropriée de BaseX
 - Créer une branche de travail et commencez vos changements
 
 ### Changements qui ne devraient pas être commités
 
-Dépendances tierces : nous n’acceptons pas de dépendances tierces dans les Pull request. 
-
-Outils d’automatisation : l’équipe se charge de la maintenance et des outils d’automatisation. Nous demandons aux contributeurs de ne pas y apporter de changements lors de leur contribution.
+- Dépendances tierces : nous n’acceptons pas de dépendances tierces dans les Pull request. 
+- Outils d’automatisation : l’équipe se charge de la maintenance et des outils d’automatisation. Nous demandons aux contributeurs de ne pas y apporter de changements lors de leur contribution.
+- Breaking changes
 
 Merci de bien veiller à ne pas introduire de fichiers systèmes dans vos commits.
 
@@ -65,17 +66,17 @@ Nous utilisons [Conventional Commits](https://www.conventionalcommits.org/en/v1.
 
 Utiliser un préfixe pour indiquer la nature du commit
 - `feat:` pour la création d’une nouvelle fonctionnalité
-- `feat(auth):` pour la création d’une nouvelle fonctionnalité concernant l’authentification
 - `fix:` pour la correction d’un bug
 - `docs:` pour la documentation
 - `style:` pour le formatage du code 
 - `test:` pour l’ajout de tests unitaires
 - `refactor:` pour une refactorisation
 
-Entre parenthèses après le préfixe il est possible de désigner la fonctionnalité concernée.
+Entre parenthèses, après le préfixe, il est possible de désigner la fonctionnalité concernée.
 
 Exemples :
 - `feat: Add user authentification feature``
+- `feat(auth):` pour la création d’une nouvelle fonctionnalité concernant l’authentification
 - `fix: Solve serialisation issue (#33)`
 
 N’hésitez pas à fournir des précisions et décrire dans un message de note le travail réalisé. Il est utile de mentionner le numéro de l’issue dans les fix.
@@ -98,11 +99,12 @@ On invite les contributeurs à respecter la présentation générale du code exi
 
 - Indentation de 2 espaces, jamais de tabulation.
 - Chaînes entre guillemets doubles : `"layout.xml"`, pas `'layout.xml'`.
+- Opérateurs séparés par des espaces : ` 1 + 3`, `let $i := (1, 2, 3)`
 - Pas de code de débogage dans les commits (code commenté, `prof:dump`, valeurs de test comme `"vide"`).
 
 ### Structure d’un module
 
-Dans l’ordre : version, namespace du module, en-tête xqDoc, déclarations de namespaces, imports, namespace de fonctions par défaut.
+Dans l’ordre : déclaration XQuery, namespace du module, en-tête xqDoc, déclarations d’espaces de noms, importations de modules, déclaration d’élément ou d’espaces de noms de fonctions par défaut.
 
 ```xquery
 xquery version "3.1" ;
@@ -128,9 +130,9 @@ import module namespace G = "synopsx.globals" at "../globals.xqm" ;
 declare default function namespace "synopsx.models.synopsx" ;
 ```
 
-- Le namespace reprend le chemin du fichier : `synopsx.{dossier}.{module}`.
-- Les namespaces des modules BaseX et EXPath sont déclarés explicitement.
-- Chaque déclaration se termine par ` ;`, avec une espace avant le point-virgule.
+- Afin de faciliter le repérage, les espaces de noms des modules reprennent le chemin du fichier : `synopsx.{dossier}.{module}`.
+- Tous les espaces de nom des modules BaseX et EXPath sont déclarés explicitement.
+- Chaque déclaration se termine par ` ;`, avec une espace avant le point-virgule.
 
 ### Nommage
 
@@ -140,7 +142,7 @@ declare default function namespace "synopsx.models.synopsx" ;
 
 ### Préfixes
 
-Les fonctions du module s’appellent sans préfixe, grâce au namespace par défaut. Les fonctions standard gardent `fn:`.
+Les fonctions du module s’appellent sans préfixe grâce à la déclaration d’espace de nom par défaut. Les fonctions standard utilisent le préfixe `fn:`.
 
 ```xquery
 return fn:string-join($candidates, " or ")
@@ -196,6 +198,7 @@ Des étiquettes supplémentaires `@rmq`, `@bug` et `@todo` sont utilisées pour 
  : @param $queryParams the query params
  : @param $template the template name.extension
  : @return a path
+ :
  : @rmq a remark on implementation choices
  : @todo work left to do
  :)
@@ -204,9 +207,6 @@ Des étiquettes supplémentaires `@rmq`, `@bug` et `@todo` sont utilisées pour 
 ## Documentation
 
 Tous les changements notables sont documentés dans le fichier [`CHANGELOG.md`](CHANGELOG.md). Son formatage est basé sur [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), et ce projet adhère à [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
-
-
-
 
 ## Top 10 des contributeurs
 
@@ -219,3 +219,6 @@ Voir la [liste de tous les contributeurs](https://github.com/synopsx/synopsx/gra
 ## Licence
 
 SynopsX est un logiciel libre publié selon les termes de la licence [GNU General Public Licence (GPL), Version 3](LICENCE).
+
+~~~~
+Bienvenue dans le collectif !
