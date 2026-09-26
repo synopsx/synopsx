@@ -50,8 +50,8 @@ declare function wrapper($queryParams as map(*), $data as map(*), $outputParams 
     (
       $processing-instruction ,
       $wrap/* update {
-      for $node in .//*[text()[fn:matches(., $synopsx.mappings.templating:regex )]] | .//@*[fn:matches(., $synopsx.mappings.templating:regex )]
-      let $key := fn:analyze-string($node, $synopsx.mappings.templating:regex )//fn:group/text()
+      for $node in .//*[text()[fn:matches(., $G:TEMPLATING-REGEX)]] | .//@*[fn:matches(., $G:TEMPLATING-REGEX)]
+      let $key := fn:analyze-string($node, $G:TEMPLATING-REGEX)//fn:group/text()
       return if ($key = 'content')
         then replace node $node with pattern($queryParams, $data, $outputParams)
         else associate($queryParams, $data?meta, $outputParams, $node)
@@ -74,7 +74,7 @@ declare function pattern($queryParams as map(*), $data as map(*), $outputParams 
   for $content in $data?content
   return
     $pattern/* update {
-      for $node in descendant-or-self::*[text()[fn:matches(., $synopsx.mappings.templating:regex )]] | .//@*[fn:matches(., $synopsx.mappings.templating:regex )]
+      for $node in descendant-or-self::*[text()[fn:matches(., $G:TEMPLATING-REGEX )]] | .//@*[fn:matches(., $G:TEMPLATING-REGEX )]
       return associate($queryParams, $content, $outputParams, $node)
       }
   };
@@ -92,7 +92,7 @@ declare function pattern($queryParams as map(*), $data as map(*), $outputParams 
  :)
 declare %updating function associate($queryParams as map(*), $data as map(*), $outputParams as map(*), $node as node()) {
   let $data := $data
-  let $keys := fn:analyze-string($node, $synopsx.mappings.templating:regex)//fn:group/text()
+  let $keys := fn:analyze-string($node, $G:TEMPLATING-REGEX)//fn:group/text()
   let $values := map:get($data, $keys)
     return typeswitch ($values)
     case empty-sequence() return ()

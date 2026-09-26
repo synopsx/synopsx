@@ -18,6 +18,12 @@ module namespace G = "synopsx.globals";
 
 declare namespace file = "http://expath.org/ns/file" ;
 
+(:~ Regex used for templating keys :)
+declare variable $G:TEMPLATING-REGEX := "\s*\{(.+?)\}\s*" ;
+(:~ XForms client path :)
+declare variable $G:XFORMS := "/synopsx/static/xsltforms/xsltforms.xsl" ;
+
+(:~ Paths :)
 declare variable $G:HOME := file:base-dir() ;
 declare variable $G:WEBAPP := file:parent($G:HOME) ;
 
@@ -29,18 +35,16 @@ declare variable $G:WORKSPACE := if(file:exists($G:WEBAPP || "workspace/"))
   then $G:WEBAPP || "workspace/" 
   else $G:HOME || "workspace/";
 
-declare variable $G:XFORMS := "/synopsx/static/xsltforms/xsltforms.xsl" ;
-
-(:~ Status: everything ok. :)
+(:~ Status: everything ok :)
 declare variable $G:OK := "1" ;
-(:~ Status: something failed. :)
+(:~ Status: something failed :)
 declare variable $G:FAILED := "2" ;
-(:~ Status: user unknown. :)
+(:~ Status: user unknown :)
 declare variable $G:USER-UNKNOWN := "4" ;
-(:~ Status: user exists. :)
+(:~ Status: user exists :)
 declare variable $G:USER-EXISTS := "5" ;
 
-(:~ Status and error messages. To be internationalized:)
+(:~ Status and error messages. To be internationalized :)
 declare variable $G:STATUS := map {
   $G:OK          : "OK",
   $G:FAILED      : "Something failed.",
