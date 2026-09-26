@@ -111,15 +111,17 @@ declare function getMappingsFunction($queryParams as map(*), $outputParams as ma
 };
 
 (:
- : This function
+ : this function returns SynopsX home
+ : 
+ : @param $queryParams the query params
  :)
 declare function getHome($queryParams) {
   let $meta := map{
-    "title" : "Test de titre",
-    "meta" : "test"
+    "title" : "Synopsx’s homepage",
+    "meta" : "synopsx"
   }
   let $content := map{
-    "message" : <tei:p>message</tei:p>
+    "message" : <tei:p>Salut !</tei:p>
   }
   return map{
     "meta"    : $meta,

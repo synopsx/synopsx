@@ -36,8 +36,7 @@ declare variable $synopsx.mappings.templating:regex := "\s*\{(.+?)\}\s*";
  :
  : @bug can't update a element more than once
  : @rmq it may be interesting to make $data?content available
- : @rmq xsltforms <? css-conversion no ?> 
- :
+ : @rmq xsltforms <? css-conversion no ?>
  :)
 declare function wrapper($queryParams as map(*), $data as map(*), $outputParams as map(*)) as node()* {
   let $wrap := fn:doc(synopsx.models.synopsx:getLayoutPath($queryParams, $outputParams?layout))
@@ -66,7 +65,6 @@ declare function wrapper($queryParams as map(*), $data as map(*), $outputParams 
  : @param $data the result of the query to dispacth
  : @param $outputParams the serialization params
  : @return instantiate the pattern with $data
- :
  :)
 declare function pattern($queryParams as map(*), $data as map(*), $outputParams as map(*)) as node()* {
   let $pattern := fn:doc(synopsx.models.synopsx:getLayoutPath($queryParams, $outputParams?pattern))
@@ -130,8 +128,6 @@ declare %updating function associate($queryParams as map(*), $data as map(*), $o
  : @param $value the content to render
  : @param $outputParams the serialization params
  : @return a serialization
- :
- : @todo check the xsl with an xsl 1.0
  :)
 declare function render($queryParams as map(*), $outputParams as map(*), $value as node()* ) as item()* {
   let $options := map{

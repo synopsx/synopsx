@@ -51,10 +51,8 @@ function index() {
   )
 };
 
-
 (:~
  : This resource function is the SynopsX’ home
- : @todo give contents
  :)
 declare
   %rest:path("/synopsx/home")
@@ -125,7 +123,6 @@ function test-xforms() {
 
   let $function := xs:QName(synopsx.models.synopsx:getModelFunction($queryParams))
   let $data := fn:function-lookup($function, 1)($queryParams)
-  (:let $data := synopsx.models.synopsx:getUsersXforms($queryParams):)
   return synopsx.mappings.templating:wrapper($queryParams, $data, $outputParams)
 };
 
@@ -150,7 +147,6 @@ function test-xforms-pseudo() {
     "xforms" : fn:true()
   }
   let $function := xs:QName(synopsx.models.synopsx:getModelFunction($queryParams))
-  (: let $data := synopsx.models.synopsx:getUsers($queryParams) :)
   let $data := fn:function-lookup($function, 1)($queryParams)
   return synopsx.mappings.templating:wrapper($queryParams, $data, $outputParams)
 };

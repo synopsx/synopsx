@@ -43,7 +43,7 @@ declare function getUsers($queryParams as map(*)){
     "title" : "Liste des utilisateurs",
     "users" : <users xmlns="">{ user:list-details()}</users>
   }
-  
+
   return map{
     "meta"    : $meta,
     "content" : $content
