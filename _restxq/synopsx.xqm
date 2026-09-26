@@ -31,6 +31,11 @@ import module namespace G = "synopsx.globals" at "../globals.xqm" ;
 import module namespace synopsx.models.synopsx = "synopsx.models.synopsx" at "../models/synopsx.xqm" ;
 import module namespace synopsx.mappings.templating = "synopsx.mappings.templating" at "../mappings/templating.xqm" ;
 
+(:~
+ : @rmq every mapping module used by the routes below must be imported. They are called dynamically and may be flagged as unused (W04): keep their imports, or getMappingsFunction will fail at runtime.
+ :)
+import module namespace synopsx.mappings.tei2html = "synopsx.mappings.tei2html" at "../mappings/tei2html.xqm" ;
+
 declare default function namespace "synopsx.restxq.synopsx" ;
 
 (:~

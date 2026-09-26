@@ -32,12 +32,14 @@ import module namespace synopsx.models.synopsx = "synopsx.models.synopsx" at "..
 import module namespace synopsx.mappings.templating = "synopsx.mappings.templating" at "../mappings/templating.xqm" ;
 import module namespace synopsx.mappings.jsoner = "synopsx.mappings.jsoner" at "../mappings/jsoner.xqm" ;
 
+(:~
+ : @rmq every mapping module used by the routes below must be imported. They are called dynamically and may be flagged as unused (W04): keep their imports, or getMappingsFunction will fail at runtime.
+ :)
 import module namespace synopsx.mappings.tei2html = "synopsx.mappings.tei2html" at "../mappings/tei2html.xqm" ;
 
 declare namespace tei = "http://www.tei-c.org/ns/1.0" ;
 
 declare default function namespace "synopsx.restxq.exemples" ;
-
 
 (:~
  : this is a test function for jsoner

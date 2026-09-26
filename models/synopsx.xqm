@@ -23,6 +23,8 @@ declare namespace xf = "http://www.w3.org/2002/xforms" ;
 
 import module namespace G = "synopsx.globals" at "../globals.xqm" ;
 
+declare namespace tei = "http://www.tei-c.org/ns/1.0" ;
+
 declare default function namespace "synopsx.models.synopsx" ;
 
 (:~
@@ -55,6 +57,9 @@ declare function getModelFunction($queryParams as map(*)) as xs:QName {
  : @param $queryParams the query params
  : @param $template the template name.extension
  : @return a path
+ :
+ : @rmq static’s paths are rebuilt by _restxq/files.xqm
+ : @rmq in `(result, fn:error(...))[1]`: [1] takes the first item of the sequence, so the error is only evaluated if the preceding sequence is empty. XQuery 4 introduced `otherwise` that could be use to simplify but would introduce a dependancy
  :)
 declare function getLayoutPath($queryParams as map(*), $template as xs:string) as xs:string {
   let $projectPath := $G:WORKSPACE || $queryParams?project || '/templates/' 
@@ -72,9 +77,10 @@ declare function getLayoutPath($queryParams as map(*), $template as xs:string) a
  : @param $queryParams the query params
  : @param $template the template name.extension
  : @return a path
- : 
+ :
  : @rmq static’s paths are rebuilt by _restxq/files.xqm
- : @todo $G:WEBAPP may be problematic with a project
+ : @rmq in `(result, fn:error(...))[1]`: [1] takes the first item of the sequence, so the error is only evaluated if the preceding sequence is empty. XQuery 4 introduced `otherwise` that could be use to simplify but would introduce a dependancy
+ : @todo test if $G:WEBAPP works well with a project
  :)
 declare function getXsltPath($queryParams as map(*), $xsl as xs:string?) as xs:string { 
   let $projectPath := $G:WEBAPP || 'static/' ||  $queryParams?project || '/xsl/'
@@ -90,21 +96,18 @@ declare function getXsltPath($queryParams as map(*), $xsl as xs:string?) as xs:s
  : this function built the mapping path based on the project hierarchy
  :
  : @param $queryParams the query params
- : @param $template the template name.extension
  : @return the public dispatch function (arity 2) of the selected mapping module
  :
  :)
 declare function getMappingsFunction($queryParams as map(*), $outputParams as map(*)) as xs:QName {
   let $projectNamespace := $queryParams?project || '.mappings.' || $outputParams?xquery
   let $defaultNamespace := 'synopsx.mappings.' || $outputParams?xquery
-  (: let $uris := inspect:context()
-    /function[fn:tokenize(@name, ':')[fn:last()] = 'dispatch']/@uri :)
-    let $uris := inspect:context()//function[@name = "dispatch"]/@uri
-  return
-    if ($uris = $projectNamespace) then fn:QName($projectNamespace , 'dispatch')
-    else if ($uris = $defaultNamespace) then fn:QName($defaultNamespace, 'dispatch')
-    else fn:error(xs:QName('local:NOFUNC'),
-      'QName de la fonction introuvable : dispatch')
+  let $uris := inspect:context()//function[@name = 'dispatch']/@uri
+  let $candidates := ($projectNamespace, $defaultNamespace)
+  return (
+    $candidates[. = $uris] ! fn:QName(., 'dispatch'),
+    fn:error(xs:QName('local:NOFUNC'), 'Mapping : dispatch not found in ' || fn:string-join($candidates, ' or '))
+  )[1]
 };
 
 (:
@@ -116,7 +119,7 @@ declare function getHome($queryParams) {
     "meta" : "test"
   }
   let $content := map{
-    "message" : <p>message</p>
+    "message" : <tei:p>message</tei:p>
   }
   return map{
     "meta"    : $meta,
