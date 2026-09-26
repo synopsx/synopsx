@@ -70,9 +70,11 @@ Utiliser un préfixe pour indiquer la nature du commit
 - `docs:` pour la documentation
 - `style:` pour le formatage du code 
 - `test:` pour l’ajout de tests unitaires
+- `refactor:` pour une refactorisation
 
-Exemples
+Entre parenthèses après le préfixe il est possible de désigner la fonctionnalité concernée.
 
+Exemples :
 - `feat: Add user authentification feature``
 - `fix: Solve serialisation issue (#33)`
 
@@ -88,13 +90,116 @@ N’hésitez pas à fournir des précisions et décrire dans un message de note 
 - terminologie claire
 - utilisation de la voix active
 
-## Style d’écriture du code
+## Formatage du code XQuery
 
-- Respect de la présentation du code existant
-- Modularité restxq, models, mappings et système de nommage pour les espaces de nom et les fonctions
-- Utilisation de XQdoc pour la documentation des fonctions
+On invite les contributeurs à respecter la présentation générale du code existant. Les développements doivent en particulier utiliser l’architecture générale de l’application, l’organisation des fichiers (`_restxq/`, `models/`, `mappings/`) ainsi que les règles de nommage des espaces de nom pour les modules et les fonctions. Les fonctions utilisent une documentation avec [xqDoc](https://xqdoc.org).
 
-@todo 
+### Règles générales
+
+- Indentation de 2 espaces, jamais de tabulation.
+- Chaînes entre guillemets doubles : `"layout.xml"`, pas `'layout.xml'`.
+- Pas de code de débogage dans les commits (code commenté, `prof:dump`, valeurs de test comme `"vide"`).
+
+### Structure d’un module
+
+Dans l’ordre : version, namespace du module, en-tête xqDoc, déclarations de namespaces, imports, namespace de fonctions par défaut.
+
+```xquery
+xquery version "3.1" ;
+module namespace synopsx.models.synopsx = "synopsx.models.synopsx" ;
+
+(:~
+ : This module provides models for SynopsX
+ :
+ : @author SynopsX’ team
+ : @since 2025-03
+ : @version 3.0
+ :
+ : This file is part of SynopsX, A lightweight framework for
+ : XML corpora publication and exposure.
+ :
+ : GNU General Public License (GPL) v. 3
+ :)
+
+declare namespace file = "http://expath.org/ns/file" ;
+
+import module namespace G = "synopsx.globals" at "../globals.xqm" ;
+
+declare default function namespace "synopsx.models.synopsx" ;
+```
+
+- Le namespace reprend le chemin du fichier : `synopsx.{dossier}.{module}`.
+- Les namespaces des modules BaseX et EXPath sont déclarés explicitement.
+- Chaque déclaration se termine par ` ;`, avec une espace avant le point-virgule.
+
+### Nommage
+
+- Fonctions et variables en camelCase : `getLayoutPath`, `$queryParams`.
+- Variables globales en majuscules, avec des tirets : `$G:TEMPLATING-REGEX`.
+- Codes d’erreur en majuscules : `local:NOTEMPLATE`.
+
+### Préfixes
+
+Les fonctions du module s’appellent sans préfixe, grâce au namespace par défaut. Les fonctions standard gardent `fn:`.
+
+```xquery
+return fn:string-join($candidates, " or ")
+```
+
+### Mise en page
+
+- Un `let` par ligne. `return` est aligné sur les `let`.
+- Les paramètres et le résultat des fonctions sont typés.
+
+```xquery
+declare function getXsltPath($queryParams as map(*), $xsl as xs:string?) as xs:string {
+  let $projectPath := $G:WEBAPP || "static/" || $queryParams?project || "/xsl/"
+  let $defaultPath := $G:FILES || "xsl/"
+  return …
+};
+```
+
+### Maps
+
+Écrire `map {`, avec une espace, et une entrée par ligne, avec une espace de chaque côté du `:`.
+
+```xquery
+let $outputParams := map {
+  "layout" : "layout.xml",
+  "xquery" : "tei2html"
+}
+```
+
+### Fonctions RESTXQ
+
+`declare` seul sur sa ligne, une annotation par ligne indentée, puis `function` en début de ligne.
+
+```xquery
+declare
+  %rest:path("/synopsx/home")
+  %output:method("html")
+function home() {
+  …
+};
+```
+
+### Documentation (xqDoc)
+
+Les fonctions utilisent une documentation avec [xqDoc](https://xqdoc.org).Chaque fonction est précédée d’un commentaire `(:~ … :)`, en anglais.
+
+Des étiquettes supplémentaires `@rmq`, `@bug` et `@todo` sont utilisées pour les commentaires.
+
+```xquery
+(:~
+ : this function builds the layout path based on the project hierarchy
+ :
+ : @param $queryParams the query params
+ : @param $template the template name.extension
+ : @return a path
+ : @rmq a remark on implementation choices
+ : @todo work left to do
+ :)
+```
 
 ## Documentation
 
