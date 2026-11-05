@@ -126,12 +126,13 @@ function newUser() {
 };
 
 (:~
- : This resource function modify an user
+ : This resource function updates an user
  : @param $username the username
  : @return 
  :)
 declare
-  %rest:path("/synopsx/users/{$username}/modify")
+  %rest:path("/synopsx/users/{$username}/update")
+  %rest:GET
   %output:method("xml")
   %perm:allow("admin")
 function user($username) {
@@ -155,6 +156,39 @@ function user($username) {
   (: let $data := synopsx.models.synopsx:getUsersXforms($queryParams) :)
   return synopsx.mappings.templating:wrapper($queryParams, $data, $outputParams)
 };
+
+(:~
+ : This resource function sets the password of a newly created user
+ : @param $username the username
+ : @query-param $token set by synopsx when the user is created
+ : @return 
+ :)
+declare
+  %rest:path("/synopsx/users/{$username}/update")
+  %rest:PUT("{$param}")
+  %rest:query-param("oldusername", "{$oldusername}", "no old user name")
+  %output:method("xml")
+  %rest:header-param("Referer", "{$referer}", "none")
+  %perm:allow("admin")
+  %updating
+function updateUser($param as document-node(), $username as xs:string, $oldusername as xs:string, $referer as xs:string) {
+  let $queryParams := map{
+    "project" : "synopsx",
+    "model" : "users",
+    "function" : "putUser",
+    "mode" : "update",
+    "param" : $param,
+    "referer" : $referer,
+    "username" : $username,
+    "oldusername" : $oldusername
+    (:username is potentialy the old user name so we also use a queryparam:)
+  }
+  let $outputParams := map{}
+  let $function := xs:QName(synopsx.models.synopsx:getModelFunction($queryParams))
+  let $response := synopsx.models.users:putUser($queryParams)
+  return $response
+};
+
 
 (:~
  : This resource function creates an user
@@ -188,9 +222,10 @@ function createUser($param as document-node(), $referer as xs:string) {
 };
 
 (:~
- : This resource function modify an user
+ : This resource function allows an user to set his password after the creation of his account
  : @param $username the username
- : @return 
+ : @query-param $token set by synopsx when the user is created (transmitted by admin)
+ : @return an XForms to set the password
  :)
 declare
   %rest:GET
@@ -226,6 +261,12 @@ function confirmUser($username as xs:string, $token as xs:string) {
     default return web:redirect("/")
 };
 
+(:~
+ : This resource function sets the password of a newly created user
+ : @param $username the username
+ : @query-param $token set by synopsx when the user is created
+ : @return 
+ :)
 declare
   %rest:path("/synopsx/users/{$username}/confirm")
   %rest:query-param("token", "{$token}", "no-token")
@@ -251,6 +292,12 @@ function setPwd($param as document-node(), $username as xs:string, $token as xs:
   return $response
 };
 
+
+(:~
+ : This resource function deletes a user
+ : @param $username the username
+ : @return 
+ :)
 declare
   %rest:path("/synopsx/users/{$username}/delete")
   %output:method("xml")

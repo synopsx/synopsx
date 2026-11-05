@@ -128,74 +128,157 @@ declare function getUserDetails($queryParams as map(*)){
 declare 
   %updating 
 function putUser($queryParams as map(*))  {
+  switch ($queryParams?mode)
+    case 'create' return createUser($queryParams) 
+    case 'confirm' return confirmUser($queryParams)
+    case 'update' return updateUser($queryParams)
+    case 'delete' return user:drop($queryParams?username)
+    (: TODO: route through the multi-language error catalog (G:message) once it lands :)
+    default return fn:error(
+      xs:QName('synopsx-error:invalid-mode'),
+      'Unknown user mode "' || $queryParams?mode || '". Valid modes: create, confirm, update, delete.',
+      $queryParams?mode
+    )
+};
+
+declare 
+  %updating
+function createUser($queryParams as map(*)) {
+  let $name := fn:normalize-space($queryParams?param/*:user/@name)
+  let $pwd := fn:normalize-space($queryParams?param/*:user/*:password)
+  let $token := random:uuid()
+
   let $globalPermission := fn:normalize-space($queryParams?param/*:user/@permission)
   let $patterns := $queryParams?param//*:database[fn:normalize-space(@pattern) != '' and fn:normalize-space(@permission) != '']
-
   let $patternPermissions := for $perm in $patterns/@permission
     return fn:normalize-space($perm)
   let $patternNames :=  for $pattern in $patterns/@pattern
     return fn:normalize-space($pattern)
   let $permissions := ($patternPermissions, $globalPermission)
 
-  let $name := fn:normalize-space($queryParams?param/*:user/@name)
-  let $pwd := fn:normalize-space($queryParams?param/*:user/*:password)
-  let $token := random:uuid()
-
+  let $info := if (fn:normalize-space($pwd) = '')
+    then
+      <info>{
+          <token date="{fn:current-dateTime()}">{$token}</token>,
+          $queryParams?param/*:user/*:info/*
+      }</info>
+    else $queryParams?param/*:user/*:info
+  
+  let $confirmLink := if (fn:normalize-space($pwd) = '')
+    then '/synopsx/users/' || $name || '/confirm?token=' || $token
+    else ''
+  
   return (
-    switch ($queryParams?mode)
-      case 'create'
-        return (
-          let $info := if (fn:normalize-space($pwd) = '')
-            then
-              <info>{
-                  <token date="{fn:current-dateTime()}">{$token}</token>,
-                  $queryParams?param/*:user/*:info/*
-              }</info>
-            else $queryParams?param/*:user/*:info
-          let $confirmLink := if (fn:normalize-space($pwd) = '')
-            then '/synopsx/users/' || $name || '/confirm?token=' || $token
-            else ''
-          return (
-            user:create($name, $pwd, $permissions, $patternNames, $info),
-            <result xmlns=""><confirmLink>{$confirmLink}</confirmLink></result>
-          )
-        )
-      case 'confirm'
-        return
-          let $submittedToken := fn:normalize-space($queryParams?token)
-          return
-            if ($submittedToken != '' and user:info($queryParams?username)/token = $submittedToken)
-            then
-              let $info :=
-                copy $i := user:list-details($queryParams?username)/*:info
-                modify delete node $i/*:token
-                return $i
-              return (
-                user:password($queryParams?username, $pwd),
-                user:update-info($info, $queryParams?username)
-              )
-            (: TODO: route through the multi-language error catalog (G:message) once it lands :)
-            else fn:error(
-              xs:QName('synopsx-error:invalid-token'),
-              'Invalid or expired confirmation token for user "' || $queryParams?username || '".',
-              $queryParams?username
-            )
-      case 'modify'
-        return (
-          user:password($name, $pwd),
-          user:update-info($queryParams?param/*:user/*:info, $name),
-          user:alter($queryParams?username, $name) (: Recupérer le OldName :)
-        )
-      case 'delete'
-        return (
-          user:drop($queryParams?username)
-        )
-      (: TODO: route through the multi-language error catalog (G:message) once it lands :)
-      default return fn:error(
-        xs:QName('synopsx-error:invalid-mode'),
-        'Unknown user mode "' || $queryParams?mode || '". Valid modes: create, confirm, modify, delete.',
-        $queryParams?mode
-      )
+    user:create($name, $pwd, $permissions, $patternNames, $info),
+    update:output((
+      <rest:response>
+        <http:response status="200" message="OK">
+          <http:header name="Content-Language" value="fr"/>
+          <http:header name="Content-Type" value="application/xml; charset=utf-8"/>
+          <http:header name="Content-Token" value="{$token}"/>
+          <http:header name="confirmation-link" value="{$confirmLink}"/>
+        </http:response>
+      </rest:response>,
+      <result>
+        <message>Nouvel utilisateur {$name} créé.</message>
+        <user>
+          <name>{$name}</name>
+          <token>{$token}</token>
+          <!-- add other infos if needed -->
+        </user>
+      </result>
+    ))
   )
 };
 
+declare 
+  %updating
+function confirmUser($queryParams as map(*)) {
+  let $name := fn:normalize-space($queryParams?username)
+  let $token := fn:normalize-space($queryParams?token)
+  let $userDetails := user:list-details($name)
+  let $storedToken := $userDetails/*:info/*:token
+  let $pwd := fn:normalize-space($queryParams?param/*:user/*:password)
+  
+  return 
+    if ($storedToken and fn:string($storedToken) = $token) then (
+      let $info :=
+        copy $i := user:list-details($queryParams?username)/*:info
+        modify delete node $i/*:token
+        return $i
+
+      return(
+        user:password($name, $pwd),
+        user:update-info($info, $queryParams?username),
+        update:output((
+          <rest:response>
+            <http:response status="200" message="OK">
+              <http:header name="Content-Language" value="fr"/>
+              <http:header name="Content-Type" value="application/xml; charset=utf-8"/>
+            </http:response>
+          </rest:response>,
+          <result>
+            <message>Le mot de passe a été mis à jour pour l’utilisateur {$name}.</message>
+            <user>
+              <name>{$name}</name>
+            </user>
+          </result>
+        ))
+      )
+    )
+    else update:output((
+      <rest:response>
+        <http:response status="400" message="Bad Request">
+          <http:header name="Content-Language" value="fr"/>
+          <http:header name="Content-Type" value="application/xml; charset=utf-8"/>
+        </http:response>
+      </rest:response>,
+      <result>
+        <message>Échec, token invalide.</message>
+      </result>
+    ))
+    (: TODO: route through the multi-language error catalog (G:message) once it lands :)
+    (: else fn:error(
+      xs:QName('synopsx-error:invalid-token'),
+      'Invalid or expired confirmation token for user "' || $queryParams?username || '".',
+      $queryParams?username
+    ) :)
+};
+
+declare 
+  %updating
+function updateUser($queryParams as map(*)) {
+  let $name := fn:normalize-space($queryParams?param/*:user/@name)
+  let $oldusername := fn:normalize-space($queryParams?oldusername)
+  let $userDetails := user:list-details($oldusername)
+
+  let $globalPermission := fn:normalize-space($queryParams?param/*:user/@permission)
+  let $patterns := $queryParams?param//*:database[fn:normalize-space(@pattern) != '' and fn:normalize-space(@permission) != '']
+  let $patternPermissions := for $perm in $patterns/@permission
+    return fn:normalize-space($perm)
+  let $patternNames :=  for $pattern in $patterns/@pattern
+    return fn:normalize-space($pattern)
+  let $permissions := ($patternPermissions, $globalPermission)
+
+  let $pwd := fn:normalize-space($queryParams?param/*:user/*:password)
+  return (
+    if ($pwd != '') then user:password($name, $pwd),
+    if ($name != $oldusername) then user:alter($oldusername, $name),
+    (: if ($queryParams?param/*:user/*:info) then user:update-info($queryParams?param/*:user/*:info, $name), :)
+    user:grant($oldusername, $permissions, $patternNames),
+    update:output((
+      <rest:response>
+        <http:response status="200" message="OK">
+          <http:header name="Content-Language" value="fr"/>
+          <http:header name="Content-Type" value="application/xml; charset=utf-8"/>
+        </http:response>
+      </rest:response>,
+      <result>
+        <message>Le mot de passe a été mis à jour pour l’utilisateur {$name}.</message>
+        <user>
+          <name>{$name}</name>
+        </user>
+      </result>
+    ))
+  )
+};

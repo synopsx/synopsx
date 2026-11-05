@@ -24,9 +24,9 @@
         <xforms-output xf-value="@connected" />
         <xforms-output xf-value="concat(' ', @name, ' ')" />
         <xforms-trigger xf-appearance="minimal">
-            <xforms-label>modify</xforms-label>
+            <xforms-label>update</xforms-label>
             <xforms-load ev-event="DOMActivate">
-                <xforms-resource xf-value="concat('/synopsx/users/', @name, '/modify')" />
+                <xforms-resource xf-value="concat('/synopsx/users/', @name, '/update')" />
             </xforms-load>
         </xforms-trigger>
         <xforms-submit xf-submission="submitDeleteUser" xf-appearance="minimal"
