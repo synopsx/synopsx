@@ -101,7 +101,7 @@ function login() {
  :)
 declare
   %rest:GET
-  %rest:path("/synopsx/users/new")
+  %rest:path("/synopsx/users/create")
   %output:method("html")
   %output:html-version("5.0")
   %perm:allow("admin")
@@ -109,9 +109,9 @@ function newUser() {
   let $queryParams := map { 
     "project" : 'synopsx',
     "model" : 'users',
-    (:"function" : "getDatabases":)
     "function" : "getUserDetails",
-    "mode" : "creation"
+    "mode" : "creation",
+    "permission" : "admin"
   }
   let $outputParams := map {
     "lang" : "fr",
@@ -124,70 +124,6 @@ function newUser() {
   let $data := fn:function-lookup($function, 1)($queryParams)
   return synopsx.mappings.templating:wrapper($queryParams, $data, $outputParams)
 };
-
-(:~
- : This resource function updates an user
- : @param $username the username
- : @return 
- :)
-declare
-  %rest:path("/synopsx/users/{$username}/update")
-  %rest:GET
-  %output:method("xml")
-  %perm:allow("admin")
-function user($username) {
-  let $queryParams := map {
-    "project" : 'synopsx',
-    "model" : 'users',
-    "function" : "getUserDetails",
-    "mode" : "update",
-    "username" : $username
-  }
-  let $outputParams := map {
-    "lang" : "fr",
-    "layout" : "layoutForms.xml",
-    "pattern": "formUser.xml",
-    "xforms-lib" : "xsltforms",
-    "xforms-prefix" : fn:true(),
-    "xforms" : fn:true()
-  }
-  let $function := xs:QName(synopsx.models.synopsx:getModelFunction($queryParams))
-  let $data := fn:function-lookup($function, 1)($queryParams)
-  (: let $data := synopsx.models.synopsx:getUsersXforms($queryParams) :)
-  return synopsx.mappings.templating:wrapper($queryParams, $data, $outputParams)
-};
-
-(:~
- : This resource function sets the password of a newly created user
- : @param $username the username
- : @query-param $token set by synopsx when the user is created
- : @return 
- :)
-declare
-  %rest:path("/synopsx/users/{$username}/update")
-  %rest:PUT("{$param}")
-  %rest:query-param("oldusername", "{$oldusername}", "no old user name")
-  %output:method("xml")
-  %rest:header-param("Referer", "{$referer}", "none")
-  %perm:allow("admin")
-  %updating
-function updateUser($param as document-node(), $username as xs:string, $oldusername as xs:string, $referer as xs:string) {
-  let $queryParams := map{
-    "project" : "synopsx",
-    "model" : "users",
-    "function" : "putUser",
-    "mode" : "update",
-    "param" : $param,
-    "referer" : $referer,
-    "username" : $username,
-    "oldusername" : $oldusername
-    (:username is potentialy the old user name so we also use a queryparam:)
-  }
-  let $outputParams := map{}
-  let $function := xs:QName(synopsx.models.synopsx:getModelFunction($queryParams))
-  return synopsx.models.users:putUser($queryParams)
-};
-
 
 (:~
  : This resource function creates an user
@@ -199,10 +135,10 @@ function updateUser($param as document-node(), $username as xs:string, $oldusern
  :)
  (::)
 declare
-  %rest:path("/synopsx/users/create")
-  %output:method("xml")
-  %rest:header-param("Referer", "{$referer}", "none")
   %rest:PUT("{$param}")
+  %rest:path("/synopsx/users/create")
+  %rest:header-param("Referer", "{$referer}", "none")
+  %output:method("xml")
   %perm:allow("admin")
   %updating
 function createUser($param as document-node(), $referer as xs:string) {
@@ -266,12 +202,11 @@ function confirmUser($username as xs:string, $token as xs:string) {
  : @return 
  :)
 declare
+  %rest:PUT("{$param}")
   %rest:path("/synopsx/users/{$username}/confirm")
+  %rest:header-param("Referer", "{$referer}", "none")
   %rest:query-param("token", "{$token}", "no-token")
   %output:method("xml")
-  %rest:header-param("Referer", "{$referer}", "none")
-  %rest:PUT("{$param}")
-  %perm:allow("admin")
   %updating
 function setPwd($param as document-node(), $username as xs:string, $token as xs:string, $referer as xs:string) {
   let $queryParams := map{
@@ -289,6 +224,72 @@ function setPwd($param as document-node(), $username as xs:string, $token as xs:
   return synopsx.models.users:putUser($queryParams)
 };
 
+(:~
+ : This resource function updates an user
+ : @param $username the username
+ : @return 
+ :)
+declare
+  %rest:GET
+  %rest:path("/synopsx/users/{$username}/update")
+  %output:method("xml")
+function user($username) {
+  let $user := session:get('id')
+  let $permission := if(user:list-details($user)/@permission = 'admin')
+    then 'admin'
+  else 'user'
+  
+  let $queryParams := map {
+    "project" : 'synopsx',
+    "model" : 'users',
+    "function" : "getUserDetails",
+    "mode" : "update",
+    "permission" : $permission,
+    "username" : $username
+  }
+  let $outputParams := map {
+    "lang" : "fr",
+    "layout" : "layoutForms.xml",
+    "pattern": "formUser.xml",
+    "xforms-lib" : "xsltforms",
+    "xforms-prefix" : fn:true(),
+    "xforms" : fn:true()
+  }
+  let $function := xs:QName(synopsx.models.synopsx:getModelFunction($queryParams))
+  let $data := fn:function-lookup($function, 1)($queryParams)
+  (: let $data := synopsx.models.synopsx:getUsersXforms($queryParams) :)
+  return synopsx.mappings.templating:wrapper($queryParams, $data, $outputParams)
+};
+
+(:~
+ : This resource function sets the password of a newly created user
+ : @param $username the username
+ : @query-param $token set by synopsx when the user is created
+ : @return 
+ :)
+declare
+  %rest:PUT("{$param}")
+  %rest:path("/synopsx/users/{$username}/update")
+  %rest:query-param("oldusername", "{$oldusername}", "no old user name")
+  %rest:header-param("Referer", "{$referer}", "none")
+  %output:method("xml")
+  %updating
+function updateUser($param as document-node(), $username as xs:string, $oldusername as xs:string, $referer as xs:string) {
+  let $queryParams := map{
+    "project" : "synopsx",
+    "model" : "users",
+    "function" : "putUser",
+    "mode" : "update",
+    "param" : $param,
+    "referer" : $referer,
+    "username" : $username,
+    "oldusername" : $oldusername
+    (:username is potentialy the old user name so we also use a queryparam:)
+  }
+  let $outputParams := map{}
+  let $function := xs:QName(synopsx.models.synopsx:getModelFunction($queryParams))
+  return synopsx.models.users:putUser($queryParams)
+};
 
 (:~
  : This resource function deletes a user
@@ -296,9 +297,9 @@ function setPwd($param as document-node(), $username as xs:string, $token as xs:
  : @return 
  :)
 declare
+  %rest:PUT
   %rest:path("/synopsx/users/{$username}/delete")
   %output:method("xml")
-  %rest:PUT
   %perm:allow("admin")
   %updating
 function deleteUser($username as xs:string) {
@@ -312,6 +313,26 @@ function deleteUser($username as xs:string) {
   return synopsx.models.users:putUser($queryParams)
 };
 
+(:~
+ : Permissions: synopsx/users
+ : Redirects to the login page when no session is open, except for the
+ : account-confirmation flow which is deliberately anonymous (token-gated).
+ : @param $perm map with permission data
+ :)
+declare
+    %perm:check('/synopsx/users/{$username}/delete', '{$perm}')
+function deleteUserPermission($perm) {
+  let $permission := $perm?allow
+  let $user := session:get('id')
+  
+  return (
+    if(fn:empty($user))
+      then web:redirect('/synopsx/login')
+    else if(user:list-details($user)/@permission != $permission)
+      then web:redirect('/synopsx/users')
+    else ()
+  )
+};
 
 (:~
  : Helpers
@@ -324,8 +345,8 @@ function deleteUser($username as xs:string) {
  :
  :)
 declare 
-  %rest:path("/synopsx/login/check")
   %rest:POST
+  %rest:path("/synopsx/login/check")
   %rest:form-param("name", "{$name}")
   %rest:form-param("pass", "{$pass}")
   %updating
@@ -391,13 +412,38 @@ declare
 function usersPermission($perm) {
   let $path := $perm?path
   let $user := session:get('id')
-  return (
-    if(fn:contains($path, '/confirm'))
-      then ()
-    else if(fn:empty($user))
-      then web:redirect('/synopsx/login')
-    else if(user:list-details($user)/@permission != 'admin')
-      then web:redirect('/synopsx/login')
-    else ()
-  )
+  let $username := if(fn:not(fn:empty($user)))
+    then user:list-details($user)/@name
+
+  return switch()
+    case $path = '/synopsx/users/create' return 
+      if(fn:empty($user))
+        then web:redirect('/synopsx/login')
+      else if(user:list-details($user)/@permission != $perm?allow)
+        then web:redirect('/synopsx/login')
+      else ()
+    case fn:contains($path, '/update') return
+      if(fn:empty($user))
+        then web:redirect('/synopsx/login')
+      else if($path[fn:starts-with(., '/synopsx/users/' || $username)])
+        then ()
+      else if(user:list-details($user)/@permission = 'admin')
+        then ()
+      else web:redirect('/synopsx/users')
+    case fn:contains($path, '/delete') return
+      if(fn:empty($user))
+        then web:redirect('/synopsx/login')
+      else if(user:list-details($user)/@permission != $perm?allow)
+        then web:redirect('/synopsx/login')
+      else ()
+    default return ()
+      (: if(fn:contains($path, '/confirm'))
+        then ()
+      else if(fn:contains($path, '/update') and fn:not(fn:empty($user)))
+        then ()
+      else if(fn:empty($user))
+        then web:redirect('/synopsx/login')
+      else if(user:list-details($user)/@permission != $perm?allow)
+        then web:redirect('/synopsx/login')
+      else () :)
 };

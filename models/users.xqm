@@ -85,6 +85,7 @@ declare function getUsers($queryParams as map(*)) {
 declare function getUserDetails($queryParams as map(*)){
   let $mode := $queryParams("mode")
   let $username := $queryParams("username")
+  let $permission := $queryParams("permission")
   let $token := $queryParams("token")
   let $userDetails := if($username and user:exists($username)) then user:list-details($username)
   let $userInstance := if($username and user:exists($username)) then
@@ -102,14 +103,14 @@ declare function getUserDetails($queryParams as map(*)){
     "title" : "Compte utilisateur",
     "user" : $userInstance,
     "databases" : <databases xmlns="">{ db:list-details() }</databases>,
-    "mode" : <mode xmlns="">{ $mode }</mode>,
+    "mode" : <mode xmlns="" permission="{$permission}">{ $mode }</mode>,
     "token" : <token xmlns="">{ $token }</token>
   }
   let $content := map{
     "title" : "Compte utilisateur",
     "user" : $userInstance,
     "databases" : <databases xmlns="">{ db:list-details() }</databases>,
-    "mode" : <mode xmlns="">{ $mode }</mode>,
+    "mode" : <mode xmlns="" permission="{$permission}">{ $mode }</mode>,
     "token" : <token xmlns="">{ $token }</token>
   }
 
@@ -206,7 +207,6 @@ function confirmUser($queryParams as map(*)) {
         copy $i := user:list-details($queryParams?username)/*:info
         modify delete node $i/*:token
         return $i
-
       return(
         user:password($name, $pwd),
         user:update-info($info, $queryParams?username),

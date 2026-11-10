@@ -37,6 +37,6 @@
     
     <xforms-trigger>
         <xforms-label>Créer un utilisateur</xforms-label>
-        <xforms-load ev-event="DOMActivate" xf-resource="/synopsx/users/new" />
+        <xforms-load ev-event="DOMActivate" xf-resource="/synopsx/users/create" />
     </xforms-trigger>
 </section>
