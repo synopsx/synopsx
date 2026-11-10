@@ -258,14 +258,16 @@ function updateUser($queryParams as map(*)) {
     return fn:normalize-space($perm)
   let $patternNames :=  for $pattern in $patterns/@pattern
     return fn:normalize-space($pattern)
-  let $permissions := ($patternPermissions, $globalPermission)
+  (: let $permissions := ($patternPermissions, $globalPermission) :)
+  let $permissions := $patternPermissions
 
   let $pwd := fn:normalize-space($queryParams?param/*:user/*:password)
   return (
     if ($pwd != '') then user:password($name, $pwd),
-    if ($name != $oldusername) then user:alter($oldusername, $name),
-    (: if ($queryParams?param/*:user/*:info) then user:update-info($queryParams?param/*:user/*:info, $name), :)
+    if ($queryParams?param/*:user/*:info) then user:update-info($queryParams?param/*:user/*:info, $oldusername),
+    if ($globalPermission != $userDetails/@permission) then user:grant($oldusername, $globalPermission),
     user:grant($oldusername, $permissions, $patternNames),
+    if ($name != $oldusername) then user:alter($oldusername, $name),
     update:output((
       <rest:response>
         <http:response status="200" message="OK">
@@ -274,7 +276,7 @@ function updateUser($queryParams as map(*)) {
         </http:response>
       </rest:response>,
       <result>
-        <message>Le mot de passe a été mis à jour pour l’utilisateur {$name}.</message>
+        <message>L’utilisateur {$name} a été mis à jour.</message>
         <user>
           <name>{$name}</name>
         </user>

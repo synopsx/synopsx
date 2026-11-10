@@ -185,8 +185,7 @@ function updateUser($param as document-node(), $username as xs:string, $oldusern
   }
   let $outputParams := map{}
   let $function := xs:QName(synopsx.models.synopsx:getModelFunction($queryParams))
-  let $response := synopsx.models.users:putUser($queryParams)
-  return $response
+  return synopsx.models.users:putUser($queryParams)
 };
 
 
@@ -217,8 +216,7 @@ function createUser($param as document-node(), $referer as xs:string) {
   }
   let $outputParams := map{}
   let $function := xs:QName(synopsx.models.synopsx:getModelFunction($queryParams))
-  let $response := synopsx.models.users:putUser($queryParams)
-  return $response
+  return synopsx.models.users:putUser($queryParams)
 };
 
 (:~
@@ -288,8 +286,7 @@ function setPwd($param as document-node(), $username as xs:string, $token as xs:
   }
   let $outputParams := map{}
   let $function := xs:QName(synopsx.models.synopsx:getModelFunction($queryParams))
-  let $response := synopsx.models.users:putUser($queryParams)
-  return $response
+  return synopsx.models.users:putUser($queryParams)
 };
 
 
@@ -312,8 +309,7 @@ function deleteUser($username as xs:string) {
     "mode" : "delete",
     "username" : $username
   }
-  let $response := synopsx.models.users:putUser($queryParams)
-  return $response
+  return synopsx.models.users:putUser($queryParams)
 };
 
 
