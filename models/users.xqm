@@ -176,7 +176,7 @@ function createUser($queryParams as map(*)) {
         <http:response status="200" message="OK">
           <http:header name="Content-Language" value="fr"/>
           <http:header name="Content-Type" value="application/xml; charset=utf-8"/>
-          <http:header name="Content-Token" value="{$token}"/>
+          <http:header name="link" value="/synopsx/users"/>
           <http:header name="confirmation-link" value="{$confirmLink}"/>
         </http:response>
       </rest:response>,
@@ -215,10 +215,11 @@ function confirmUser($queryParams as map(*)) {
             <http:response status="200" message="OK">
               <http:header name="Content-Language" value="fr"/>
               <http:header name="Content-Type" value="application/xml; charset=utf-8"/>
+              <http:header name="link" value="/synopsx/login"/>
             </http:response>
           </rest:response>,
           <result>
-            <message>Le mot de passe a été mis à jour pour l’utilisateur {$name}.</message>
+            <message>Le mot de passe pour l’utilisateur {$name} a été mis à jour.</message>
             <user>
               <name>{$name}</name>
             </user>
@@ -234,7 +235,7 @@ function confirmUser($queryParams as map(*)) {
         </http:response>
       </rest:response>,
       <result>
-        <message>Échec, token invalide.</message>
+        <message>Token invalide.</message>
       </result>
     ))
     (: TODO: route through the multi-language error catalog (G:message) once it lands :)
@@ -251,7 +252,7 @@ function updateUser($queryParams as map(*)) {
   let $name := fn:normalize-space($queryParams?param/*:user/@name)
   let $oldusername := fn:normalize-space($queryParams?oldusername)
   let $userDetails := user:list-details($oldusername)
-
+  let $initiator := fn:normalize-space($queryParams?initiator)
   let $globalPermission := fn:normalize-space($queryParams?param/*:user/@permission)
   let $patterns := $queryParams?param//*:database[fn:normalize-space(@pattern) != '' and fn:normalize-space(@permission) != '']
   let $patternPermissions := for $perm in $patterns/@permission
@@ -260,6 +261,10 @@ function updateUser($queryParams as map(*)) {
     return fn:normalize-space($pattern)
   (: let $permissions := ($patternPermissions, $globalPermission) :)
   let $permissions := $patternPermissions
+
+  let $link := if($initiator != $oldusername) 
+    then '/synopsx/users'
+  else '/synopsx/logout'
 
   let $pwd := fn:normalize-space($queryParams?param/*:user/*:password)
   return (
@@ -273,10 +278,11 @@ function updateUser($queryParams as map(*)) {
         <http:response status="200" message="OK">
           <http:header name="Content-Language" value="fr"/>
           <http:header name="Content-Type" value="application/xml; charset=utf-8"/>
+          <http:header name="link" value="{$link}"/>
         </http:response>
       </rest:response>,
       <result>
-        <message>L’utilisateur {$name} a été mis à jour.</message>
+        <message>L’utilisateur {$name} a été mis à jour par {$initiator}.</message>
         <user>
           <name>{$name}</name>
         </user>

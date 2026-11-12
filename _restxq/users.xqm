@@ -275,6 +275,7 @@ declare
   %output:method("xml")
   %updating
 function updateUser($param as document-node(), $username as xs:string, $oldusername as xs:string, $referer as xs:string) {
+  let $initiator := session:get('id')
   let $queryParams := map{
     "project" : "synopsx",
     "model" : "users",
@@ -283,7 +284,8 @@ function updateUser($param as document-node(), $username as xs:string, $oldusern
     "param" : $param,
     "referer" : $referer,
     "username" : $username,
-    "oldusername" : $oldusername
+    "oldusername" : $oldusername,
+    "initiator" : user:list-details($initiator)/@name
     (:username is potentialy the old user name so we also use a queryparam:)
   }
   let $outputParams := map{}

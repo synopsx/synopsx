@@ -58,109 +58,90 @@
             </script>
         </xforms-instance> 
 
-        <xforms-instance id="createResult">
-            <script type="application/xml">
-                <result xmlns="">
-                    <confirmLink />
-                </result>
-            </script>
-        </xforms-instance>
-
         <xforms-bind xf-ref="instance('user')/@name" xf-required="true()" xf-relevant="instance('mode') != 'confirm'"/>
         <xforms-bind xf-ref="instance('user')/password" xf-required="instance('mode') = 'confirm'" />
         <xforms-bind xf-ref="instance('user')/@permission" xf-required="true()" xf-relevant="instance('mode') != 'confirm' and instance('mode')/@permission = 'admin'"/>
         <!-- <xforms-bind xf-ref="instance('user')/database/@*" xf-required="normalize-space(instance('listDatabase')) != ''" xf-relevant="instance('mode') != 'confirm' and instance('mode')/@permission = 'admin'" /> -->
         <xforms-bind xf-ref="instance('user')/database/@*" xf-relevant="instance('mode') != 'confirm' and instance('mode')/@permission = 'admin'" />
         <xforms-bind xf-ref="instance('user')/info" xf-relevant="instance('mode') != 'confirm' and instance('mode')/@permission = 'admin'"/>
-        <!-- <xforms-bind xf-ref="instance('createResult')/confirmLink" xf-relevant="normalize-space(.) != ''"/> -->
 
-        <!-- /synopsx/users/{$username}/put -->
-
-        <xforms-submission id="submitUserCreation" xf-mode="synchronous"
-            xf-resource="/synopsx/users/create" xf-method="put">
-            <!-- xf-replace="instance" xf-instance="createResult"> -->
+        <xforms-submission id="submitUserCreation"
+            xf-mode="synchronous"
+            xf-resource="/synopsx/users/create"
+            xf-method="put"
+            xf-replace="none">
             <xforms-action ev-event="xforms-submit-done">
-                <xforms-message xf-level="modal"> La ressource a été enregistrée ! 
-                    Status : <xforms-output xf-value="event('response-status-code')" />; <br/>
-                    URI : <xforms-output xf-value="event('resource-uri')" />; <br/>
-                    Headers : <xforms-output xf-value="event('response-headers')" />; <br/>
-                    Location : <xforms-output xf-value="event('response-headers')/self::*[name='content-location']/value" />; <br/>
-                    confirmation link : <xforms-output xf-value="event('response-headers')/self::*[name='confirmation-link']/value" />; <br/>
-                    Token : <xforms-output xf-value="event('response-headers')/self::*[name='content-token']/value" />; <br/>
-                    Reason : <xforms-output xf-value="event('response-reason-phrase')" />; <br/>
-                    Body : <xforms-output xf-value="event('response-body')" />.
+                <xforms-message xf-level="modal">
+                    <xforms-output xf-value="concat(event('response-status-code'), ' ', event('response-reason-phrase'))" /> <br/>
+                    URI : <xforms-output xf-value="event('resource-uri')" /> <br/>
+                    Message : <xforms-output xf-value="event('response-body')//*:message" /> <br/>
+                    Confirmation link : <xforms-output xf-value="event('response-headers')/self::*[name='confirmation-link']/value" />
                 </xforms-message>
-                <!-- <xforms-load xf-show="new">
-                    <xforms-resource
-                        xf-value="event('response-headers')/self::*[name='content-location']/value" />
-                </xforms-load> -->
+                <xforms-load xf-show="replace">
+                    <xforms-resource xf-value="event('response-headers')/self::*[name='link']/value" />
+                </xforms-load>
             </xforms-action>
             <xforms-action ev-event="xforms-submit-error">
                 <xforms-message xf-level="modal">
-                    Une erreur est apparue : <xforms-output xf-value="event('error-type')" />;
-                    Status : <xforms-output xf-value="event('response-status-code')" />;
+                    <xforms-output xf-value="concat(event('response-status-code'), ' ', event('response-reason-phrase'))" /> <br/>
                     URI : <xforms-output xf-value="event('resource-uri')" />;
-                    Headers : <xforms-output xf-value="event('response-headers')" />;
-                    Reason : <xforms-output xf-value="event('response-reason-phrase')" />
-                    Body : <xforms-output xf-value="event('response-body')" />.
+                    Error type : <xforms-output xf-value="event('error-type')" />;
+                    Message : <xforms-output xf-value="event('response-body')" />.
                 </xforms-message>
             </xforms-action>
         </xforms-submission>
 
-        <xforms-submission id="submitUserConfirm" xf-mode="synchronous"
-            xf-method="put" xf-replace="none">
-            <xforms-resource
-                xf-value="concat('/synopsx/users/', instance('user')/@name, '/confirm?token=', instance('confirmToken'))" />
+        <xforms-submission id="submitUserConfirm"
+            xf-mode="synchronous"
+            xf-method="put"
+            xf-replace="none">
+            <xforms-resource xf-value="concat('/synopsx/users/', instance('user')/@name, '/confirm?token=', instance('confirmToken'))" />
             <xforms-action ev-event="xforms-submit-done">
-                <xforms-message xf-level="modal"> La ressource a été enregistrée !
-                    Status : <xforms-output xf-value="event('response-status-code')" />;
-                    URI : <xforms-output xf-value="event('resource-uri')" />;
-                    Headers : <xforms-output xf-value="event('response-headers')" />;
-                    Reason : <xforms-output xf-value="event('response-reason-phrase')" />;
-                    Body : <xforms-output xf-value="event('response-body')" />.
+                <xforms-message xf-level="modal">
+                    <xforms-output xf-value="concat(event('response-status-code'), ' ', event('response-reason-phrase'))" /> <br/>
+                    URI : <xforms-output xf-value="event('resource-uri')" /> <br/>
+                    Message : <xforms-output xf-value="event('response-body')//*:message" />
                 </xforms-message>
-                <xforms-load xf-show="replace" xf-resource="/synopsx/login" />
+                <xforms-load xf-show="replace">
+                    <xforms-resource xf-value="event('response-headers')/self::*[name='link']/value" />
+                </xforms-load>
             </xforms-action>
             <xforms-action ev-event="xforms-submit-error">
                 <xforms-message xf-level="modal">
-                    Une erreur est apparue : <xforms-output xf-value="event('error-type')" />;
-                    Status : <xforms-output xf-value="event('response-status-code')" />;
-                    URI : <xforms-output xf-value="event('resource-uri')" />;
-                    Headers : <xforms-output xf-value="event('response-headers')" />;
-                    Reason : <xforms-output xf-value="event('response-reason-phrase')" />
-                    Body : <xforms-output xf-value="event('response-body')" />.
+                    <xforms-output xf-value="concat(event('response-status-code'), ' ', event('response-reason-phrase'))" /> <br/>
+                    URI : <xforms-output xf-value="event('resource-uri')" />;
+                    Error type : <xforms-output xf-value="event('error-type')" />;
+                    Message : <xforms-output xf-value="event('response-body')" />.
                 </xforms-message>
             </xforms-action>
         </xforms-submission>
 
-        <xforms-submission id="updateUser" xf-mode="synchronous"
-            xf-method="put" xf-replace="none">
-            <xforms-resource
-                xf-value="concat('/synopsx/users/', instance('oldUserName')/@oldname, '/update?oldusername=', instance('oldUserName')/@oldname)" />
+        <xforms-submission id="updateUser"
+            xf-mode="synchronous"
+            xf-method="put"
+            xf-replace="none">
+            <xforms-resource xf-value="concat('/synopsx/users/', instance('oldUserName')/@oldname, '/update?oldusername=', instance('oldUserName')/@oldname)" />
             <xforms-action ev-event="xforms-submit-done">
-                <xforms-message xf-level="modal"> La ressource a été enregistrée !
-                    Status : <xforms-output xf-value="event('response-status-code')" />;
-                    URI : <xforms-output xf-value="event('resource-uri')" />;
-                    Headers : <xforms-output xf-value="event('response-headers')" />;
-                    Reason : <xforms-output xf-value="event('response-reason-phrase')" />;
-                    Body : <xforms-output xf-value="event('response-body')" />.
+                <xforms-message xf-level="modal">
+                    <xforms-output xf-value="concat(event('response-status-code'), ' ', event('response-reason-phrase'))" /> <br/>
+                    URI : <xforms-output xf-value="event('resource-uri')" /> <br/>
+                    Message : <xforms-output xf-value="event('response-body')//*:message" />
                 </xforms-message>
-                <xforms-load xf-show="replace" xf-resource="/synopsx/login" />
+                <xforms-load xf-show="replace">
+                    <xforms-resource xf-value="event('response-headers')/self::*[name='link']/value" />
+                </xforms-load>
             </xforms-action>
             <xforms-action ev-event="xforms-submit-error">
                 <xforms-message xf-level="modal">
-                    Une erreur est apparue : <xforms-output xf-value="event('error-type')" />;
-                    Status : <xforms-output xf-value="event('response-status-code')" />;
-                    URI : <xforms-output xf-value="event('resource-uri')" />;
-                    Headers : <xforms-output xf-value="event('response-headers')" />;
-                    Reason : <xforms-output xf-value="event('response-reason-phrase')" />
-                    Body : <xforms-output xf-value="event('response-body')" />.
+                    <xforms-output xf-value="concat(event('response-status-code'), ' ', event('response-reason-phrase'))" /> <br/>
+                    URI : <xforms-output xf-value="event('resource-uri')" />;
+                    Error type : <xforms-output xf-value="event('error-type')" />;
+                    Message : <xforms-output xf-value="event('response-body')" />.
                 </xforms-message>
             </xforms-action>
         </xforms-submission>
-
-        
     </xforms-model>
+
     <xforms-group xf-ref="instance('user')">
         <xforms-label>Nouveau compte utilisateur</xforms-label>
         <xforms-input xf-ref="@name">
@@ -190,8 +171,7 @@
             </xforms-select1>
             <xforms-select1 xf-ref="@permission">
                 <xforms-label>Permission</xforms-label>
-                <xforms-itemset
-                    xf-ref="instance('permissions')/permission[@value != 'admin' and @value != 'create']">
+                <xforms-itemset xf-ref="instance('permissions')/permission[@value != 'admin' and @value != 'create']">
                     <xforms-label xf-ref="@label" />
                     <xforms-value xf-ref="@value" />
                 </xforms-itemset>
@@ -200,8 +180,9 @@
         <xforms-trigger xf-ref=".[instance('mode')!= 'confirm' and instance('mode')/@permission = 'admin']">
             <xforms-label>Ajouter un pattern</xforms-label>
             <xforms-action ev-event="DOMActivate">
-                <xforms-insert xf-origin="instance('pattern')" xf-nodeset="info"
-                    xf-position="before" />
+                <xforms-insert xf-origin="instance('pattern')"
+                    xf-nodeset="info"
+                    xf-position="before"/>
             </xforms-action>
         </xforms-trigger>
         <xforms-group xf-ref="info">
@@ -216,8 +197,6 @@
                 </xforms-action>
             </xforms-trigger>
         </xforms-group>
-        <xforms-output xf-value="serialize(.)" />
-        <xforms-output xf-value="serialize(instance('oldUserName'))" />
     </xforms-group>
 
     <xforms-trigger>
@@ -234,9 +213,4 @@
             <xforms-send xf-submission="updateUser" />
         </xforms-action>
     </xforms-trigger>
-    <xforms-group xf-ref="instance('createResult')/confirmLink">
-        <xforms-label>Lien de confirmation à transmettre à l’utilisateur :</xforms-label>
-        <br />
-        <xforms-output xf-ref="instance('createResult')/confirmLink" />
-    </xforms-group>
 </section>
