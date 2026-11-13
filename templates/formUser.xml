@@ -185,18 +185,17 @@
                     xf-position="before"/>
             </xforms-action>
         </xforms-trigger>
-        <xforms-group xf-ref="info">
-            <xforms-repeat xf-ref="grant">
-                <xforms-label>grant</xforms-label>
-                <xforms-input xf-ref="." />
-            </xforms-repeat>
-            <xforms-trigger>
-                <xforms-label>Ajouter une info</xforms-label>
-                <xforms-action ev-event="DOMActivate">
-                    <xforms-insert xf-origin="instance('grant')" xf-at="last()" xf-position="after" />
-                </xforms-action>
-            </xforms-trigger>
-        </xforms-group>
+        <br />
+        <xforms-repeat xf-ref="grant">
+            <xforms-label>grant</xforms-label>
+            <xforms-input xf-ref="." />
+        </xforms-repeat>
+        <xforms-trigger xf-ref=".[instance('mode')!= 'confirm' and instance('mode')/@permission = 'admin']">
+            <xforms-label>Ajouter une info</xforms-label>
+            <xforms-action ev-event="DOMActivate">
+                <xforms-insert xf-origin="instance('grant')" xf-at="last()" xf-position="after" />
+            </xforms-action>
+        </xforms-trigger>
     </xforms-group>
 
     <xforms-trigger>

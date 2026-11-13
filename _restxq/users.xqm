@@ -165,7 +165,8 @@ declare
   %rest:GET
   %rest:path("/synopsx/users/{$username}/confirm")
   %rest:query-param("token", "{$token}", "no-token")
-  %output:method("xml")
+  %output:method("html")
+  %output:html-version("5.0")
 function confirmUser($username as xs:string, $token as xs:string) {
   switch (user:info($username)/token = $token)
   case fn:true()
@@ -183,7 +184,7 @@ function confirmUser($username as xs:string, $token as xs:string) {
       "layout" : "layoutForms.xml",
       "pattern": "formUser.xml",
       "xforms-lib" : "xsltforms",
-      "xforms-prefix" : fn:true(),
+      (: "xforms-prefix" : fn:true(), :)
       "xforms" : fn:true()
     }
     let $function := xs:QName(synopsx.models.synopsx:getModelFunction($queryParams))
@@ -232,7 +233,8 @@ function setPwd($param as document-node(), $username as xs:string, $token as xs:
 declare
   %rest:GET
   %rest:path("/synopsx/users/{$username}/update")
-  %output:method("xml")
+  %output:method("html")
+  %output:html-version("5.0")
 function user($username) {
   let $user := session:get('id')
   let $permission := if(user:list-details($user)/@permission = 'admin')
@@ -252,7 +254,7 @@ function user($username) {
     "layout" : "layoutForms.xml",
     "pattern": "formUser.xml",
     "xforms-lib" : "xsltforms",
-    "xforms-prefix" : fn:true(),
+    (: "xforms-prefix" : fn:true(), :)
     "xforms" : fn:true()
   }
   let $function := xs:QName(synopsx.models.synopsx:getModelFunction($queryParams))
@@ -362,15 +364,12 @@ function login($name as xs:string, $pass as xs:string) {
         <http:response status="200" message="OK">
           <http:header name="Content-Language" value="fr"/>
           <http:header name="Content-Type" value="application/xml; charset=utf-8"/>
-          <http:header name="Content-Location" value="/synopsx/home"/>
+          <http:header name="link" value="/synopsx/home"/>
         </http:response>
       </rest:response>,
       <result>
-        <message></message>
-        <user>
-          Vous êtes connecté comme {$name}
-          <!-- add other infos if needed -->
-        </user>
+        <message>Vous êtes connecté comme {$name}</message>
+        <user><!-- add other infos if needed --></user>
       </result>
     ))
   } 
@@ -385,9 +384,7 @@ function login($name as xs:string, $pass as xs:string) {
       </rest:response>,
       <result>
         <message>Vous n’êtes pas connecté</message>
-        <user>
-          <!-- add other infos if needed -->
-        </user>
+        <user><!-- add other infos if needed --></user>
       </result>
     ))
   }

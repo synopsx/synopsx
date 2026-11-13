@@ -133,7 +133,7 @@ function putUser($queryParams as map(*))  {
     case 'create' return createUser($queryParams) 
     case 'confirm' return confirmUser($queryParams)
     case 'update' return updateUser($queryParams)
-    case 'delete' return user:drop($queryParams?username)
+    case 'delete' return deleteUser($queryParams)
     (: TODO: route through the multi-language error catalog (G:message) once it lands :)
     default return fn:error(
       xs:QName('synopsx-error:invalid-mode'),
@@ -289,4 +289,52 @@ function updateUser($queryParams as map(*)) {
       </result>
     ))
   )
+};
+
+declare 
+  %updating
+function deleteUser($queryParams as map(*)) {
+  let $name := $queryParams?username
+  return try {
+    user:drop($name),
+    update:output((
+      <rest:response>
+        <http:response status="200" message="OK">
+          <http:header name="Content-Language" value="fr"/>
+          <http:header name="Content-Type" value="application/xml; charset=utf-8"/>
+          <http:header name="link" value="/synopsx/users"/>
+        </http:response>
+      </rest:response>,
+      <result>
+        <message>L’utilisateur {$name} a été supprimé.</message>
+        <user/>
+      </result>
+    ))
+  } catch user:unknown | user:name | user:admin | user:logged-in {
+    let $status := if ($err:code = xs:QName('user:unknown'))
+      then 404
+    else if ($err:code = xs:QName('user:name'))
+      then 400
+    else 409
+    
+    let $message := if ($err:code = xs:QName('user:unknown'))
+      then 'L’utilisateur n’existe pas.'
+    else if ($err:code = xs:QName('user:name'))
+      then 'Nom d’utilisateur est invalide.'
+    else if ($err:code = xs:QName('user:admin'))
+      then 'Le compte admin ne peut pas être supprimé.'
+    else 'L’utilisateur est actuellement connecté à BaseX.'
+    
+    return update:output((
+      <rest:response>
+        <http:response status="{$status}" message="{$message}">
+          <http:header name="Content-Language" value="fr"/>
+          <http:header name="Content-Type" value="application/xml; charset=utf-8"/>
+        </http:response>
+      </rest:response>,
+      <result>
+        <message>{$message}</message>
+      </result>
+    ))
+  }
 };
