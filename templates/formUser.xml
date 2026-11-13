@@ -84,9 +84,9 @@
             <xforms-action ev-event="xforms-submit-error">
                 <xforms-message xf-level="modal">
                     <xforms-output xf-value="concat(event('response-status-code'), ' ', event('response-reason-phrase'))" /> <br/>
-                    URI : <xforms-output xf-value="event('resource-uri')" />;
-                    Error type : <xforms-output xf-value="event('error-type')" />;
-                    Message : <xforms-output xf-value="event('response-body')" />.
+                    URI : <xforms-output xf-value="event('resource-uri')" /> <br/>
+                    Error type : <xforms-output xf-value="event('error-type')" /> <br/>
+                    Message : <xforms-output xf-value="event('response-body')" />
                 </xforms-message>
             </xforms-action>
         </xforms-submission>
@@ -109,9 +109,9 @@
             <xforms-action ev-event="xforms-submit-error">
                 <xforms-message xf-level="modal">
                     <xforms-output xf-value="concat(event('response-status-code'), ' ', event('response-reason-phrase'))" /> <br/>
-                    URI : <xforms-output xf-value="event('resource-uri')" />;
-                    Error type : <xforms-output xf-value="event('error-type')" />;
-                    Message : <xforms-output xf-value="event('response-body')" />.
+                    URI : <xforms-output xf-value="event('resource-uri')" /> <br/>
+                    Error type : <xforms-output xf-value="event('error-type')" /> <br/>
+                    Message : <xforms-output xf-value="event('response-body')" /> 
                 </xforms-message>
             </xforms-action>
         </xforms-submission>
@@ -134,9 +134,9 @@
             <xforms-action ev-event="xforms-submit-error">
                 <xforms-message xf-level="modal">
                     <xforms-output xf-value="concat(event('response-status-code'), ' ', event('response-reason-phrase'))" /> <br/>
-                    URI : <xforms-output xf-value="event('resource-uri')" />;
-                    Error type : <xforms-output xf-value="event('error-type')" />;
-                    Message : <xforms-output xf-value="event('response-body')" />.
+                    URI : <xforms-output xf-value="event('resource-uri')" /> <br/>
+                    Error type : <xforms-output xf-value="event('error-type')" /> <br/>
+                    Message : <xforms-output xf-value="event('response-body')" />
                 </xforms-message>
             </xforms-action>
         </xforms-submission>
@@ -161,7 +161,13 @@
         </xforms-select1>
         <br />
         <xforms-repeat xf-ref="database">
-            <xforms-label>Pattern</xforms-label>
+            <xforms-label>
+                Pattern
+                <xforms-trigger xf-appearance="minimal">
+                    <xforms-label>×</xforms-label>
+                    <xforms-delete xf-ref="." ev-event="DOMActivate"/>
+                </xforms-trigger>
+            </xforms-label>
             <xforms-select1 xf-ref="@pattern">
                 <xforms-label>Base de donnée</xforms-label>
                 <xforms-itemset xf-ref="instance('listDatabase')/database">
@@ -186,14 +192,20 @@
             </xforms-action>
         </xforms-trigger>
         <br />
-        <xforms-repeat xf-ref="grant">
-            <xforms-label>grant</xforms-label>
+        <xforms-repeat xf-ref="info/grant">
+            <xforms-label>
+                grant
+                <xforms-trigger xf-appearance="minimal">
+                    <xforms-label>×</xforms-label>
+                    <xforms-delete xf-ref="." ev-event="DOMActivate"/>
+                </xforms-trigger>
+            </xforms-label>
             <xforms-input xf-ref="." />
         </xforms-repeat>
         <xforms-trigger xf-ref=".[instance('mode')!= 'confirm' and instance('mode')/@permission = 'admin']">
             <xforms-label>Ajouter une info</xforms-label>
             <xforms-action ev-event="DOMActivate">
-                <xforms-insert xf-origin="instance('grant')" xf-at="last()" xf-position="after" />
+                <xforms-insert xf-context="info" xf-origin="instance('grant')" xf-at="last()" xf-position="after" />
             </xforms-action>
         </xforms-trigger>
     </xforms-group>

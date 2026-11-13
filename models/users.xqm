@@ -55,6 +55,7 @@ declare function getUsers($queryParams as map(*)) {
       return element user {
         $u/@*,
         attribute connected { if ($u/@name = $connectedUsers) then '🟢' else '⚪' },
+        attribute current { if ($u/@name = $queryParams?currentUser) then 'true' else 'false' },
         $u/node()
       }
     }</users>
@@ -95,7 +96,11 @@ declare function getUserDetails($queryParams as map(*)){
           if ($userDetails/database) then $userDetails/database
           else <database pattern="" permission="" xmlns="" />
         }
-        {$userDetails/*:info}
+        {
+          if($userDetails/*:info)
+            then $userDetails/*:info
+          else <info/>
+        }
     </user>
     else <user xmlns="" name="" permission="none"><password/><database pattern="" permission="" xmlns="" /><info/></user>
 
@@ -163,7 +168,7 @@ function createUser($queryParams as map(*)) {
           <token date="{fn:current-dateTime()}">{$token}</token>,
           $queryParams?param/*:user/*:info/*
       }</info>
-    else $queryParams?param/*:user/*:info
+    else (:$queryParams?param/*:user/*:info:) <info>blop</info>
   
   let $confirmLink := if (fn:normalize-space($pwd) = '')
     then '/synopsx/users/' || $name || '/confirm?token=' || $token
@@ -271,7 +276,15 @@ function updateUser($queryParams as map(*)) {
     if ($pwd != '') then user:password($name, $pwd),
     if ($queryParams?param/*:user/*:info) then user:update-info($queryParams?param/*:user/*:info, $oldusername),
     if ($globalPermission != $userDetails/@permission) then user:grant($oldusername, $globalPermission),
-    user:grant($oldusername, $permissions, $patternNames),
+    (: Update pattern permissions :)
+    if ($patternNames)
+      then user:grant($oldusername, $permissions, $patternNames)
+    else (: Remove all pattern permissions :)
+      let $existingPatterns := for $db in $userDetails/database return fn:string($db/@pattern)
+      return
+        if (fn:count($existingPatterns) > 0)
+          then user:drop($oldusername, $existingPatterns)
+        else (),
     if ($name != $oldusername) then user:alter($oldusername, $name),
     update:output((
       <rest:response>

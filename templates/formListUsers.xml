@@ -35,17 +35,19 @@
     <xforms-repeat id="userRepeat" xf-ref="user">
         <xforms-output xf-value="@connected" />
         <xforms-output xf-value="concat(' ', @name, ' ')" />
-        <xforms-trigger xf-appearance="minimal">
+        <xforms-trigger xf-ref=".[@current = 'true' or parent::users[user[@current = 'true'][@permission = 'admin']]]"
+            xf-appearance="minimal">
             <xforms-label>update</xforms-label>
             <xforms-load ev-event="DOMActivate">
                 <xforms-resource xf-value="concat('/synopsx/users/', @name, '/update')" />
             </xforms-load>
         </xforms-trigger>
-        <xforms-submit xf-submission="deleteUser"
+        <xforms-trigger xf-ref=".[@current = 'true' or parent::users[user[@current = 'true'][@permission = 'admin']]]"
             xf-appearance="minimal"
             onclick="if (!confirm('Supprimer cet utilisateur ?')) { event.stopPropagation(); return false; }">
             <xforms-label>delete</xforms-label>
-        </xforms-submit>
+            <xforms-send xf-submission="deleteUser" ev-event="DOMActivate"/>
+        </xforms-trigger>
     </xforms-repeat>
     
     <xforms-trigger>

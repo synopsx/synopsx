@@ -44,10 +44,13 @@ declare
   %output:method("html")
   %output:html-version("5.0")
 function getUsers() {
+  let $currentUser := session:get('id')
+
   let $queryParams := map { 
     "project" : 'synopsx',
     "model" : 'users',
-    "function" : "getUsers"
+    "function" : "getUsers",
+    "currentUser" : $currentUser
   }
   let $outputParams := map { 
     "lang" : "fr",
