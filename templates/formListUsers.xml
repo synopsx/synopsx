@@ -42,7 +42,7 @@
                 <xforms-resource xf-value="concat('/synopsx/users/', @name, '/update')" />
             </xforms-load>
         </xforms-trigger>
-        <xforms-trigger xf-ref=".[@current = 'true' or parent::users[user[@current = 'true'][@permission = 'admin']]]"
+        <xforms-trigger xf-ref=".[parent::users[user[@current = 'true'][@permission = 'admin']]]"
             xf-appearance="minimal"
             onclick="if (!confirm('Supprimer cet utilisateur ?')) { event.stopPropagation(); return false; }">
             <xforms-label>delete</xforms-label>
