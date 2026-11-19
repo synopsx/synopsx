@@ -48,15 +48,22 @@
             </script>
         </xforms-instance>
 
-        <xforms-instance id="submitLabels">
+        <xforms-instance id="labels">
             <script type="application/xml">
                 <labels xmlns="">
-                    <label mode="creation">Créer</label>
-                    <label mode="update">Modifier</label>
-                    <label mode="confirm">Confirmer</label>
+                    <formTitle>
+                        <label mode="creation">Création d’un compte utilisateur</label>
+                        <label mode="update">Modification d’un compte utilisateur</label>
+                        <label mode="confirm">Confirmation d’un compte utilisateur</label>
+                    </formTitle>
+                    <submitButton>
+                        <label mode="creation">Créer</label>
+                        <label mode="update">Modifier</label>
+                        <label mode="confirm">Confirmer</label>
+                    </submitButton>
                 </labels>
             </script>
-        </xforms-instance> 
+        </xforms-instance>
 
         <xforms-bind xf-ref="instance('user')/@name" xf-required="true()" xf-relevant="instance('mode') != 'confirm'"/>
         <xforms-bind xf-ref="instance('user')/password" xf-required="instance('mode') = 'confirm'" />
@@ -143,7 +150,12 @@
     </xforms-model>
 
     <xforms-group xf-ref="instance('user')">
-        <xforms-label>Nouveau compte utilisateur</xforms-label>
+        <xforms-label>
+            <xforms-output xf-value="instance('labels')/formTitle/label[@mode = instance('mode')]"/>
+        </xforms-label>
+        <xforms-group ref="info/token">
+            <xforms-output xf-value="if(info/token, '⏳ Compte en attente de confirmation', '')"/>
+        </xforms-group>
         <xforms-input xf-ref="@name">
             <xforms-label>Nom</xforms-label>
         </xforms-input>
@@ -212,7 +224,7 @@
 
     <xforms-trigger>
         <xforms-label>
-            <xforms-output xf-value="instance('submitLabels')/label[@mode = instance('mode')]"/>
+            <xforms-output xf-value="instance('labels')/submitButton/label[@mode = instance('mode')]"/>
         </xforms-label>
         <xforms-action xf-if="instance('mode') = 'creation'" ev-event="DOMActivate">
             <xforms-send xf-submission="submitUserCreation" />

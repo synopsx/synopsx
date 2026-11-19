@@ -56,7 +56,8 @@ declare function getUsers($queryParams as map(*)) {
         $u/@*,
         attribute connected { if ($u/@name = $connectedUsers) then '🟢' else '⚪' },
         attribute current { if ($u/@name = $queryParams?currentUser) then 'true' else 'false' },
-        $u/node()
+        attribute pending { if ($u/descendant::token) then 'true' else 'false' }
+        (: $u/node() :)
       }
     }</users>
   let $meta := map{

@@ -33,7 +33,8 @@
     <!-- @xf-nodeset doesn't work with pseudo-xforms-element -->
     <h1>Liste des utilisateurs</h1>
     <xforms-repeat id="userRepeat" xf-ref="user">
-        <xforms-output xf-value="@connected" />
+        <xforms-output xf-ref="@connected" />
+        <xforms-output xf-value="if(@pending='true', '⏳', '')" />
         <xforms-output xf-value="concat(' ', @name, ' ')" />
         <xforms-trigger xf-ref=".[@current = 'true' or parent::users[user[@current = 'true'][@permission = 'admin']]]"
             xf-appearance="minimal">
