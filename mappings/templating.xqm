@@ -75,6 +75,8 @@ declare function layout($queryParams as map(*), $data as map(*), $outputParams a
     let $key := fn:analyze-string($node, $synopsx.mappings.templating:regex )//fn:group/text()
     return if ($key = 'content')
       then replace node $node with pattern($queryParams, $data, $outputParams)
+      else if ($key = 'models')
+      then replace node $node with models($queryParams, $data, $outputParams)
       else associate($queryParams, $data?meta, $outputParams, $node)
   }
 };
@@ -98,6 +100,25 @@ declare function pattern($queryParams as map(*), $data as map(*), $outputParams 
       return associate($queryParams, $content, $outputParams, $node)
       }
   };
+
+(:~
+ : this function includes a sequence of model with placeholder substitution
+ :
+ : @param $queryParams the query params defined in restxq
+ : @param $data the result of the query containing metadata for substitution
+ : @param $outputParams the serialization params containing the models sequence
+ : @return model src with placeholders instantiated
+ :)
+declare function models($queryParams as map(*), $data as map(*), $outputParams as map(*)) as node()* {
+  let $models := $outputParams?models
+  
+  for $model in $models
+  let $model := fn:doc(synopsx.models.synopsx:getLayoutPath($queryParams, $model))
+  return $model/* update {
+    for $node in descendant-or-self::*[text()[fn:matches(., $synopsx.mappings.templating:regex )]] | .//@*[fn:matches(., $synopsx.mappings.templating:regex )]
+    return associate($queryParams, $data?meta, $outputParams, $node)
+  }
+};
 
 (:~
  : this function dispatch the content with the data

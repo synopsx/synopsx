@@ -1,0 +1,40 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:xf="http://www.w3.org/2002/xforms"
+    xf:bogus="fix/Firefox/namespace/issue"
+    xmlns:ev="http://www.w3.org/2001/xml-events"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xs:bogus="fix/Firefox/namespace/issue"
+    lang="fr">
+    <head>
+        <title>{title}</title>
+        <link rel="icon" href="https://via.placeholder.com/70x70"/>
+        <!-- <link rel="stylesheet" href="/synopsx/static/css/mvp.css"/> -->
+        <meta charset="utf-8"/>
+        <meta name="description" content="My description"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <style>
+            xforms-body > form { all: unset; }
+        </style>
+        <models>{models}</models>
+    </head>
+    <body>
+        <header>
+            <nav>
+                <a href="/"><img alt="Logo" src="" height="70"/></a>
+                <ul>
+                    <li>Menu Item 1</li>
+                    <li><a href="/synopsx/users">Users</a></li>
+                    <li>
+                        <a href="#">Dropdown Menu Item</a>
+                        <ul>
+                            <li><a href="#">Sublink with a long name</a></li>
+                            <li><a href="#">Short sublink</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+        </header>
+        <main>{content}</main>
+        <footer data-url="incFooter"/>
+    </body>
+</html>

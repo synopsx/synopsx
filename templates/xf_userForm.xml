@@ -1,0 +1,94 @@
+<section xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:xf="http://www.w3.org/2002/xforms"
+    xf:bogus="fix/Firefox/namespace/issue"
+    xmlns:ev="http://www.w3.org/2001/xml-events"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xs:bogus="fix/Firefox/namespace/issue">
+    <xf:group ref="instance('user')">
+        <xf:label>
+            <xf:output value="instance('labels')/formTitle/label[@mode = instance('mode')]"/>
+        </xf:label>
+        <xf:group ref="info/token">
+            <xf:output value="if(info/token, '⏳ Compte en attente de confirmation', '')"/>
+        </xf:group>
+        <xf:input ref="@name">
+            <xf:label>Nom</xf:label>
+        </xf:input>
+        <br />
+        <xf:secret ref="password">
+            <xf:label>Mot de passe</xf:label>
+        </xf:secret>
+        <br />
+        <xf:select1 ref="@permission">
+            <xf:label>Permission (globale)</xf:label>
+            <xf:itemset ref="instance('permissions')/permission">
+                <xf:label ref="@label" />
+                <xf:value ref="@value" />
+            </xf:itemset>
+        </xf:select1>
+        <br />
+        <xf:repeat nodeset="database">
+            <xf:label>
+                Pattern
+                <xf:trigger appearance="minimal">
+                    <xf:label>×</xf:label>
+                    <xf:delete nodeset="." ev:event="DOMActivate"/>
+                </xf:trigger>
+            </xf:label>
+            <xf:select1 ref="@pattern">
+                <xf:label>Base de donnée</xf:label>
+                <xf:itemset ref="instance('listDatabase')/database">
+                    <xf:label ref="." />
+                    <xf:value ref="." />
+                </xf:itemset>
+            </xf:select1>
+            <xf:select1 ref="@permission">
+                <xf:label>Permission</xf:label>
+                <xf:itemset ref="instance('permissions')/permission[@value != 'admin' and @value != 'create']">
+                    <xf:label ref="@label" />
+                    <xf:value ref="@value" />
+                </xf:itemset>
+            </xf:select1>
+        </xf:repeat>
+        <xf:trigger ref=".[instance('mode')!= 'confirm' and instance('mode')/@permission = 'admin']">
+            <xf:label>Ajouter un pattern</xf:label>
+            <xf:action ev:event="DOMActivate">
+                <xf:insert origin="instance('pattern')"
+                    nodeset="info"
+                    position="before"/>
+            </xf:action>
+        </xf:trigger>
+        <br />
+        <xf:repeat nodeset="info/grant">
+            <xf:label>
+                grant
+                <xf:trigger appearance="minimal">
+                    <xf:label>×</xf:label>
+                    <xf:delete nodeset="." ev:event="DOMActivate"/>
+                </xf:trigger>
+            </xf:label>
+            <xf:input ref="." />
+        </xf:repeat>
+        <xf:trigger ref=".[instance('mode')!= 'confirm' and instance('mode')/@permission = 'admin']">
+            <xf:label>Ajouter une info</xf:label>
+            <xf:action ev:event="DOMActivate">
+                <xf:insert context="info" origin="instance('grant')" at="last()" position="after" />
+            </xf:action>
+        </xf:trigger>
+    </xf:group>
+
+    <xf:trigger>
+        <xf:label>
+            <xf:output value="instance('labels')/submitButton/label[@mode = instance('mode')]"/>
+        </xf:label>
+        <xf:action if="instance('mode') = 'creation'" ev:event="DOMActivate">
+            <xf:send submission="submitUserCreation" />
+        </xf:action>
+        <xf:action if="instance('mode') = 'confirm'" ev:event="DOMActivate">
+            <xf:send submission="submitUserConfirm" />
+        </xf:action>
+        <xf:action if="instance('mode') = 'update'" ev:event="DOMActivate">
+            <xf:send submission="updateUser" />
+        </xf:action>
+    </xf:trigger>
+</section>

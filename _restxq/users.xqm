@@ -27,6 +27,7 @@ declare namespace user = "http://basex.org/modules/user";
 declare namespace session = "http://basex.org/modules/session";
 declare namespace http = "http://expath.org/ns/http-client";
 declare namespace map = "http://www.w3.org/2005/xpath-functions/map";
+declare namespace xslt = "http://basex.org/modules/xslt";
 
 import module namespace G = "synopsx.globals" at "../globals.xqm";
 import module namespace synopsx.models.synopsx = "synopsx.models.synopsx" at "../models/synopsx.xqm";
@@ -43,6 +44,7 @@ declare
   %rest:path("/synopsx/users")
   %output:method("html")
   %output:html-version("5.0")
+  %output:indent("true")
 function getUsers() {
   let $currentUser := session:get('id')
 
@@ -52,16 +54,20 @@ function getUsers() {
     "function" : "getUsers",
     "currentUser" : $currentUser
   }
-  let $outputParams := map { 
+  let $outputParams := map {
     "lang" : "fr",
-    "layout" : "layoutForms.xml",
-    "pattern": "formListUsers.xml",
+    (: "models": ("xf_listUsersModel.xml", "xf_listUsersModel2.xml"), :)
+    "models": "xf_listUsersModel.xml",
+    "pattern": "xf_listUsersForm.xml",
+    "layout" : "xf_formLayout.xml",
     "xforms-lib" : "xsltforms",
+    "xforms-prefix" : fn:true(),
     "xforms" : fn:true()
   }
   let $function := xs:QName(synopsx.models.synopsx:getModelFunction($queryParams))
   let $data := fn:function-lookup($function, 1)($queryParams)
-  return synopsx.mappings.templating:wrapper($queryParams, $data, $outputParams)
+  let $xhtml := synopsx.mappings.templating:wrapper($queryParams, $data, $outputParams)
+  return xslt:transform(document { $xhtml }, $G:FILES || "xsltforms/xsltforms.xsl")
 };
 
 (:~
@@ -107,6 +113,7 @@ declare
   %rest:path("/synopsx/users/create")
   %output:method("html")
   %output:html-version("5.0")
+  %output:indent("true")
   %perm:allow("admin")
 function newUser() { 
   let $queryParams := map { 
@@ -116,16 +123,26 @@ function newUser() {
     "mode" : "creation",
     "permission" : "admin"
   }
-  let $outputParams := map {
+  (: let $outputParams := map {
     "lang" : "fr",
     "layout" : "layoutForms.xml",
     "pattern": "formUser.xml",
     "xforms-lib" : "xsltforms",
     "xforms" : fn:true()
+  } :)
+  let$outputParams := map{
+    "lang" : "fr",
+    "models": "xf_userModel.xml",
+    "pattern": "xf_userForm.xml",
+    "layout" : "xf_formLayout.xml",
+    "xforms-lib" : "xsltforms",
+    "xforms-prefix" : fn:true(),
+    "xforms" : fn:true()
   }
   let $function := xs:QName(synopsx.models.synopsx:getModelFunction($queryParams))
   let $data := fn:function-lookup($function, 1)($queryParams)
-  return synopsx.mappings.templating:wrapper($queryParams, $data, $outputParams)
+  let $xhtml := synopsx.mappings.templating:wrapper($queryParams, $data, $outputParams)
+  return xslt:transform(document { $xhtml }, $G:FILES || "xsltforms/xsltforms.xsl")
 };
 
 (:~
@@ -175,25 +192,35 @@ function confirmUser($username as xs:string, $token as xs:string) {
   case fn:true()
     return (
       let $queryParams := map {
-      "project" : 'synopsx',
-      "model" : 'users',
-      "function" : "getUserDetails",
-      "mode" : "confirm",
-      "username" : $username,
-      "token" : $token
-    }
-    let $outputParams := map {
+        "project" : 'synopsx',
+        "model" : 'users',
+        "function" : "getUserDetails",
+        "mode" : "confirm",
+        "username" : $username,
+        "token" : $token
+      }
+    (: let $outputParams := map {
       "lang" : "fr",
       "layout" : "layoutForms.xml",
       "pattern": "formUser.xml",
       "xforms-lib" : "xsltforms",
       (: "xforms-prefix" : fn:true(), :)
       "xforms" : fn:true()
-    }
-    let $function := xs:QName(synopsx.models.synopsx:getModelFunction($queryParams))
-    let $data := fn:function-lookup($function, 1)($queryParams)
-    (: let $data := synopsx.models.synopsx:getUsersXforms($queryParams) :)
-    return   synopsx.mappings.templating:wrapper($queryParams, $data, $outputParams)
+    } :)
+      let$outputParams := map{
+        "lang" : "fr",
+        "models": "xf_userModel.xml",
+        "pattern": "xf_userForm.xml",
+        "layout" : "xf_formLayout.xml",
+        "xforms-lib" : "xsltforms",
+        "xforms-prefix" : fn:true(),
+        "xforms" : fn:true()
+      }
+      let $function := xs:QName(synopsx.models.synopsx:getModelFunction($queryParams))
+      let $data := fn:function-lookup($function, 1)($queryParams)
+      (: let $data := synopsx.models.synopsx:getUsersXforms($queryParams) :)
+      let $xhtml := synopsx.mappings.templating:wrapper($queryParams, $data, $outputParams)
+      return xslt:transform(document { $xhtml }, $G:FILES || "xsltforms/xsltforms.xsl")
     )
 
     default return web:redirect("/")
@@ -252,18 +279,28 @@ function user($username) {
     "permission" : $permission,
     "username" : $username
   }
-  let $outputParams := map {
+  (: let $outputParams := map {
     "lang" : "fr",
     "layout" : "layoutForms.xml",
     "pattern": "formUser.xml",
     "xforms-lib" : "xsltforms",
     (: "xforms-prefix" : fn:true(), :)
     "xforms" : fn:true()
+  } :)
+  let $outputParams := map{
+    "lang" : "fr",
+    "models": "xf_userModel.xml",
+    "pattern": "xf_userForm.xml",
+    "layout" : "xf_formLayout.xml",
+    "xforms-lib" : "xsltforms",
+    "xforms-prefix" : fn:true(),
+    "xforms" : fn:true()
   }
   let $function := xs:QName(synopsx.models.synopsx:getModelFunction($queryParams))
   let $data := fn:function-lookup($function, 1)($queryParams)
   (: let $data := synopsx.models.synopsx:getUsersXforms($queryParams) :)
-  return synopsx.mappings.templating:wrapper($queryParams, $data, $outputParams)
+  let $xhtml := synopsx.mappings.templating:wrapper($queryParams, $data, $outputParams)
+  return xslt:transform(document { $xhtml }, $G:FILES || "xsltforms/xsltforms.xsl")
 };
 
 (:~
