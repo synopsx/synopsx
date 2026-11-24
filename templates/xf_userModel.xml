@@ -1,0 +1,127 @@
+<xf:model xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:xf="http://www.w3.org/2002/xforms"
+    xf:bogus="fix/Firefox/namespace/issue"
+    xmlns:ev="http://www.w3.org/2001/xml-events"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xs:bogus="fix/Firefox/namespace/issue"
+    id="userModel">
+    <xf:setvalue ev:event="xforms-ready" ref="instance('oldUserName')/@oldname" value="instance('user')/@name"/>
+    <xf:instance id="user">{user}</xf:instance>
+    <xf:instance id="oldUserName">
+        <name xmlns="" oldname=""/>
+    </xf:instance>
+    <xf:instance id="permissions">
+        <permissions xmlns="">
+            <permission label="Aucune" value="none" />
+            <permission label="Lecture" value="read" />
+            <permission label="Écriture" value="write" />
+            <!-- <permission label="Création" value="create" /> -->
+            <permission label="Admin" value="admin" />
+        </permissions>
+    </xf:instance>
+    <xf:instance id="pattern">
+        <database pattern="" permission="" xmlns="" />
+    </xf:instance>
+    <xf:instance id="listDatabase">{databases}</xf:instance>
+    <xf:instance id="mode">{mode}</xf:instance>
+    <xf:instance id="confirmToken">{token}</xf:instance>
+    <xf:instance id="grant">
+        <grant xmlns="" />
+    </xf:instance>
+    <xf:instance id="labels">
+        <labels xmlns="">
+            <formTitle>
+                <label mode="creation">Création d’un compte utilisateur</label>
+                <label mode="update">Modification d’un compte utilisateur</label>
+                <label mode="confirm">Confirmation d’un compte utilisateur</label>
+            </formTitle>
+            <submitButton>
+                <label mode="creation">Créer</label>
+                <label mode="update">Modifier</label>
+                <label mode="confirm">Confirmer</label>
+            </submitButton>
+        </labels>
+    </xf:instance>
+    <xf:bind ref="instance('user')/@name" required="true()" relevant="instance('mode') != 'confirm'"/>
+    <xf:bind ref="instance('user')/password" required="instance('mode') = 'confirm'" />
+    <xf:bind ref="instance('user')/@permission" required="true()" relevant="instance('mode') != 'confirm' and instance('mode')/@permission = 'admin'"/>
+    <!-- <xf:bind ref="instance('user')/database/@*" required="normalize-space(instance('listDatabase')) != ''" relevant="instance('mode') != 'confirm' and instance('mode')/@permission = 'admin'" /> -->
+    <xf:bind ref="instance('user')/database" relevant="instance('mode') != 'confirm' and instance('mode')/@permission = 'admin'" />
+    <xf:bind ref="instance('user')/info" relevant="instance('mode') != 'confirm' and instance('mode')/@permission = 'admin'"/>
+
+    <xf:submission id="submitUserCreation"
+        mode="synchronous"
+        resource="/synopsx/users/create"
+        method="put"
+        replace="none">
+        <xf:action ev:event="xforms-submit-done">
+            <xf:message level="modal">
+                <xf:output value="concat(event('response-status-code'), ' ', event('response-reason-phrase'))" /> <br/>
+                URI : <xf:output value="event('resource-uri')" /> <br/>
+                Message : <xf:output value="event('response-body')//*:message" /> <br/>
+                Confirmation link : <xf:output value="event('response-headers')/self::*[name='confirmation-link']/value" />
+            </xf:message>
+            <xf:load show="replace">
+                <xf:resource value="event('response-headers')/self::*[name='link']/value" />
+            </xf:load>
+        </xf:action>
+        <xf:action ev:event="xforms-submit-error">
+            <xf:message level="modal">
+                <xf:output value="concat(event('response-status-code'), ' ', event('response-reason-phrase'))" /> <br/>
+                URI : <xf:output value="event('resource-uri')" /> <br/>
+                Error type : <xf:output value="event('error-type')" /> <br/>
+                Message : <xf:output value="event('response-body')" />
+            </xf:message>
+        </xf:action>
+    </xf:submission>
+
+    <xf:submission id="submitUserConfirm"
+        mode="synchronous"
+        method="put"
+        replace="none">
+        <xf:resource value="concat('/synopsx/users/', instance('user')/@name, '/confirm?token=', instance('confirmToken'))" />
+        <xf:action ev:event="xforms-submit-done">
+            <xf:message level="modal">
+                <xf:output value="concat(event('response-status-code'), ' ', event('response-reason-phrase'))" /> <br/>
+                URI : <xf:output value="event('resource-uri')" /> <br/>
+                Message : <xf:output value="event('response-body')//*:message" />
+            </xf:message>
+            <xf:load show="replace">
+                <xf:resource value="event('response-headers')/self::*[name='link']/value" />
+            </xf:load>
+        </xf:action>
+        <xf:action ev:event="xforms-submit-error">
+            <xf:message level="modal">
+                <xf:output value="concat(event('response-status-code'), ' ', event('response-reason-phrase'))" /> <br/>
+                URI : <xf:output value="event('resource-uri')" /> <br/>
+                Error type : <xf:output value="event('error-type')" /> <br/>
+                Message : <xf:output value="event('response-body')" /> 
+            </xf:message>
+        </xf:action>
+    </xf:submission>
+
+    <xf:submission id="updateUser"
+        mode="synchronous"
+        method="put"
+        replace="none">
+        <xf:resource value="concat('/synopsx/users/', instance('oldUserName')/@oldname, '/update?oldusername=', instance('oldUserName')/@oldname)" />
+        <xf:action ev:event="xforms-submit-done">
+            <xf:message level="modal">
+                <xf:output value="concat(event('response-status-code'), ' ', event('response-reason-phrase'))" /> <br/>
+                URI : <xf:output value="event('resource-uri')" /> <br/>
+                Message : <xf:output value="event('response-body')//*:message" />
+            </xf:message>
+            <xf:load show="replace">
+                <xf:resource value="event('response-headers')/self::*[name='link']/value" />
+            </xf:load>
+        </xf:action>
+        <xf:action ev:event="xforms-submit-error">
+            <xf:message level="modal">
+                <xf:output value="concat(event('response-status-code'), ' ', event('response-reason-phrase'))" /> <br/>
+                URI : <xf:output value="event('resource-uri')" /> <br/>
+                Error type : <xf:output value="event('error-type')" /> <br/>
+                Message : <xf:output value="event('response-body')" />
+            </xf:message>
+        </xf:action>
+    </xf:submission>
+</xf:model>

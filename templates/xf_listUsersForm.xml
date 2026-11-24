@@ -1,0 +1,29 @@
+<section xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:xf="http://www.w3.org/2002/xforms"
+    xf:bogus="fix/Firefox/namespace/issue"
+    xmlns:ev="http://www.w3.org/2001/xml-events"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xs:bogus="fix/Firefox/namespace/issue"
+    lang="fr">
+    <h1>Liste des utilisateurs</h1>
+    <xf:repeat id="userRepeat" nodeset="user">
+        <xf:output ref="@connected" />
+        <xf:output value="if(@pending='true', '⏳', '')" />
+        <xf:output value="concat(' ', @name, ' ')" />
+        <xf:trigger ref=".[@current = 'true' or parent::users[user[@current = 'true'][@permission = 'admin']]]" appearance="minimal">
+            <xf:label>update</xf:label>
+            <xf:load ev:event="DOMActivate">
+                <xf:resource value="concat('/synopsx/users/', @name, '/update')" />
+            </xf:load>
+        </xf:trigger>
+        <xf:trigger ref=".[parent::users[user[@current = 'true'][@permission = 'admin']]]" appearance="minimal" onclick="if (!confirm('Supprimer cet utilisateur ?')) { event.stopPropagation(); return false; }">
+            <xf:label>delete</xf:label>
+            <xf:send submission="deleteUser" ev:event="DOMActivate"/>
+        </xf:trigger>
+    </xf:repeat>
+
+    <xf:trigger>
+        <xf:label>Créer un utilisateur</xf:label>
+        <xf:load ev:event="DOMActivate" resource="/synopsx/users/create" />
+    </xf:trigger>
+</section>

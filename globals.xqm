@@ -31,9 +31,9 @@ declare variable $G:_RESTXQ := $G:HOME || "_restxq/" ;
 declare variable $G:FILES := $G:HOME || "static/" ;
 declare variable $G:MODELS :=  $G:HOME || "models/" ;
 declare variable $G:TEMPLATES :=  $G:HOME || "templates/" ;
-declare variable $G:WORKSPACE := if(file:exists($G:WEBAPP || "workspace/")) 
-  then $G:WEBAPP || "workspace/" 
-  else $G:HOME || "workspace/";
+declare variable $G:WORKSPACE := if(file:exists($G:WEBAPP || "workspace/"))
+  then $G:WEBAPP || "workspace/"
+  else $G:WEBAPP ;
 
 (:~ Status: everything ok :)
 declare variable $G:OK := "1" ;

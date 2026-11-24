@@ -1,7 +1,15 @@
 <section>
     <xforms-model>
+        <xforms-setvalue ev-event="xforms-ready" xf-ref="instance('oldUserName')/@oldname" xf-value="instance('user')/@name"/>
+
         <xforms-instance id="user">
             <script type="application/xml">{user}</script>
+        </xforms-instance>
+
+        <xforms-instance id="oldUserName">
+            <script type="application/xml">
+                <name xmlns="" oldname=""/>
+            </script>
         </xforms-instance>
 
         <xforms-instance id="permissions">
@@ -30,50 +38,124 @@
             <script type="application/xml">{mode}</script>
         </xforms-instance>
 
+        <xforms-instance id="confirmToken">
+            <script type="application/xml">{token}</script>
+        </xforms-instance>
+
         <xforms-instance id="grant">
             <script type="application/xml">
                 <grant xmlns="" />
             </script>
         </xforms-instance>
 
+        <xforms-instance id="labels">
+            <script type="application/xml">
+                <labels xmlns="">
+                    <formTitle>
+                        <label mode="creation">Création d’un compte utilisateur</label>
+                        <label mode="update">Modification d’un compte utilisateur</label>
+                        <label mode="confirm">Confirmation d’un compte utilisateur</label>
+                    </formTitle>
+                    <submitButton>
+                        <label mode="creation">Créer</label>
+                        <label mode="update">Modifier</label>
+                        <label mode="confirm">Confirmer</label>
+                    </submitButton>
+                </labels>
+            </script>
+        </xforms-instance>
+
         <xforms-bind xf-ref="instance('user')/@name" xf-required="true()" xf-relevant="instance('mode') != 'confirm'"/>
-        <!-- <xforms-bind xf-ref="instance('user')/password" xf-required="true()" /> -->
-        <xforms-bind xf-ref="instance('user')/@permission" xf-required="true()" xf-relevant="instance('mode') != 'confirm'"/>
-        <xforms-bind xf-ref="instance('user')/info"  xf-relevant="instance('mode') != 'confirm'"/>
+        <xforms-bind xf-ref="instance('user')/password" xf-required="instance('mode') = 'confirm'" />
+        <xforms-bind xf-ref="instance('user')/@permission" xf-required="true()" xf-relevant="instance('mode') != 'confirm' and instance('mode')/@permission = 'admin'"/>
+        <!-- <xforms-bind xf-ref="instance('user')/database/@*" xf-required="normalize-space(instance('listDatabase')) != ''" xf-relevant="instance('mode') != 'confirm' and instance('mode')/@permission = 'admin'" /> -->
+        <xforms-bind xf-ref="instance('user')/database" xf-relevant="instance('mode') != 'confirm' and instance('mode')/@permission = 'admin'" />
+        <xforms-bind xf-ref="instance('user')/info" xf-relevant="instance('mode') != 'confirm' and instance('mode')/@permission = 'admin'"/>
 
-        <!-- /synopsx/users/{$username}/put -->
-
-        <xforms-submission id="submitUserCreation" xf-mode="synchronous"
-            xf-resource="/synopsx/users/create" xf-method="put" xf-replace="none">
+        <xforms-submission id="submitUserCreation"
+            xf-mode="synchronous"
+            xf-resource="/synopsx/users/create"
+            xf-method="put"
+            xf-replace="none">
             <xforms-action ev-event="xforms-submit-done">
-                <xforms-message xf-level="modal"> La ressource a été enregistrée ! 
-                    Status : <xforms-output xf-value="event('response-status-code')" />;
-                    URI : <xforms-output xf-value="event('resource-uri')" />; 
-                    Headers : <xforms-output xf-value="event('response-headers')" />;
-                    Location : <xforms-output xf-value="event('response-headers')/self::*[name='content-location']/value" />;
-                    Token : <xforms-output xf-value="event('response-headers')/self::*[name='content-token']/value" />;
-                    Reason : <xforms-output xf-value="event('response-reason-phrase')" />;
-                    Body : <xforms-output xf-value="event('response-body')" />.
+                <xforms-message xf-level="modal">
+                    <xforms-output xf-value="concat(event('response-status-code'), ' ', event('response-reason-phrase'))" /> <br/>
+                    URI : <xforms-output xf-value="event('resource-uri')" /> <br/>
+                    Message : <xforms-output xf-value="event('response-body')//*:message" /> <br/>
+                    Confirmation link : <xforms-output xf-value="event('response-headers')/self::*[name='confirmation-link']/value" />
                 </xforms-message>
-                <xforms-load xf-show="replace" xf-replace="instance">
-                    <xforms-resource
-                        xf-value="event('response-headers')/self::*[name='content-location']/value" />
+                <xforms-load xf-show="replace">
+                    <xforms-resource xf-value="event('response-headers')/self::*[name='link']/value" />
                 </xforms-load>
             </xforms-action>
             <xforms-action ev-event="xforms-submit-error">
                 <xforms-message xf-level="modal">
-                    Une erreur est apparue : <xforms-output xf-value="event('error-type')" />;
-                    Status : <xforms-output xf-value="event('response-status-code')" />;
-                    URI : <xforms-output xf-value="event('resource-uri')" />;
-                    Headers : <xforms-output xf-value="event('response-headers')" />;
-                    Reason : <xforms-output xf-value="event('response-reason-phrase')" />
-                    Body : <xforms-output xf-value="event('response-body')" />.
+                    <xforms-output xf-value="concat(event('response-status-code'), ' ', event('response-reason-phrase'))" /> <br/>
+                    URI : <xforms-output xf-value="event('resource-uri')" /> <br/>
+                    Error type : <xforms-output xf-value="event('error-type')" /> <br/>
+                    Message : <xforms-output xf-value="event('response-body')" />
+                </xforms-message>
+            </xforms-action>
+        </xforms-submission>
+
+        <xforms-submission id="submitUserConfirm"
+            xf-mode="synchronous"
+            xf-method="put"
+            xf-replace="none">
+            <xforms-resource xf-value="concat('/synopsx/users/', instance('user')/@name, '/confirm?token=', instance('confirmToken'))" />
+            <xforms-action ev-event="xforms-submit-done">
+                <xforms-message xf-level="modal">
+                    <xforms-output xf-value="concat(event('response-status-code'), ' ', event('response-reason-phrase'))" /> <br/>
+                    URI : <xforms-output xf-value="event('resource-uri')" /> <br/>
+                    Message : <xforms-output xf-value="event('response-body')//*:message" />
+                </xforms-message>
+                <xforms-load xf-show="replace">
+                    <xforms-resource xf-value="event('response-headers')/self::*[name='link']/value" />
+                </xforms-load>
+            </xforms-action>
+            <xforms-action ev-event="xforms-submit-error">
+                <xforms-message xf-level="modal">
+                    <xforms-output xf-value="concat(event('response-status-code'), ' ', event('response-reason-phrase'))" /> <br/>
+                    URI : <xforms-output xf-value="event('resource-uri')" /> <br/>
+                    Error type : <xforms-output xf-value="event('error-type')" /> <br/>
+                    Message : <xforms-output xf-value="event('response-body')" /> 
+                </xforms-message>
+            </xforms-action>
+        </xforms-submission>
+
+        <xforms-submission id="updateUser"
+            xf-mode="synchronous"
+            xf-method="put"
+            xf-replace="none">
+            <xforms-resource xf-value="concat('/synopsx/users/', instance('oldUserName')/@oldname, '/update?oldusername=', instance('oldUserName')/@oldname)" />
+            <xforms-action ev-event="xforms-submit-done">
+                <xforms-message xf-level="modal">
+                    <xforms-output xf-value="concat(event('response-status-code'), ' ', event('response-reason-phrase'))" /> <br/>
+                    URI : <xforms-output xf-value="event('resource-uri')" /> <br/>
+                    Message : <xforms-output xf-value="event('response-body')//*:message" />
+                </xforms-message>
+                <xforms-load xf-show="replace">
+                    <xforms-resource xf-value="event('response-headers')/self::*[name='link']/value" />
+                </xforms-load>
+            </xforms-action>
+            <xforms-action ev-event="xforms-submit-error">
+                <xforms-message xf-level="modal">
+                    <xforms-output xf-value="concat(event('response-status-code'), ' ', event('response-reason-phrase'))" /> <br/>
+                    URI : <xforms-output xf-value="event('resource-uri')" /> <br/>
+                    Error type : <xforms-output xf-value="event('error-type')" /> <br/>
+                    Message : <xforms-output xf-value="event('response-body')" />
                 </xforms-message>
             </xforms-action>
         </xforms-submission>
     </xforms-model>
+
     <xforms-group xf-ref="instance('user')">
-        <xforms-label>Nouveau compte utilisateur</xforms-label>
+        <xforms-label>
+            <xforms-output xf-value="instance('labels')/formTitle/label[@mode = instance('mode')]"/>
+        </xforms-label>
+        <xforms-group ref="info/token">
+            <xforms-output xf-value="if(info/token, '⏳ Compte en attente de confirmation', '')"/>
+        </xforms-group>
         <xforms-input xf-ref="@name">
             <xforms-label>Nom</xforms-label>
         </xforms-input>
@@ -91,7 +173,13 @@
         </xforms-select1>
         <br />
         <xforms-repeat xf-ref="database">
-            <xforms-label>Pattern</xforms-label>
+            <xforms-label>
+                Pattern
+                <xforms-trigger xf-appearance="minimal">
+                    <xforms-label>×</xforms-label>
+                    <xforms-delete xf-ref="." ev-event="DOMActivate"/>
+                </xforms-trigger>
+            </xforms-label>
             <xforms-select1 xf-ref="@pattern">
                 <xforms-label>Base de donnée</xforms-label>
                 <xforms-itemset xf-ref="instance('listDatabase')/database">
@@ -101,35 +189,51 @@
             </xforms-select1>
             <xforms-select1 xf-ref="@permission">
                 <xforms-label>Permission</xforms-label>
-                <xforms-itemset
-                    xf-ref="instance('permissions')/permission[@value != 'admin' and @value != 'create']">
+                <xforms-itemset xf-ref="instance('permissions')/permission[@value != 'admin' and @value != 'create']">
                     <xforms-label xf-ref="@label" />
                     <xforms-value xf-ref="@value" />
                 </xforms-itemset>
             </xforms-select1>
         </xforms-repeat>
-        <xforms-trigger xf-ref="instance('mode')/self::*[normalize-space(.) != 'confirm']">
+        <xforms-trigger xf-ref=".[instance('mode')!= 'confirm' and instance('mode')/@permission = 'admin']">
             <xforms-label>Ajouter un pattern</xforms-label>
             <xforms-action ev-event="DOMActivate">
-                <xforms-insert xf-origin="instance('pattern')" xf-nodeset="info" xf-position="before" />
+                <xforms-insert xf-origin="instance('pattern')"
+                    xf-nodeset="info"
+                    xf-position="before"/>
             </xforms-action>
         </xforms-trigger>
-        <xforms-group xf-ref="info">
-            <xforms-repeat xf-ref="grant">
-                <xforms-label>grant</xforms-label>
-                <xforms-input xf-ref="." />
-            </xforms-repeat>
-            <xforms-trigger>
-                <xforms-label>Ajouter une info</xforms-label>
-                <xforms-action ev-event="DOMActivate">
-                    <xforms-insert xf-origin="instance('grant')" xf-at="last()" xf-position="after" />
-                </xforms-action>
-            </xforms-trigger>
-        </xforms-group>
-        <xforms-output xf-value="serialize(.)" />
+        <br />
+        <xforms-repeat xf-ref="info/grant">
+            <xforms-label>
+                grant
+                <xforms-trigger xf-appearance="minimal">
+                    <xforms-label>×</xforms-label>
+                    <xforms-delete xf-ref="." ev-event="DOMActivate"/>
+                </xforms-trigger>
+            </xforms-label>
+            <xforms-input xf-ref="." />
+        </xforms-repeat>
+        <xforms-trigger xf-ref=".[instance('mode')!= 'confirm' and instance('mode')/@permission = 'admin']">
+            <xforms-label>Ajouter une info</xforms-label>
+            <xforms-action ev-event="DOMActivate">
+                <xforms-insert xf-context="info" xf-origin="instance('grant')" xf-at="last()" xf-position="after" />
+            </xforms-action>
+        </xforms-trigger>
     </xforms-group>
 
-    <xforms-submit xf-submission="submitUserCreation">
-        <xforms-label>Créer</xforms-label>
-    </xforms-submit>
+    <xforms-trigger>
+        <xforms-label>
+            <xforms-output xf-value="instance('labels')/submitButton/label[@mode = instance('mode')]"/>
+        </xforms-label>
+        <xforms-action xf-if="instance('mode') = 'creation'" ev-event="DOMActivate">
+            <xforms-send xf-submission="submitUserCreation" />
+        </xforms-action>
+        <xforms-action xf-if="instance('mode') = 'confirm'" ev-event="DOMActivate">
+            <xforms-send xf-submission="submitUserConfirm" />
+        </xforms-action>
+        <xforms-action xf-if="instance('mode') = 'update'" ev-event="DOMActivate">
+            <xforms-send xf-submission="updateUser" />
+        </xforms-action>
+    </xforms-trigger>
 </section>

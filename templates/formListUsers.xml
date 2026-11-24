@@ -3,21 +3,56 @@
         <xforms-instance>
             <script type="application/xml">{users}</script>
         </xforms-instance>
+
+        <xforms-submission id="deleteUser"
+            xf-mode="synchronous"
+            xf-method="put"
+            xf-replace="none">
+            <xforms-resource xf-value="concat('/synopsx/users/', instance()/user[position() = index('userRepeat')]/@name, '/delete')" />
+            <xforms-action ev-event="xforms-submit-done">
+                <xforms-message xf-level="modal">
+                    <xforms-output xf-value="concat(event('response-status-code'), ' ', event('response-reason-phrase'))" /> <br/>
+                    URI : <xforms-output xf-value="event('resource-uri')" /> <br/>
+                    Message : <xforms-output xf-value="event('response-body')//*:message" />
+                </xforms-message>
+                <xforms-load xf-show="replace" xf-replace="instance">
+                    <xforms-resource xf-value="event('response-headers')/self::*[name='link']/value" />
+                </xforms-load>
+            </xforms-action>
+            <xforms-action ev-event="xforms-submit-error">
+                <xforms-message xf-level="modal">
+                    <xforms-output xf-value="concat(event('response-status-code'), ' ', event('response-reason-phrase'))" /> <br/>
+                    URI : <xforms-output xf-value="event('resource-uri')" />;
+                    Error type : <xforms-output xf-value="event('error-type')" />;
+                    Message : <xforms-output xf-value="event('response-body')" />.
+                </xforms-message>
+            </xforms-action>
+        </xforms-submission>
     </xforms-model>
+    
     <!-- @xf-nodeset doesn't work with pseudo-xforms-element -->
     <h1>Liste des utilisateurs</h1>
-    <xforms-repeat xf-ref="user">
-        <xforms-output xf-value="concat(@name, ' ')" />
-        <xforms-trigger xf-appearance="minimal">
-            <xforms-label>modify</xforms-label>
+    <xforms-repeat id="userRepeat" xf-ref="user">
+        <xforms-output xf-ref="@connected" />
+        <xforms-output xf-value="if(@pending='true', '⏳', '')" />
+        <xforms-output xf-value="concat(' ', @name, ' ')" />
+        <xforms-trigger xf-ref=".[@current = 'true' or parent::users[user[@current = 'true'][@permission = 'admin']]]"
+            xf-appearance="minimal">
+            <xforms-label>update</xforms-label>
             <xforms-load ev-event="DOMActivate">
-                <xforms-resource xf-value="concat('/synopsx/users/', @name, '/modify')" />
+                <xforms-resource xf-value="concat('/synopsx/users/', @name, '/update')" />
             </xforms-load>
+        </xforms-trigger>
+        <xforms-trigger xf-ref=".[parent::users[user[@current = 'true'][@permission = 'admin']]]"
+            xf-appearance="minimal"
+            onclick="if (!confirm('Supprimer cet utilisateur ?')) { event.stopPropagation(); return false; }">
+            <xforms-label>delete</xforms-label>
+            <xforms-send xf-submission="deleteUser" ev-event="DOMActivate"/>
         </xforms-trigger>
     </xforms-repeat>
     
     <xforms-trigger>
         <xforms-label>Créer un utilisateur</xforms-label>
-        <xforms-load ev-event="DOMActivate" xf-resource="/synopsx/users/new" />
+        <xforms-load ev-event="DOMActivate" xf-resource="/synopsx/users/create" />
     </xforms-trigger>
 </section>

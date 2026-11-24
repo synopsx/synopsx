@@ -1,0 +1,36 @@
+
+<xf:model xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:xf="http://www.w3.org/2002/xforms"
+    xf:bogus="fix/Firefox/namespace/issue"
+    xmlns:ev="http://www.w3.org/2001/xml-events"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xs:bogus="fix/Firefox/namespace/issue"
+    id="listUsersModel"
+    lang="fr">
+    <xf:instance>{users}</xf:instance>
+    <xf:submission id="deleteUser"
+        mode="synchronous"
+        method="put"
+        replace="none">
+        <xf:resource value="concat('/synopsx/users/', instance()/user[position() = index('userRepeat')]/@name, '/delete')" />
+        <xf:action ev:event="xforms-submit-done">
+            <xf:message level="modal">
+                <xf:output value="concat(event('response-status-code'), ' ', event('response-reason-phrase'))" /> <br/>
+                URI : <xf:output value="event('resource-uri')" /> <br/>
+                Message : <xf:output value="event('response-body')//*:message" />
+            </xf:message>
+            <xf:load show="replace"
+                replace="instance">
+                <xf:resource value="event('response-headers')/self::*[name='link']/value" />
+            </xf:load>
+        </xf:action>
+        <xf:action ev:event="xforms-submit-error">
+            <xf:message level="modal">
+                <xf:output value="concat(event('response-status-code'), ' ', event('response-reason-phrase'))" /> <br/>
+                URI : <xf:output value="event('resource-uri')" />;
+                Error type : <xf:output value="event('error-type')" />;
+                Message : <xf:output value="event('response-body')" />.
+            </xf:message>
+        </xf:action>
+    </xf:submission>
+</xf:model>

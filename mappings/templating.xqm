@@ -78,6 +78,25 @@ declare function pattern($queryParams as map(*), $data as map(*), $outputParams 
   };
 
 (:~
+ : this function includes a sequence of model with placeholder substitution
+ :
+ : @param $queryParams the query params defined in restxq
+ : @param $data the result of the query containing metadata for substitution
+ : @param $outputParams the serialization params containing the models sequence
+ : @return model src with placeholders instantiated
+ :)
+declare function models($queryParams as map(*), $data as map(*), $outputParams as map(*)) as node()* {
+  let $models := $outputParams?models
+  
+  for $model in $models
+  let $model := fn:doc(synopsx.models.synopsx:getLayoutPath($queryParams, $model))
+  return $model/* update {
+    for $node in descendant-or-self::*[text()[fn:matches(., $synopsx.mappings.templating:regex )]] | .//@*[fn:matches(., $synopsx.mappings.templating:regex )]
+    return associate($queryParams, $data?meta, $outputParams, $node)
+  }
+};
+
+(:~
  : this function dispatch the content with the data
  :
  : @param $queryParams the query params defined in restxq
