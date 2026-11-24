@@ -15,7 +15,7 @@
             <permission label="Aucune" value="none" />
             <permission label="Lecture" value="read" />
             <permission label="Écriture" value="write" />
-            <permission label="Création" value="create" />
+            <!-- <permission label="Création" value="create" /> -->
             <permission label="Admin" value="admin" />
         </permissions>
     </xf:instance>
