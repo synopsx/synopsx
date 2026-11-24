@@ -53,6 +53,8 @@ declare function wrapper($queryParams as map(*), $data as map(*), $outputParams 
       let $key := fn:analyze-string($node, $G:TEMPLATING-REGEX)//fn:group/text()
       return if ($key = 'content')
         then replace node $node with pattern($queryParams, $data, $outputParams)
+        else if ($key = 'models')
+        then replace node $node with models($queryParams, $data, $outputParams)
         else associate($queryParams, $data?meta, $outputParams, $node)
       }
     )
