@@ -28,6 +28,7 @@ declare namespace session = "http://basex.org/modules/session";
 declare namespace http = "http://expath.org/ns/http-client";
 declare namespace map = "http://www.w3.org/2005/xpath-functions/map";
 declare namespace xslt = "http://basex.org/modules/xslt";
+declare namespace html = "http://basex.org/modules/html";
 
 import module namespace G = "synopsx.globals" at "../globals.xqm";
 import module namespace synopsx.models.synopsx = "synopsx.models.synopsx" at "../models/synopsx.xqm";
@@ -67,7 +68,7 @@ function getUsers() {
   let $function := xs:QName(synopsx.models.synopsx:getModelFunction($queryParams))
   let $data := fn:function-lookup($function, 1)($queryParams)
   let $xhtml := synopsx.mappings.templating:wrapper($queryParams, $data, $outputParams)
-  return xslt:transform(document { $xhtml }, $G:FILES || "xsltforms/xsltforms.xsl")
+  return xslt:transform-text(document { $xhtml }, $G:FILES || "xsltforms/xsltforms.xsl") => html:parse()
 };
 
 (:~
@@ -142,7 +143,7 @@ function newUser() {
   let $function := xs:QName(synopsx.models.synopsx:getModelFunction($queryParams))
   let $data := fn:function-lookup($function, 1)($queryParams)
   let $xhtml := synopsx.mappings.templating:wrapper($queryParams, $data, $outputParams)
-  return xslt:transform(document { $xhtml }, $G:FILES || "xsltforms/xsltforms.xsl")
+  return xslt:transform-text(document { $xhtml }, $G:FILES || "xsltforms/xsltforms.xsl") => html:parse()
 };
 
 (:~
@@ -220,7 +221,7 @@ function confirmUser($username as xs:string, $token as xs:string) {
       let $data := fn:function-lookup($function, 1)($queryParams)
       (: let $data := synopsx.models.synopsx:getUsersXforms($queryParams) :)
       let $xhtml := synopsx.mappings.templating:wrapper($queryParams, $data, $outputParams)
-      return xslt:transform(document { $xhtml }, $G:FILES || "xsltforms/xsltforms.xsl")
+      return xslt:transform-text(document { $xhtml }, $G:FILES || "xsltforms/xsltforms.xsl") => html:parse()
     )
 
     default return web:redirect("/")
@@ -300,7 +301,7 @@ function user($username) {
   let $data := fn:function-lookup($function, 1)($queryParams)
   (: let $data := synopsx.models.synopsx:getUsersXforms($queryParams) :)
   let $xhtml := synopsx.mappings.templating:wrapper($queryParams, $data, $outputParams)
-  return xslt:transform(document { $xhtml }, $G:FILES || "xsltforms/xsltforms.xsl")
+  return xslt:transform-text(document { $xhtml }, $G:FILES || "xsltforms/xsltforms.xsl") => html:parse()
 };
 
 (:~
