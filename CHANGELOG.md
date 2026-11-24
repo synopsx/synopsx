@@ -20,6 +20,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 ### Removed
 - Suppression des fonctionnalités bloquantes lors de l’installation (création db synopsx, user)
 
+### Fixed
+
+- Module d’exemples : préfixe de module corrigé et clé `xsl` des `outputParams` rétablie (la transformation XSLT n’était pas déclenchée)
+
 ## [v2.0] - 2015
 
 ## [v1.0] - 2012-2014

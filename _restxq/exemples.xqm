@@ -1,5 +1,5 @@
 xquery version "3.1" ;
-module namespace synopsx.restxq.synopsx = "synopsx.restxq.exemples" ;
+module namespace synopsx.restxq.exemples = "synopsx.restxq.exemples" ;
 
 (:~
  : This module provides the SynopsX’ REST entries
@@ -148,7 +148,7 @@ function getXslt() {
     "content" : $content
     }
   let $outputParams := map {
-    "xslt" : "default.xsl", (: user defined serialisation :)
+    "xsl" : "default.xsl", (: user defined serialisation :)
     "layout" : "layout.xml",
     "pattern" : "incArticle.xml"
     }
